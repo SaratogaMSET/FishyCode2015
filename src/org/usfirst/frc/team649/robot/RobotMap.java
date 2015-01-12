@@ -18,5 +18,7 @@ public class RobotMap {
 	
 	public static final class DRIVE_TRAIN {
 		public static final int[] Motors = new int[] {1,2,3,4};
+        public static final int[] ENCODERS = new int[]{3, 4, 6, 7};
+
 	}
 }
