@@ -1,29 +1,27 @@
 package org.usfirst.frc.team649.robot.commands.drivetraincommands;
 
 import org.usfirst.frc.team649.robot.commands.CommandBase;
-import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveForwardRotate extends CommandBase {
+public class RampMotors extends Command {
 
-	private double forwardVal;
-	private double rotateVal;
-    public DriveForwardRotate(double DriveForward, double DriveRotate) {
+	double inputVal; 
+	double outputVal;
+    public RampMotors() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	forwardVal = DriveForward;
-    	rotateVal = DriveRotate;
+    	
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(drivetrainSubsystem.isMotorRamping()) {
-    		forwardVal = linearRamping(forwardVal);
-    	}
+    	inputVal = CommandBase.drivetrainSubsystem.currentInput;
+    	outputVal = CommandBase.drivetrainSubsystem.output;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,12 +40,5 @@ public class DriveForwardRotate extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    }
-    
-    protected double linearRamping(double toRamp) {
-    	if(drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DELTA_LIMIT) {
-    		CommandBase
-    	}
-    	return 2.0;
     }
 }
