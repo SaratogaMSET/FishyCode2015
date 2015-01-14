@@ -8,11 +8,11 @@ import org.usfirst.frc.team649.robot.Robot;
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class GrabTote extends Command {
 
-    public ExampleCommand() {
+    public GrabTote() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        //requires(Robot.exampleSubsystem);
     }
 
     // Called just before this Command runs the first time
