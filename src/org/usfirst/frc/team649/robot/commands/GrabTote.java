@@ -8,7 +8,7 @@ import org.usfirst.frc.team649.robot.Robot;
 /**
  *
  */
-public class GrabTote extends Command {
+public class GrabTote extends CommandBase {
 
     public GrabTote() {
         // Use requires() here to declare subsystem dependencies
