@@ -1,5 +1,7 @@
 package org.usfirst.frc.team649.robot.subsystems;
 
+import java.util.Vector;
+
 import org.usfirst.frc.team649.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -20,9 +22,10 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDS
     private SpeedController[] motors;
     private Encoder[] encoders;
     private PIDController pid;
-	public  double output;
-	public  double currentInput;
-	public  double oldInput;
+	private  double output;
+	private  double currentInput;
+	private  double oldInput;
+	private Vector lastRates;
 	
     public static class EncoderBasedDriving {
     	private static final double ENCODER_DISTANCE_PER_PULSE = -4 * Math.PI / 128;
@@ -37,9 +40,10 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDS
     }
     
     public static class RampingConstants {
-    	public static final double DELTA_LIMIT = .34;
-    	public static final int RAMPING_UP = 0;
-    	public static final int RAMPING_DOWN = 1;
+    	public static final double ACCELERATION_LIMIT = .34;
+    	public static final double DECELERATION_LIMIT = .34;
+    	public static final double RAMP_UP_CONSTANT = .20;
+    	public static final double RAMP_DOWN_CONSTANT = 1;
     	private static boolean rampMotors = false;
 
     }
@@ -118,6 +122,13 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDS
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	public double getVelocity() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
 

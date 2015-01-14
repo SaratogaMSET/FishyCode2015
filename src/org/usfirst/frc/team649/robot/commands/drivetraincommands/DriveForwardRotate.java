@@ -22,8 +22,10 @@ public class DriveForwardRotate extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if(drivetrainSubsystem.isMotorRamping()) {
-    		forwardVal = linearRamping(forwardVal);
+    		linearRamping(forwardVal);
     	}
+        CommandBase.drivetrainSubsystem.driveFwdRot(forwardVal, rotateVal);
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -44,10 +46,14 @@ public class DriveForwardRotate extends CommandBase {
     protected void interrupted() {
     }
     
-    protected double linearRamping(double toRamp) {
-    	if(drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DELTA_LIMIT) {
-    		CommandBase
+    protected void linearRamping(double toRamp) {
+    	if(drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.ACCELERATION_LIMIT) {
+    		forwardVal = CommandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_UP_CONSTANT;
     	}
-    	return 2.0;
+    	else if(drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DECELERATION_LIMIT) {
+    		forwardVal -= DrivetrainSubsystem.RampingConstants.RAMP_DOWN_CONSTANT;
+    	}
+    	else
+    		forwardVal = forwardVal;
     }
 }
