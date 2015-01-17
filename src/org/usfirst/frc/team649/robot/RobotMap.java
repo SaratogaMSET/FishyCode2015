@@ -17,8 +17,15 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 	
 	public static final class DRIVE_TRAIN {
-		public static final int[] Motors = new int[] {1,2,3,4};
+		public static final int[] MOTORS = new int[] {1,2,3,4};
         public static final int[] ENCODERS = new int[]{3, 4, 6, 7};
+
+	}
+	
+	public static final class CHAIN_LIFT {
+		public static final int[] MOTORS = new int[] {5,6,7,8};
+        public static final int[] ENCODERS = new int[]{8, 9, 10, 11};
+
 
 	}
 }

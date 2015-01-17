@@ -1,6 +1,7 @@
 package org.usfirst.frc.team649.robot.commands;
 import org.usfirst.frc.team649.robot.OI;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
+import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -13,6 +14,7 @@ public abstract class CommandBase extends Command {
 
 	public static OI oi;
 	public static DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
+	public static ChainLiftSubsystem chainLiftSubsystem = new ChainLiftSubsystem();
 	
 	
 	public static Command driveForwardRotate(double forward, double rotate){

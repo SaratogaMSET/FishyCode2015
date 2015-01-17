@@ -22,9 +22,8 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDS
     private SpeedController[] motors;
     private Encoder[] encoders;
     private PIDController pid;
-	private  double output;
-	private  double currentInput;
-	private  double oldInput;
+	public  double currentInput;
+	public  double oldInput;
 	private Vector lastRates;
 	
     public static class EncoderBasedDriving {
@@ -50,9 +49,9 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDS
     
     public DrivetrainSubsystem() {
     	super("Drivetrain", EncoderBasedDriving.AUTO_P, EncoderBasedDriving.AUTO_I, EncoderBasedDriving.AUTO_D);
-    	motors = new SpeedController[RobotMap.DRIVE_TRAIN.Motors.length];
-    	for (int i = 0; i < RobotMap.DRIVE_TRAIN.Motors.length; i++) {
-            motors[i] = new Victor(RobotMap.DRIVE_TRAIN.Motors[i]);
+    	motors = new SpeedController[RobotMap.DRIVE_TRAIN.MOTORS.length];
+    	for (int i = 0; i < RobotMap.DRIVE_TRAIN.MOTORS.length; i++) {
+            motors[i] = new Victor(RobotMap.DRIVE_TRAIN.MOTORS[i]);
         }
     	pid = this.getPIDController();
     	pid.setAbsoluteTolerance(EncoderBasedDriving.ABS_TOLERANCE);
@@ -91,6 +90,17 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDS
             motors[i].set(-right);
         }
     }
+    
+    public double getVelocity() {
+        int numEncoders = encoders.length;
+        double totalRate = 0;
+        for (int i = 0; i < numEncoders; i++) {
+            totalRate += encoders[i].getRate();
+        }
+        final double rate = totalRate / numEncoders;
+        return rate;
+    }
+    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -124,11 +134,5 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDS
 		
 	}
 
-
-
-	public double getVelocity() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
 

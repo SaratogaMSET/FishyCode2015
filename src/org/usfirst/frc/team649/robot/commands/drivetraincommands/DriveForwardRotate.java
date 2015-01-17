@@ -47,11 +47,11 @@ public class DriveForwardRotate extends CommandBase {
     }
     
     protected void linearRamping(double toRamp) {
-    	if(drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.ACCELERATION_LIMIT) {
-    		forwardVal = CommandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_UP_CONSTANT;
+    	if(CommandBase.drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.ACCELERATION_LIMIT) {
+    		forwardVal = drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_UP_CONSTANT;
     	}
     	else if(drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DECELERATION_LIMIT) {
-    		forwardVal -= DrivetrainSubsystem.RampingConstants.RAMP_DOWN_CONSTANT;
+    		forwardVal = drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_DOWN_CONSTANT;
     	}
     	else
     		forwardVal = forwardVal;

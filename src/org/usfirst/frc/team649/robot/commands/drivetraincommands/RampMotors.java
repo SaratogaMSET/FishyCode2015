@@ -21,7 +21,6 @@ public class RampMotors extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	inputVal = CommandBase.drivetrainSubsystem.currentInput;
-    	outputVal = CommandBase.drivetrainSubsystem.output;
     }
 
     // Called repeatedly when this Command is scheduled to run
