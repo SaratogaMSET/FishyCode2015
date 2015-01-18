@@ -22,14 +22,14 @@ public abstract class CommandBase extends Command {
 	}
 	
 	//pick up totes with as many calls as you need
-    public static Command pickUpTote(){
+    public static Command intakeTote(){
     	Command sequence = new CommandGroup();
     	//do whatever
     	return sequence;
     }
     
     //might just be a simple drive command or more based on final design
-    public static Command releaseTote(){
+    public static Command purgeTote(){
     	//using crate design
     	Command sequence = new CommandGroup();
     	//add whatever

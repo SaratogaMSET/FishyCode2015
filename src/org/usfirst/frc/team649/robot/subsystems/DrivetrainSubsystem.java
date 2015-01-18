@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDSource{
+public class DrivetrainSubsystem extends PIDSubsystem {
     
     private SpeedController[] motors;
     private Encoder[] encoders;
@@ -101,38 +101,27 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDOutput, PIDS
         return rate;
     }
     
+    public double getDistance() {
+        int numEncoders = encoders.length;
+        double totalVal = 0;
+        for (int i = 0; i < numEncoders; i++) {
+            totalVal += encoders[i].getDistance();
+        }
+        return totalVal / numEncoders;
+    }
+
+	protected double returnPIDInput() {
+		return this.getDistance();
+	}
+
+	protected void usePIDOutput(double output) {
+        output = (output < 0 ? -1 : 1) * Math.max(Math.abs(output), EncoderBasedDriving.MIN_MOTOR_POWER);
+        driveFwdRot(output, 0);
+	}
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-
-	@Override
-	public double pidGet() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-
-	@Override
-	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
 

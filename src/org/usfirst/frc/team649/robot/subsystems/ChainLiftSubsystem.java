@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class ChainLiftSubsystem extends PIDSubsystem implements PIDOutput, PIDSource{
+public class ChainLiftSubsystem extends PIDSubsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -31,6 +31,14 @@ public class ChainLiftSubsystem extends PIDSubsystem implements PIDOutput, PIDSo
 		public static final double LIFT_D_VALUE = 0.0;
 		public static final double ENCODER_DISTANCE_PER_PULSE = 0;
 		public static final double ABS_TOLERANCE = 0;
+		//In inches
+		public static final double SCORE_LEVEL_DIFFERANCE = 2;
+		public static final double STEP_LEVEL_DIFFRERANCE = 4;
+		public static final double NEXT_LEVEL_DIFFRERANCE = 7;
+		//States
+		public static final int PICK_UP_STATE = 0;
+		public static final int SCORE_STATE = 1;
+		public static final int STEP_STATE = 3;
 
 
 	}
@@ -49,9 +57,21 @@ public class ChainLiftSubsystem extends PIDSubsystem implements PIDOutput, PIDSo
         }
         
     }
-		
-		
-		
+	
+    public void setPower(double power) {
+        for (int i =0; i < motors.length; i++) {
+            motors[i].set(power);
+        }
+    }	
+    
+    public double getHeight() {
+    	int numEncoders = encoders.length;
+        double totalVal = 0;
+        for (int i = 0; i < numEncoders; i++) {
+            totalVal += encoders[i].getDistance();
+        }
+        return totalVal / numEncoders;    	
+    }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -61,23 +81,14 @@ public class ChainLiftSubsystem extends PIDSubsystem implements PIDOutput, PIDSo
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.getHeight();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		
+		this.setPower(output);
 	}
-	@Override
-	public double pidGet() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }
 
