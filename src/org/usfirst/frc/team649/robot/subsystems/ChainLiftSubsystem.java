@@ -4,6 +4,7 @@ import org.usfirst.frc.team649.robot.RobotMap;
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.EncoderBasedDriving;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -23,6 +24,10 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	Victor[] motors;
 	Encoder[] encoders;
 	PIDController pid;
+	DigitalInput limitMax;
+	DigitalInput limitReset;
+	public double currentHeight;
+
 	
 	public static class PIDConstants {
 		
@@ -32,14 +37,8 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 		public static final double ENCODER_DISTANCE_PER_PULSE = 0;
 		public static final double ABS_TOLERANCE = 0;
 		//In inches
-		public static final double SCORE_LEVEL_DIFFERANCE = 2;
-		public static final double STEP_LEVEL_DIFFRERANCE = 4;
-		public static final double NEXT_LEVEL_DIFFRERANCE = 7;
-		//States
-		public static final int PICK_UP_STATE = 0;
-		public static final int SCORE_STATE = 1;
-		public static final int STEP_STATE = 3;
-
+		public static final double STORE_TO_STEP_LEVEL_DIFFRERANCE = 5.0;
+		public static final double STORE_TO_NEXT_LEVEL_DIFFRERANCE = 18.0;
 
 	}
 
@@ -50,19 +49,33 @@ public class ChainLiftSubsystem extends PIDSubsystem {
         }
     	pid = CommandBase.chainLiftSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
+    	
+    	//TODO: ALTER FOR DEFNED NUM OF ENCODERS
     	encoders = new Encoder[RobotMap.CHAIN_LIFT.ENCODERS.length / 2];
         for (int x = 0; x < RobotMap.CHAIN_LIFT.ENCODERS.length; x += 2) {
             encoders[x / 2] = new Encoder(RobotMap.CHAIN_LIFT.ENCODERS[x], RobotMap.CHAIN_LIFT.ENCODERS[x + 1], x == 0, EncodingType.k2X);
             encoders[x / 2].setDistancePerPulse(PIDConstants.ENCODER_DISTANCE_PER_PULSE);
         }
         
+        
+        limitMax = new DigitalInput(RobotMap.CHAIN_LIFT.MAX_LIM_SWITCH);
+        limitReset = new DigitalInput(RobotMap.CHAIN_LIFT.RESET_LIM_SWITCH);
+
     }
 	
     public void setPower(double power) {
         for (int i =0; i < motors.length; i++) {
             motors[i].set(power);
         }
-    }	
+    }
+    
+    public boolean isMaxLimitPressed() {
+    	return limitMax.get();
+    }
+    
+    public boolean isResetLimitPressed() {
+    	return limitReset.get();
+    }
     
     public double getHeight() {
     	int numEncoders = encoders.length;
@@ -73,6 +86,12 @@ public class ChainLiftSubsystem extends PIDSubsystem {
         return totalVal / numEncoders;    	
     }
 
+    public void resetEncoders() {
+        for (int x = 0; x < encoders.length; x++) {
+            encoders[x].reset();
+        }
+    }
+    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

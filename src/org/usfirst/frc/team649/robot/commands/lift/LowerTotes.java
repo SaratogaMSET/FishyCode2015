@@ -2,7 +2,6 @@ package org.usfirst.frc.team649.robot.commands.lift;
 
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
-import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem.PIDConstants;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,20 +9,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class RaiseTote extends Command {
+public class LowerTotes extends Command {
 
 	private PIDController liftPID;
-    public RaiseTote() {
+    public LowerTotes() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	liftPID = CommandBase.chainLiftSubsystem.getPIDController();
-    	CommandBase.chainLiftSubsystem.currentHeight += ChainLiftSubsystem.PIDConstants.STORE_TO_NEXT_LEVEL_DIFFRERANCE;
+    	CommandBase.chainLiftSubsystem.currentHeight -= ChainLiftSubsystem.PIDConstants.STORE_TO_NEXT_LEVEL_DIFFRERANCE;
+  
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	liftPID.enable();
-    	liftPID.setSetpoint(CommandBase.chainLiftSubsystem.currentHeight);    		
+      	liftPID.enable();
+    	liftPID.setSetpoint(CommandBase.chainLiftSubsystem.currentHeight);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,7 +32,7 @@ public class RaiseTote extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (CommandBase.chainLiftSubsystem.currentHeight == CommandBase.chainLiftSubsystem.getHeight() || CommandBase.chainLiftSubsystem.isMaxLimitPressed());
+        return false;
     }
 
     // Called once after isFinished returns true

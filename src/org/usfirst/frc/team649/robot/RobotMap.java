@@ -25,6 +25,8 @@ public class RobotMap {
 	public static final class CHAIN_LIFT {
 		public static final int[] MOTORS = new int[] {5,6,7,8};
         public static final int[] ENCODERS = new int[]{8, 9, 10, 11};
+		public static final int RESET_LIM_SWITCH = 1;
+		public static final int MAX_LIM_SWITCH = 0;
 
 
 	}
