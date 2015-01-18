@@ -3,6 +3,8 @@ import org.usfirst.frc.team649.robot.OI;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.GrabberLeftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.GrabberRightSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -15,7 +17,8 @@ public abstract class CommandBase extends Command {
 	public static OI oi;
 	public static DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 	public static ChainLiftSubsystem chainLiftSubsystem = new ChainLiftSubsystem();
-	
+	public static GrabberLeftSubsystem grabberLeftSubsystem = new GrabberLeftSubsystem();
+	public static GrabberRightSubsystem grabberRightSubsystem = new GrabberRightSubsystem();
 	
 	public static Command driveForwardRotate(double forward, double rotate){
 		return new DriveForwardRotate(forward, rotate);
