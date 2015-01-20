@@ -9,21 +9,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LowerTotes extends Command {
+public class ChangeOffsetHeight extends Command {
 
-	private PIDController liftPID;
-    public LowerTotes() {
+	PIDController liftPID;
+    public ChangeOffsetHeight(boolean platformOrDriveHeight) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	liftPID = CommandBase.chainLiftSubsystem.getPIDController();
-    	CommandBase.chainLiftSubsystem.currentHeight -= ChainLiftSubsystem.PIDConstants.STORE_TO_NEXT_LEVEL_DIFFRERANCE;
-  
+    	if(platformOrDriveHeight) {
+    		CommandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.PLATFORM_DRIVE_OFFSET;
+    	}
+    	else
+    		CommandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.STEP_OFFSET;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-      	liftPID.enable();
-    	liftPID.setSetpoint(CommandBase.chainLiftSubsystem.currentHeight);
+    	liftPID.enable();
+    	liftPID.setSetpoint(CommandBase.chainLiftSubsystem.setpointHeight + CommandBase.chainLiftSubsystem.offsetHeight);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,7 +35,7 @@ public class LowerTotes extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+		return ((CommandBase.chainLiftSubsystem.setpointHeight + CommandBase.chainLiftSubsystem.offsetHeight) == CommandBase.chainLiftSubsystem.getHeight() || CommandBase.chainLiftSubsystem.isMaxLimitPressed() || CommandBase.chainLiftSubsystem.isResetLimitPressed());
     }
 
     // Called once after isFinished returns true

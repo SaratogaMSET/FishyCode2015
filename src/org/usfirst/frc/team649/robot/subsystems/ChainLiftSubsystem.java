@@ -26,11 +26,12 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	PIDController pid;
 	DigitalInput limitMax;
 	DigitalInput limitReset;
-	public double currentHeight;
+	public double setpointHeight;
+	public double offsetHeight;
 
 	
 	public static class PIDConstants {
-		
+		//PID
 		public static final double LIFT_P_VALUE = 0.0;
 		public static final double LIFT_I_VALUE = 0.0;
 		public static final double LIFT_D_VALUE = 0.0;
@@ -39,6 +40,11 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 		//In inches
 		public static final double STORE_TO_STEP_LEVEL_DIFFRERANCE = 5.0;
 		public static final double STORE_TO_NEXT_LEVEL_DIFFRERANCE = 18.0;
+		public static final double PLATFORM_DRIVE_OFFSET = 3;
+		public static final double STEP_OFFSET = 8;
+
+		//Other
+		public static final double UNLOAD_TOTES_MOTOR_POWER = -.5;
 
 	}
 
