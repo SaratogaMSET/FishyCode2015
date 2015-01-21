@@ -20,7 +20,7 @@ public class RampMotors extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	inputVal = CommandBase.drivetrainSubsystem.currentInput;
+    	inputVal = org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.currentInput;
     }
 
     // Called repeatedly when this Command is scheduled to run

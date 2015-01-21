@@ -1,5 +1,7 @@
 package org.usfirst.frc.team649.robot.commands.drivetraincommands;
 
+import java.awt.Robot;
+
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 
@@ -8,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveForwardRotate extends CommandBase {
+public class DriveForwardRotate extends Command {
 
 	private double forwardVal;
 	private double rotateVal;
@@ -21,10 +23,10 @@ public class DriveForwardRotate extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(drivetrainSubsystem.isMotorRamping()) {
+    	if(org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.isMotorRamping()) {
     		linearRamping(forwardVal);
     	}
-        CommandBase.drivetrainSubsystem.driveFwdRot(forwardVal, rotateVal);
+    	org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.driveFwdRot(forwardVal, rotateVal);
 
     }
 
@@ -47,11 +49,11 @@ public class DriveForwardRotate extends CommandBase {
     }
     
     protected void linearRamping(double toRamp) {
-    	if(CommandBase.drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.ACCELERATION_LIMIT) {
-    		forwardVal = drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_UP_CONSTANT;
+    	if(org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.currentInput - org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.ACCELERATION_LIMIT) {
+    		forwardVal = org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_UP_CONSTANT;
     	}
-    	else if(drivetrainSubsystem.currentInput - drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DECELERATION_LIMIT) {
-    		forwardVal = drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_DOWN_CONSTANT;
+    	else if(org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.currentInput - org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DECELERATION_LIMIT) {
+    		forwardVal = org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_DOWN_CONSTANT;
     	}
     	else
     		forwardVal = forwardVal;

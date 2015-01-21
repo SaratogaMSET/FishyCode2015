@@ -1,5 +1,6 @@
 package org.usfirst.frc.team649.robot.subsystems;
 
+import org.usfirst.frc.team649.robot.Robot;
 import org.usfirst.frc.team649.robot.RobotMap;
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 
@@ -20,7 +21,7 @@ public class GrabberLeftSubsystem extends PIDSubsystem {
 	public GrabberLeftSubsystem(){
 		super("Grabber Left Subsystem", RobotMap.GRABBER.PIDConstants.P, RobotMap.GRABBER.PIDConstants.I, RobotMap.GRABBER.PIDConstants.D);
     	
-    	pid = CommandBase.grabberLeftSubsystem.getPIDController();
+    	pid =  Robot.commandBase.grabberLeftSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(RobotMap.GRABBER.PIDConstants.ABS_TOLERANCE);
     	
     	//potentiometer

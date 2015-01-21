@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team649.robot.subsystems;
 
+import org.usfirst.frc.team649.robot.Robot;
 import org.usfirst.frc.team649.robot.RobotMap;
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem.PIDConstants;
@@ -30,7 +31,7 @@ public class GrabberRightSubsystem extends PIDSubsystem {
     public GrabberRightSubsystem(){
     	super("Grabber Right Subsystem", RobotMap.GRABBER.PIDConstants.P, RobotMap.GRABBER.PIDConstants.I, RobotMap.GRABBER.PIDConstants.D);
     	
-    	pid = CommandBase.grabberRightSubsystem.getPIDController();
+    	pid = Robot.commandBase.grabberRightSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(RobotMap.GRABBER.PIDConstants.ABS_TOLERANCE);
     	
     	//potentiometer

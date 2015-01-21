@@ -1,5 +1,6 @@
 package org.usfirst.frc.team649.robot.commands.lift;
 
+import org.usfirst.frc.team649.robot.Robot;
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 
@@ -15,18 +16,18 @@ public class ChangeOffsetHeight extends Command {
     public ChangeOffsetHeight(boolean platformOrDriveHeight) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	liftPID = CommandBase.chainLiftSubsystem.getPIDController();
+    	liftPID =  Robot.commandBase.chainLiftSubsystem.getPIDController();
     	if(platformOrDriveHeight) {
-    		CommandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.PLATFORM_DRIVE_OFFSET;
+    		 Robot.commandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.PLATFORM_DRIVE_OFFSET;
     	}
     	else
-    		CommandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.STEP_OFFSET;
+    		 Robot.commandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.STEP_OFFSET;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	liftPID.enable();
-    	liftPID.setSetpoint(CommandBase.chainLiftSubsystem.setpointHeight + CommandBase.chainLiftSubsystem.offsetHeight);
+    	liftPID.setSetpoint( Robot.commandBase.chainLiftSubsystem.setpointHeight +  Robot.commandBase.chainLiftSubsystem.offsetHeight);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,7 +36,7 @@ public class ChangeOffsetHeight extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		return ((CommandBase.chainLiftSubsystem.setpointHeight + CommandBase.chainLiftSubsystem.offsetHeight) == CommandBase.chainLiftSubsystem.getHeight() || CommandBase.chainLiftSubsystem.isMaxLimitPressed() || CommandBase.chainLiftSubsystem.isResetLimitPressed());
+		return (( Robot.commandBase.chainLiftSubsystem.setpointHeight + Robot.commandBase.chainLiftSubsystem.offsetHeight) ==  Robot.commandBase.chainLiftSubsystem.getHeight() ||  Robot.commandBase.chainLiftSubsystem.isMaxLimitPressed() ||  Robot.commandBase.chainLiftSubsystem.isResetLimitPressed());
     }
 
     // Called once after isFinished returns true
