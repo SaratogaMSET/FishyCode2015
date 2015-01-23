@@ -1,6 +1,6 @@
 package org.usfirst.frc.team649.robot.subsystems;
 
-import org.usfirst.frc.team649.robot.Robot;
+import org.usfirst.frc.team649.robot.FishyRobot2015;
 import org.usfirst.frc.team649.robot.RobotMap;
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.EncoderBasedDriving;
@@ -54,7 +54,7 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	 	for (int i = 0; i < RobotMap.CHAIN_LIFT.MOTORS.length; i++) {
             motors[i] = new Victor(RobotMap.CHAIN_LIFT.MOTORS[i]);
         }
-    	pid = Robot.commandBase.chainLiftSubsystem.getPIDController();
+    	pid = FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
     	
     	//TODO: ALTER FOR DEFNED NUM OF ENCODERS

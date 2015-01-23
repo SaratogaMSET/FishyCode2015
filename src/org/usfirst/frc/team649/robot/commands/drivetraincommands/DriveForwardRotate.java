@@ -23,10 +23,10 @@ public class DriveForwardRotate extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.isMotorRamping()) {
+    	if(org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.isMotorRamping()) {
     		linearRamping(forwardVal);
     	}
-    	org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.driveFwdRot(forwardVal, rotateVal);
+    	org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.driveFwdRot(forwardVal, rotateVal);
 
     }
 
@@ -49,11 +49,11 @@ public class DriveForwardRotate extends Command {
     }
     
     protected void linearRamping(double toRamp) {
-    	if(org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.currentInput - org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.ACCELERATION_LIMIT) {
-    		forwardVal = org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_UP_CONSTANT;
+    	if(org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.currentInput - org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.ACCELERATION_LIMIT) {
+    		forwardVal = org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_UP_CONSTANT;
     	}
-    	else if(org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.currentInput - org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DECELERATION_LIMIT) {
-    		forwardVal = org.usfirst.frc.team649.robot.Robot.commandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_DOWN_CONSTANT;
+    	else if(org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.currentInput - org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DECELERATION_LIMIT) {
+    		forwardVal = org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_DOWN_CONSTANT;
     	}
     	else
     		forwardVal = forwardVal;

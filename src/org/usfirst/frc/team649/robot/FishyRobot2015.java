@@ -15,10 +15,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class FishyRobot2015 extends IterativeRobot {
 
 	public static CommandBase commandBase = new CommandBase();
-    Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -35,7 +34,6 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**
@@ -50,7 +48,6 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
     }
 
     /**

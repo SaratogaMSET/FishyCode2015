@@ -1,6 +1,6 @@
 package org.usfirst.frc.team649.robot.commands.lift;
 
-import org.usfirst.frc.team649.robot.Robot;
+import org.usfirst.frc.team649.robot.FishyRobot2015;
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 
@@ -22,17 +22,17 @@ public class ScoreAllTotesAndResetEncoders extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	 Robot.commandBase.chainLiftSubsystem.setPower(ChainLiftSubsystem.PIDConstants.UNLOAD_TOTES_MOTOR_POWER);
+    	 FishyRobot2015.commandBase.chainLiftSubsystem.setPower(ChainLiftSubsystem.PIDConstants.UNLOAD_TOTES_MOTOR_POWER);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return  Robot.commandBase.chainLiftSubsystem.isResetLimitPressed();
+        return  FishyRobot2015.commandBase.chainLiftSubsystem.isResetLimitPressed();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	 Robot.commandBase.chainLiftSubsystem.resetEncoders();
+    	 FishyRobot2015.commandBase.chainLiftSubsystem.resetEncoders();
     }
 
     // Called when another command which requires one or more of the same
