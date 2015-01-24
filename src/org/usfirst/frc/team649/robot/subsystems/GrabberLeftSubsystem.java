@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 public class GrabberLeftSubsystem extends PIDSubsystem {
 
-	Victor roller, arm;
-	Potentiometer pot;
-	PIDController pid;
-	DigitalInput touchSensor;
+	public Victor roller, arm;
+	public Potentiometer pot;
+	public PIDController pid;
+	public DigitalInput touchSensor;
 	
 	public GrabberLeftSubsystem(){
 		super("Grabber Left Subsystem", RobotMap.GRABBER.PIDConstants.P, RobotMap.GRABBER.PIDConstants.I, RobotMap.GRABBER.PIDConstants.D);
@@ -34,10 +34,15 @@ public class GrabberLeftSubsystem extends PIDSubsystem {
     	touchSensor = new DigitalInput(RobotMap.GRABBER.LIMIT_SWITCH_IN_LEFT);
     }
 	
+	public double getPot(){
+		return pot.get();
+	}
+	
+	
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return pot.get();
+		return getPot();
 	}
 
 	@Override

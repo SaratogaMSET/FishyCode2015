@@ -3,6 +3,9 @@ import java.awt.ContainerOrderFocusTraversalPolicy;
 
 import org.usfirst.frc.team649.robot.OI;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
+import org.usfirst.frc.team649.robot.commands.grabbercommands.GrabberArmPosition;
+import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
+import org.usfirst.frc.team649.robot.commands.grabbercommands.PurgeTote;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeLevelOfTotes;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
@@ -39,6 +42,20 @@ public class CommandBase {
 	public Command changeOffSetHeight(boolean storeHeight) {
 		return new ChangeOffsetHeight(storeHeight);
 	}
+	
+	//Suneel was here
+	public Command setArmPosition(int state){
+		return new GrabberArmPosition(state);
+	}
+	
+	public Command intakeTote(){
+		return new IntakeTote();
+	}
+	
+	public Command purgeTote(){
+		return new PurgeTote();
+	}
+	
 	//pick up totes with as many calls as you need
     public Command ScoreTotesOnPlatform(){
     	Command sequence = new CommandGroup();

@@ -23,10 +23,12 @@ public class GrabberRightSubsystem extends PIDSubsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	Victor roller, arm;
-	Potentiometer pot;
-	PIDController pid;
-	DigitalInput touchSensor;
+	public Victor roller, arm;
+	public Potentiometer pot;
+	public PIDController pid;
+	public DigitalInput touchSensor;
+	
+	
 	
     public GrabberRightSubsystem(){
     	super("Grabber Right Subsystem", RobotMap.GRABBER.PIDConstants.P, RobotMap.GRABBER.PIDConstants.I, RobotMap.GRABBER.PIDConstants.D);
@@ -48,12 +50,16 @@ public class GrabberRightSubsystem extends PIDSubsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+	
+	public double getPot(){
+		return pot.get();
+	}
     
 
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return pot.get();
+		return getPot();
 	}
 
 	@Override
