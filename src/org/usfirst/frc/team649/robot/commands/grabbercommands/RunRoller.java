@@ -6,13 +6,17 @@ import org.usfirst.frc.team649.robot.FishyRobot2015;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PurgeTote extends Command {
+public class RunRoller extends Command {
 
+	//allows for a command to stop
+	public RunRoller(double speed){
+		FishyRobot2015.commandBase.grabberLeftSubsystem.roller.set(speed);
+		FishyRobot2015.commandBase.grabberRightSubsystem.roller.set(speed);
+	}
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		FishyRobot2015.commandBase.grabberLeftSubsystem.roller.set(-1.0);
-		FishyRobot2015.commandBase.grabberRightSubsystem.roller.set(-1.0);
+		
 	}
 
 	@Override

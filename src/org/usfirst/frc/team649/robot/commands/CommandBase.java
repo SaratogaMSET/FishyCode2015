@@ -5,7 +5,7 @@ import org.usfirst.frc.team649.robot.OI;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.GrabberArmPosition;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
-import org.usfirst.frc.team649.robot.commands.grabbercommands.PurgeTote;
+import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeLevelOfTotes;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
@@ -53,7 +53,7 @@ public class CommandBase {
 	}
 	
 	public Command purgeTote(){
-		return new PurgeTote();
+		return new RunRoller(-1.0);
 	}
 	
 	//pick up totes with as many calls as you need
