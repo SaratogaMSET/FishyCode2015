@@ -1,35 +1,54 @@
 package org.usfirst.frc.team649.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
+    private Joystick operatorJoystick;
+	private Joystick horizontal;
+    private Joystick vertical;
     
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
+    public OI(){
+    	operatorJoystick = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_OPERATOR);
+    	//i think...i cant remember actually
+    	vertical = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_DRIVER_RIGHT);
+    	horizontal = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_DRIVER_LEFT);
+    }
     
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
+    public class Operator{
+    	
+		public boolean isPurgeButtonPressed(){
+			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.PURGE);
+		}
+		
+		public boolean isIntakeButtonPressed(){
+			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.INTAKE);
+		}
+		
+    	public boolean isRaiseToteButtonPressed() {	
+			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.RAISE_TOTE);
+		}
+		
+		public boolean isLowerToteButtonPressed() {
+			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.LOWER_TOTE);
+		}
+	
+		public boolean isScoreAllButtonPressed() {
+			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.SCORE_ALL);
+		}
+		
+		public boolean isStepButtonPressed() {
+			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.STEP_OFFSET);
+		}
+		
+		public boolean isStoreButtonPressed() {
+			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.STORE);
+		}
+		
+    }
     
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-    
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-    
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
 }
 

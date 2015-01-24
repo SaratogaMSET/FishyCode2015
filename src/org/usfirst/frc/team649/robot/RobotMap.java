@@ -16,6 +16,20 @@ public class RobotMap {
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
 	
+	public static final class JOYSTICKS{
+		public static int JOYSTICK_OPERATOR = 0;
+		public static int JOYSTICK_DRIVER_LEFT = 1;
+		public static int JOYSTICK_DRIVER_RIGHT = 2;
+		
+		public static int PURGE = 1;
+		public static int INTAKE = 2;
+		public static int RAISE_TOTE = 5;
+		public static int LOWER_TOTE = 6;
+		public static int SCORE_ALL = 7;
+		public static int STEP_OFFSET = 8;
+		public static int STORE = 9;
+	}
+	
 	public static final class DRIVE_TRAIN {
 		public static final int[] MOTORS = new int[] {1,2,3,4};
         public static final int[] ENCODERS = new int[]{3, 4, 6, 7};
