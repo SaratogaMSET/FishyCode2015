@@ -49,7 +49,7 @@ public class RobotMap {
 		//FOR RIGHT AND LEFT, so there are some not-IO things here so i didnt have to repeat per class
 		
 		//0 and 1 are RIGHT....2 and 3 are LEFT    (roller and then arm)
-		public static final int[] MOTORS = new int[] {9, 10, 12, 13};
+		public static final int[] MOTORS = new int[] {9, 10, 11, 12};
 		public static final int[] POTS = new int[] {0,1};
 		public static final int LIMIT_SWITCH_IN_RIGHT = 0;
 		public static final int LIMIT_SWITCH_IN_LEFT = 1;
@@ -70,5 +70,11 @@ public class RobotMap {
 			public static final double D = 0.0;
 			public static final double ABS_TOLERANCE = 0;
 		}
+	}
+	
+	public static final class AUTO_WINCH {
+		public static final int MOTOR = 12;
+		public static final int LIM = 9;
+		
 	}
 }
