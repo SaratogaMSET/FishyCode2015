@@ -75,6 +75,7 @@ public class RobotMap {
 	public static final class AUTO_WINCH {
 		public static final int MOTOR = 12;
 		public static final int LIM = 9;
+		public static final int SERVO = 0;
 		
 	}
 }
