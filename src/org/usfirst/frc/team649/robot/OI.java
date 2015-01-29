@@ -21,31 +21,31 @@ public class OI {
     public class Operator{
     	
 		public boolean isPurgeButtonPressed(){
-			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.PURGE);
+			return operatorJoystick.getRawButton(1);
 		}
 		
 		public boolean isIntakeButtonPressed(){
-			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.INTAKE);
+			return operatorJoystick.getRawButton(2);
 		}
 		
     	public boolean isRaiseToteButtonPressed() {	
-			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.RAISE_TOTE);
+			return operatorJoystick.getRawButton(5);
 		}
 		
 		public boolean isLowerToteButtonPressed() {
-			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.LOWER_TOTE);
+			return operatorJoystick.getRawButton(6);
 		}
 	
 		public boolean isScoreAllButtonPressed() {
-			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.SCORE_ALL);
+			return operatorJoystick.getRawButton(7);
 		}
 		
 		public boolean isStepButtonPressed() {
-			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.STEP_OFFSET);
+			return operatorJoystick.getRawButton(8);
 		}
 		
 		public boolean isStoreButtonPressed() {
-			return operatorJoystick.getRawButton(RobotMap.JOYSTICKS.STORE);
+			return operatorJoystick.getRawButton(9);
 		}
 		
     }

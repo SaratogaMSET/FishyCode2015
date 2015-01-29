@@ -33,9 +33,9 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	
 	public static class PIDConstants {
 		//PID
-		public static final double LIFT_P_VALUE = 0.0;
-		public static final double LIFT_I_VALUE = 0.0;
-		public static final double LIFT_D_VALUE = 0.0;
+		public static final double P_VALUE = 0.0;
+		public static final double I_VALUE = 0.0;
+		public static final double D_VALUE = 0.0;
 		public static final double ENCODER_DISTANCE_PER_PULSE = 0;
 		public static final double ABS_TOLERANCE = 0;
 		//In inches
@@ -50,7 +50,7 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	}
 
 	public ChainLiftSubsystem() {
-		super("Lift PID", PIDConstants.LIFT_P_VALUE, PIDConstants.LIFT_I_VALUE, PIDConstants.LIFT_D_VALUE);
+		super("Lift PID", PIDConstants.P_VALUE, PIDConstants.I_VALUE, PIDConstants.D_VALUE);
 	 	for (int i = 0; i < RobotMap.CHAIN_LIFT.MOTORS.length; i++) {
             motors[i] = new Victor(RobotMap.CHAIN_LIFT.MOTORS[i]);
         }

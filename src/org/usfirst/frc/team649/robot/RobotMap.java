@@ -20,14 +20,6 @@ public class RobotMap {
 		public static int JOYSTICK_OPERATOR = 0;
 		public static int JOYSTICK_DRIVER_LEFT = 1;
 		public static int JOYSTICK_DRIVER_RIGHT = 2;
-		
-		public static int PURGE = 1;
-		public static int INTAKE = 2;
-		public static int RAISE_TOTE = 5;
-		public static int LOWER_TOTE = 6;
-		public static int SCORE_ALL = 7;
-		public static int STEP_OFFSET = 8;
-		public static int STORE = 9;
 	}
 	
 	public static final class DRIVE_TRAIN {
@@ -45,31 +37,18 @@ public class RobotMap {
 
 	}
 	
-	public static final class GRABBER {
-		//FOR RIGHT AND LEFT, so there are some not-IO things here so i didnt have to repeat per class
-		
-		//0 and 1 are RIGHT....2 and 3 are LEFT    (roller and then arm)
-		public static final int[] MOTORS = new int[] {9, 10, 11, 12};
-		public static final int[] POTS = new int[] {0,1};
-		public static final int LIMIT_SWITCH_IN_RIGHT = 0;
-		public static final int LIMIT_SWITCH_IN_LEFT = 1;
-		
-		//CONSTANTS THAT ARE SHARED
-		
-		//(these are the pot values and -- of course not accurate at all lolol)
-		//for releasing
-		public static final double ARM_POS_RELEASE = 1000000.0;
-		//for pulling in totes
-		public static final double ARM_POS_GRABBING = 0.0;
-		//for both arms completely back
-		public static final double ARM_POS_STORING = 6000000.0;
-		
-		public static final class PIDConstants{
-			public static final double P = 0.0;
-			public static final double I = 0.0;
-			public static final double D = 0.0;
-			public static final double ABS_TOLERANCE = 0;
-		}
+	public static final class LEFT_GRABBER {
+		public static final int ROLLER_MOTOR = 11;
+		public static final int ARM_MOTOR = 12;
+		public static final int POT = 1;
+		public static final int LIMIT_SWITCH = 1;
+	}
+	
+	public static final class RIGHT_GRABBER {
+		public static final int ROLLER_MOTOR = 9;
+		public static final int ARM_MOTOR = 10;
+		public static final int POT = 0;
+		public static final int LIMIT_SWITCH = 0;
 	}
 	
 	public static final class AUTO_WINCH {

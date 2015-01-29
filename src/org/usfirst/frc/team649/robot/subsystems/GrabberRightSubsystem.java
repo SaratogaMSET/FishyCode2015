@@ -28,22 +28,34 @@ public class GrabberRightSubsystem extends PIDSubsystem {
 	public PIDController pid;
 	public DigitalInput touchSensor;
 	
-	
+	public static final class PIDConstants{
+		public static final double P = 0.0;
+		public static final double I = 0.0;
+		public static final double D = 0.0;
+		public static final double ABS_TOLERANCE = 0;
+		
+		public static final double ARM_POS_RELEASE = 1000000.0;
+		//for pulling in totes
+		public static final double ARM_POS_GRABBING = 0.0;
+		//for both arms completely back
+		public static final double ARM_POS_STORING = 6000000.0;
+		
+	}	
 	
     public GrabberRightSubsystem(){
-    	super("Grabber Right Subsystem", RobotMap.GRABBER.PIDConstants.P, RobotMap.GRABBER.PIDConstants.I, RobotMap.GRABBER.PIDConstants.D);
+    	super("Grabber Right Subsystem", PIDConstants.P, PIDConstants.I, PIDConstants.D);
     	
     	pid = FishyRobot2015.commandBase.grabberRightSubsystem.getPIDController();
-    	pid.setAbsoluteTolerance(RobotMap.GRABBER.PIDConstants.ABS_TOLERANCE);
+    	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
     	
     	//potentiometer
-    	pot = new AnalogPotentiometer(RobotMap.GRABBER.POTS[0]);
+    	pot = new AnalogPotentiometer(RobotMap.RIGHT_GRABBER.POT);
     	
     	//motors
-    	roller = new Victor(RobotMap.GRABBER.MOTORS[0]);
-    	arm = new Victor(RobotMap.GRABBER.MOTORS[2]);
+    	roller = new Victor(RobotMap.RIGHT_GRABBER.ROLLER_MOTOR);
+    	arm = new Victor(RobotMap.RIGHT_GRABBER.ARM_MOTOR);
     	
-    	touchSensor = new DigitalInput(RobotMap.GRABBER.LIMIT_SWITCH_IN_RIGHT);
+    	touchSensor = new DigitalInput(RobotMap.RIGHT_GRABBER.LIMIT_SWITCH);
     }
 	
 	public void initDefaultCommand() {

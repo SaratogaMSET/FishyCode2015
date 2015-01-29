@@ -2,24 +2,31 @@ package org.usfirst.frc.team649.robot.commands.grabbercommands;
 
 import org.usfirst.frc.team649.robot.FishyRobot2015;
 import org.usfirst.frc.team649.robot.RobotMap;
+import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.GrabberLeftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.GrabberRightSubsystem;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GrabberArmPosition extends Command {
-	double relevantSetpoint;
+	double relevantSetpointRight;
+	double relevantSetpointLeft;
 	PIDController pidLeft, pidRight;
 	
 	public GrabberArmPosition(int st){
 		//0 is grabbing, 1 is releasing, 2 is storage
 		 if (st == 0){
-			 relevantSetpoint = RobotMap.GRABBER.ARM_POS_GRABBING;
+			 relevantSetpointRight = GrabberRightSubsystem.PIDConstants.ARM_POS_GRABBING;
+			 relevantSetpointLeft = GrabberLeftSubsystem.PIDConstants.ARM_POS_GRABBING;
 		 }
 		 else if (st == 1){
-			 relevantSetpoint = RobotMap.GRABBER.ARM_POS_RELEASE;
+			 relevantSetpointRight = GrabberRightSubsystem.PIDConstants.ARM_POS_RELEASE;
+			 relevantSetpointLeft = GrabberLeftSubsystem.PIDConstants.ARM_POS_RELEASE;
 		 }
 		 else{
-			 relevantSetpoint = RobotMap.GRABBER.ARM_POS_STORING;
+			 relevantSetpointRight = GrabberRightSubsystem.PIDConstants.ARM_POS_STORING;
+			 relevantSetpointLeft = GrabberLeftSubsystem.PIDConstants.ARM_POS_STORING;
 		 }
 	}
 
@@ -33,15 +40,15 @@ public class GrabberArmPosition extends Command {
 	@Override
 	protected void execute() {
 		//for different positions for each arm, this command will need 2 state inputs
-		pidRight.setSetpoint(relevantSetpoint);
-		pidLeft.setSetpoint(relevantSetpoint);
+		pidRight.setSetpoint(relevantSetpointRight);
+		pidLeft.setSetpoint(relevantSetpointLeft);
 		
 	}
 
 	@Override
 	protected boolean isFinished() {
 		//when both have reached
-		return FishyRobot2015.commandBase.grabberLeftSubsystem.getPot() == relevantSetpoint && FishyRobot2015.commandBase.grabberRightSubsystem.getPot() == relevantSetpoint;
+		return FishyRobot2015.commandBase.grabberLeftSubsystem.getPot() == relevantSetpointLeft && FishyRobot2015.commandBase.grabberRightSubsystem.getPot() == relevantSetpointRight;
 	}
 
 	@Override
