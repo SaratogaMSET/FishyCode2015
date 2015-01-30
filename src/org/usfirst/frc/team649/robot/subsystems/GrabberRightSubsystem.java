@@ -23,6 +23,7 @@ public class GrabberRightSubsystem extends PIDSubsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+	
 	public Victor roller, arm;
 	public Potentiometer pot;
 	public PIDController pid;

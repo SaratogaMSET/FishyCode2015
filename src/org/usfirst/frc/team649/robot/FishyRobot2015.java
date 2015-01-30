@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,13 +22,23 @@ public class FishyRobot2015 extends IterativeRobot {
 
 	public static CommandBase commandBase = new CommandBase();
 
+	public SendableChooser autoChooser;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	
+    	NetworkTable n;
+    	autoChooser = new SendableChooser();
+    	autoChooser.addObject("Some option 1", "option1");
+    	autoChooser.addObject("Some option 2", "option2");
+    	autoChooser.addObject("Some option 3", "option3");
+    	
+    	SmartDashboard.putData("Autonomous", autoChooser);
     	// instantiate the command used for the autonomous period
      //   autonomousCommand = new ExampleCommand();
+    	SmartDashboard.putData(Scheduler.getInstance());
     }
 	
 	public void disabledPeriodic() {
@@ -34,6 +47,18 @@ public class FishyRobot2015 extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+    	String autoMode = (String) autoChooser.getSelected();
+    	
+    	
+    	//obviously names will be changed
+    	switch(autoMode){
+    	case "option1":
+    		break;
+    	case "option2":
+    		break;
+    	case "option3":
+    		break;
+    	}
     }
 
     /**
@@ -63,6 +88,7 @@ public class FishyRobot2015 extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("Chain Height", commandBase.chainLiftSubsystem.getHeight());
     }
     
     /**

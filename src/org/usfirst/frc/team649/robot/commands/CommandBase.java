@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class CommandBase {
 
-	public OI oI = new OI();
+	public OI oi = new OI();
 	public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 	public ChainLiftSubsystem chainLiftSubsystem = new ChainLiftSubsystem();
 	public GrabberLeftSubsystem grabberLeftSubsystem = new GrabberLeftSubsystem();
@@ -30,7 +30,6 @@ public class CommandBase {
 	public AutoWinchSubsystem autoWinchSubsystem = new AutoWinchSubsystem();
 	
 	public CommandBase() {
-		
 	}
 	
 	public  Command driveForwardRotate(double forward, double rotate){
