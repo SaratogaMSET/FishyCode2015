@@ -4,6 +4,8 @@ package org.usfirst.frc.team649.robot;
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -33,16 +35,21 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
      */
     public void robotInit() {
     	
-    	NetworkTable n;
+    	NetworkTable table;
+    	Preferences prefs;
     	autoChooser = new SendableChooser();
     	autoChooser.addObject("Some option 1", "debugger mode");
     	autoChooser.addObject("Some option 2", "option2");
     	autoChooser.addObject("Some option 3", "option3");
     	
-    	SmartDashboard.putData("Autonomous", autoChooser);
+    	SmartDashboard.putData("Autonomous Mode", autoChooser);
     	// instantiate the command used for the autonomous period
-     //   autonomousCommand = new ExampleCommand();
+    	//autonomousCommand = new ExampleCommand();
     	SmartDashboard.putData(Scheduler.getInstance());
+    	
+    	//idk if this works
+    	//SmartDashboard.putData("Cam", (Sendable) commandBase.cameraSubsystem.cam);
+    	//cam must be configured from smartdashboard
     }
 	
 	public void disabledPeriodic() {

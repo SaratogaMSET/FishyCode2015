@@ -9,6 +9,7 @@ import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeLevelOfTotes;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.GrabberLeftSubsystem;
@@ -29,6 +30,8 @@ public class CommandBase {
 	public GrabberLeftSubsystem grabberLeftSubsystem = new GrabberLeftSubsystem();
 	public GrabberRightSubsystem grabberRightSubsystem = new GrabberRightSubsystem();
 	public AutoWinchSubsystem autoWinchSubsystem = new AutoWinchSubsystem();
+	//probably wont end up using this at all
+	public CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	
 	public CommandBase() {
 	}
