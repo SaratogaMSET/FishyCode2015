@@ -17,12 +17,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * @param <driveLeftEncoderState>
  */
-public class FishyRobot2015 extends IterativeRobot {
+public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
 
 	public static CommandBase commandBase = new CommandBase();
 
 	public SendableChooser autoChooser;
+	public Command autoCommand;
+	public String autoMode;
+	public boolean driveLeftEncoderState, driveRightEncoderState, chainEncoderState;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -31,7 +35,7 @@ public class FishyRobot2015 extends IterativeRobot {
     	
     	NetworkTable n;
     	autoChooser = new SendableChooser();
-    	autoChooser.addObject("Some option 1", "option1");
+    	autoChooser.addObject("Some option 1", "debugger mode");
     	autoChooser.addObject("Some option 2", "option2");
     	autoChooser.addObject("Some option 3", "option3");
     	
@@ -47,18 +51,23 @@ public class FishyRobot2015 extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	String autoMode = (String) autoChooser.getSelected();
-    	
+    	autoMode = (String) autoChooser.getSelected();
+    	driveLeftEncoderState = false;
+    	driveRightEncoderState = false;
+    	chainEncoderState = false;
     	
     	//obviously names will be changed
     	switch(autoMode){
-    	case "option1":
+    	case "debugger mode":
+    		autoCommand = commandBase.debug();
     		break;
     	case "option2":
     		break;
     	case "option3":
     		break;
     	}
+    	
+    	autoCommand.start();
     }
 
     /**
@@ -66,6 +75,22 @@ public class FishyRobot2015 extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
+        if (autoMode.equals("debugger mode") && !autoCommand.isRunning()){
+        	if (commandBase.drivetrainSubsystem.encoders[0].get() != 0){
+        		driveLeftEncoderState = true;
+        	}
+        	if (commandBase.drivetrainSubsystem.encoders[1].get() != 0){
+        		driveRightEncoderState = true;
+        	}
+        	if (commandBase.chainLiftSubsystem.getHeight() != 0){
+        		chainEncoderState = true;
+        	}
+        }
+        
+        SmartDashboard.putBoolean("Left Drive Encoder", driveLeftEncoderState);
+        SmartDashboard.putBoolean("Right Drive Encoder", driveRightEncoderState);
+        SmartDashboard.putBoolean("Chain Encoder", chainEncoderState);
     }
 
     public void teleopInit() {
@@ -73,6 +98,8 @@ public class FishyRobot2015 extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+    	
+    	//FIGURE OUT HOW TO CLEAR SMARTDASHBOARD REMOTELY
     }
 
     /**

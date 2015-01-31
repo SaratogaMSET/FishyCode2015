@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DrivetrainSubsystem extends PIDSubsystem {
     
     private SpeedController[] motors;
-    private Encoder[] encoders;
+    public Encoder[] encoders;
     private PIDController pid;
 	public  double currentInput;
 	public  double oldInput;

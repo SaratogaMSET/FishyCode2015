@@ -16,6 +16,7 @@ import org.usfirst.frc.team649.robot.subsystems.GrabberRightSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -58,18 +59,31 @@ public class CommandBase {
 	}
 	
 	//pick up totes with as many calls as you need
-    public Command ScoreTotesOnPlatform(){
-    	Command sequence = new CommandGroup();
+    public Command scoreTotesOnPlatform(){
+    	CommandGroup sequence = new CommandGroup();
     	//do whatever
     	return sequence;
     }
     
     //might just be a simple drive command or more based on final design
-    public Command ScoreTotesOnStep(){
+    public Command scoreTotesOnStep(){
     	//using crate design
-    	Command sequence = new CommandGroup();
+    	CommandGroup sequence = new CommandGroup();
     	//add whatever
     	//unlatch and drive backwards
+    	return sequence;
+    }
+    
+    public Command debug(){
+    	CommandGroup sequence = new CommandGroup();
+    	//for raw motor
+    	sequence.addSequential(new RawMotor(0.4, 0.4));
+    	sequence.addSequential(new WaitCommand(1000));
+    	sequence.addSequential(new RawMotor(0,0));
+    	//for chain
+    	sequence.addSequential(new RawMotor(0.5));
+    	sequence.addSequential(new WaitCommand(1000));
+    	sequence.addSequential(new RawMotor(0));
     	return sequence;
     }
 }
