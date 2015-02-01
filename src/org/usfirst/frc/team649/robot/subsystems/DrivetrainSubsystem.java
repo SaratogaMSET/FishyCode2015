@@ -21,7 +21,7 @@ public class DrivetrainSubsystem extends PIDSubsystem {
     
     private SpeedController[] motors;
     public Encoder[] encoders;
-    private PIDController pid;
+    public PIDController pid;
 	public  double currentInput;
 	public  double oldInput;
 	private Vector lastRates;
@@ -29,7 +29,7 @@ public class DrivetrainSubsystem extends PIDSubsystem {
     public static class EncoderBasedDriving {
     	private static final double ENCODER_DISTANCE_PER_PULSE = -4 * Math.PI / 128;
         public static final double MAX_MOTOR_POWER = 0.5;
-        public static final double MIN_MOTOR_POWER = 0.25;
+        public static double MIN_MOTOR_POWER = 0.25;
         public static final double AUTONOMOUS_DRIVE_DISTANCE = -14 * 12;
     	public static final double AUTO_P = 0.4;
     	public static final double AUTO_I = 0.0;
@@ -45,6 +45,11 @@ public class DrivetrainSubsystem extends PIDSubsystem {
     	public static final double RAMP_DOWN_CONSTANT = 1;
     	private static boolean rampMotors = false;
 
+    }
+    
+    public static class DriveDistanceConstants{
+    	public static final double AUTO_DRIVE_DISTANCE = 100;
+    	public static final double UNHOOK_BACKWARDS_DISTANCE = -10;
     }
     
     public DrivetrainSubsystem() {
@@ -78,7 +83,12 @@ public class DrivetrainSubsystem extends PIDSubsystem {
         right /= max;
         rawDrive(left, right);
     }
-    
+
+    public void resetEncoders() {
+        for (int x = 0; x < encoders.length; x++) {
+            encoders[x].reset();
+        }
+    }
 
     public void rawDrive(double left, double right) {
         int i = 0;

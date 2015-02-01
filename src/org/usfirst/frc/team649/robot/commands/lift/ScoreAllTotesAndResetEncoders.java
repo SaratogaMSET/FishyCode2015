@@ -14,6 +14,9 @@ public class ScoreAllTotesAndResetEncoders extends Command {
     public ScoreAllTotesAndResetEncoders() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	
+    	//reset to platform always if not already
+    	FishyRobot2015.commandBase.chainLiftSubsystem.platformOrStepOffset = true;
     }
 
     // Called just before this Command runs the first time

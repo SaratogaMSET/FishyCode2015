@@ -38,9 +38,9 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
     	NetworkTable table;
     	Preferences prefs;
     	autoChooser = new SendableChooser();
-    	autoChooser.addObject("Some option 1", "debugger mode");
-    	autoChooser.addObject("Some option 2", "option2");
-    	autoChooser.addObject("Some option 3", "option3");
+    	autoChooser.addObject("Debugger Mode", "debugger mode");
+    	autoChooser.addObject("Winch Autonomous", "winch in totes");
+    	autoChooser.addObject("Do Nothing Autonomous", "none");
     	
     	SmartDashboard.putData("Autonomous Mode", autoChooser);
     	// instantiate the command used for the autonomous period
@@ -68,13 +68,17 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
     	case "debugger mode":
     		autoCommand = commandBase.debug();
     		break;
-    	case "option2":
+    	case "winch in totes":
+    		autoCommand = commandBase.autoWinchAndDrive();
     		break;
-    	case "option3":
+    	case "none":
+    		autoCommand = null;
     		break;
     	}
     	
-    	autoCommand.start();
+    	if (autoCommand != null){ //for the case of none
+    		autoCommand.start();
+    	}
     }
 
     /**

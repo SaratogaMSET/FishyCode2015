@@ -14,11 +14,11 @@ public class DriveForwardRotate extends Command {
 
 	private double forwardVal;
 	private double rotateVal;
-    public DriveForwardRotate(double DriveForward, double DriveRotate) {
+    public DriveForwardRotate(double driveForward, double driveRotate) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	forwardVal = DriveForward;
-    	rotateVal = DriveRotate;
+    	forwardVal = driveForward;
+    	rotateVal = driveRotate;
     }
 
     // Called just before this Command runs the first time

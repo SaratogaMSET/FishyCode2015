@@ -29,6 +29,8 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	DigitalInput limitReset;
 	public double setpointHeight;
 	public double offsetHeight;
+	//true for platform, false for step
+	public boolean platformOrStepOffset;
 
 	
 	public static class PIDConstants {
@@ -56,6 +58,8 @@ public class ChainLiftSubsystem extends PIDSubsystem {
         }
     	pid = FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
+    	
+    	platformOrStepOffset = true;
     	
     	//TODO: ALTER FOR DEFNED NUM OF ENCODERS
     	encoders = new Encoder[RobotMap.CHAIN_LIFT.ENCODERS.length / 2];
