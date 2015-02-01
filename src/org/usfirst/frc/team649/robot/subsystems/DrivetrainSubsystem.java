@@ -49,7 +49,7 @@ public class DrivetrainSubsystem extends PIDSubsystem {
     
     public static class DriveDistanceConstants{
     	public static final double AUTO_DRIVE_DISTANCE = 100;
-    	public static final double UNHOOK_BACKWARDS_DISTANCE = -10;
+    	public static final double UNHOOK_BACKWARDS_DISTANCE = -100;
     }
     
     public DrivetrainSubsystem() {
