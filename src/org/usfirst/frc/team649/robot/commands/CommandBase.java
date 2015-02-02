@@ -10,9 +10,10 @@ import org.usfirst.frc.team649.robot.commands.lift.ChangeLevelOfTotes;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.ContainerGrabberSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
-import org.usfirst.frc.team649.robot.subsystems.GrabberLeftSubsystem;
-import org.usfirst.frc.team649.robot.subsystems.GrabberRightSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -25,9 +26,10 @@ public class CommandBase {
 	public OI oI = new OI();
 	public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 	public ChainLiftSubsystem chainLiftSubsystem = new ChainLiftSubsystem();
-	public GrabberLeftSubsystem grabberLeftSubsystem = new GrabberLeftSubsystem();
-	public GrabberRightSubsystem grabberRightSubsystem = new GrabberRightSubsystem();
+	public IntakeLeftSubsystem grabberLeftSubsystem = new IntakeLeftSubsystem();
+	public IntakeRightSubsystem grabberRightSubsystem = new IntakeRightSubsystem();
 	public AutoWinchSubsystem autoWinchSubsystem = new AutoWinchSubsystem();
+	public ContainerGrabberSubsystem containerGrabberSubsystem = new ContainerGrabberSubsystem();
 	
 	public CommandBase() {
 		

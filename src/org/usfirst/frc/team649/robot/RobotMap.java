@@ -57,4 +57,11 @@ public class RobotMap {
 		public static final int SERVO = 0;
 		
 	}
+	
+	public static final class CONTAINER_GRABBER {
+		public static final int PISTON_1_FORWARD_CHANNEL = 0;
+		public static final int PISTON_1_REVERSE_CHANNEL = 1;
+		public static final int PISTON_2_FORWARD_CHANNEL = 2;
+		public static final int PISTON_2_REVERSE_CHANNEL = 3;
+	}
 }

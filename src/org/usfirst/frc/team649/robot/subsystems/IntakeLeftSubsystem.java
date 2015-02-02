@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
-public class GrabberLeftSubsystem extends PIDSubsystem {
+public class IntakeLeftSubsystem extends PIDSubsystem {
 
 	public Victor roller, arm;
 	public Potentiometer pot;
@@ -34,7 +34,7 @@ public class GrabberLeftSubsystem extends PIDSubsystem {
 		
 	}
 	
-	public GrabberLeftSubsystem(){
+	public IntakeLeftSubsystem(){
 		super("Grabber Left Subsystem", PIDConstants.P, PIDConstants.I, PIDConstants.D);
     	
     	pid =  FishyRobot2015.commandBase.grabberLeftSubsystem.getPIDController();
