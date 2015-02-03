@@ -1,5 +1,6 @@
 package org.usfirst.frc.team649.robot.subsystems;
 
+
 import org.usfirst.frc.team649.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -18,25 +19,25 @@ public class ContainerGrabberSubsystem extends Subsystem {
 	DoubleSolenoid piston2;
 	Value grabberState;
 	public static final Value GRABBER_DEFAULT_STATE = DoubleSolenoid.Value.kReverse;
+	public static final Value GRABBER_CLOSED_STATE = DoubleSolenoid.Value.kForward;
+	public static final Value GRABBER_OPENED_STATE = DoubleSolenoid.Value.kReverse;
 	
 	public ContainerGrabberSubsystem() {
 		piston1 = new DoubleSolenoid(RobotMap.CONTAINER_GRABBER.PISTON_1_FORWARD_CHANNEL, RobotMap.CONTAINER_GRABBER.PISTON_1_REVERSE_CHANNEL);
 		piston2 = new DoubleSolenoid(RobotMap.CONTAINER_GRABBER.PISTON_2_FORWARD_CHANNEL, RobotMap.CONTAINER_GRABBER.PISTON_2_REVERSE_CHANNEL);
 		grabberState = GRABBER_DEFAULT_STATE;
-		piston1.set(GRABBER_DEFAULT_STATE);
-		piston2.set(GRABBER_DEFAULT_STATE);
+		SetGrabberState(GRABBER_DEFAULT_STATE);
 	}
 	
-	public void ToggleGrabberState() {
-		if(grabberState.equals(DoubleSolenoid.Value.kReverse)) {
-			piston1.set(DoubleSolenoid.Value.kForward);
-			piston2.set(DoubleSolenoid.Value.kForward);
-			grabberState = DoubleSolenoid.Value.kForward;
-		} else
-			piston1.set(DoubleSolenoid.Value.kReverse);
-			piston2.set(DoubleSolenoid.Value.kReverse);
-			grabberState = DoubleSolenoid.Value.kReverse;
+	public void SetGrabberState(Value state) {
+		if(!state.equals(grabberState)) {
+			grabberState = state;
+				piston1.set(grabberState);
+				piston2.set(grabberState);
+		}
+		
 	}
+	
 	
 	
     public void initDefaultCommand() {
