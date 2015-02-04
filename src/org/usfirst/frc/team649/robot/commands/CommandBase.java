@@ -6,7 +6,7 @@ import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRot
 import org.usfirst.frc.team649.robot.commands.grabbercommands.GrabberArmPosition;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
-import org.usfirst.frc.team649.robot.commands.lift.ChangeLevelOfTotes;
+import org.usfirst.frc.team649.robot.commands.lift.RaiseToteToIntermediateLevel;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
@@ -40,9 +40,10 @@ public class CommandBase {
 	}
 	
 	public Command changeLevelOfTotes(boolean up) {
-		return new ChangeLevelOfTotes(up);
+		return new RaiseToteToIntermediateLevel(up);
 	}
 	
+	//lol
 	public Command changeOffSetHeight(boolean storeHeight) {
 		return new ChangeOffsetHeight(storeHeight);
 	}

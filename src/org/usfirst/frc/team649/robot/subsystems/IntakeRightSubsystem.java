@@ -27,7 +27,8 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 	public Potentiometer pot;
 	public PIDController pid;
 	public DigitalInput touchSensor;
-	
+	public static final double INTAKE_ROLLER_SPEED = 0.4;
+
 	public static final class PIDConstants{
 		public static final double P = 0.0;
 		public static final double I = 0.0;

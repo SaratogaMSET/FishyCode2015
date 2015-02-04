@@ -10,12 +10,17 @@ public class OI {
 	private Joystick operatorJoystick;
 	private Joystick horizontal;
 	private Joystick vertical;
+	public Operator operator;
+	public Driver driver;
 
 	public OI() {
 		operatorJoystick = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_OPERATOR);
 		// i think...i cant remember actually
 		vertical = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_DRIVER_RIGHT);
 		horizontal = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_DRIVER_LEFT);
+		driver = new Driver();
+		operator = new Operator();
+		
 	}
 
 	public class Operator {

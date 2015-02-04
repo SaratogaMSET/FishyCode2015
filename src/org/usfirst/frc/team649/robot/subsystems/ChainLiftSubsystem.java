@@ -29,6 +29,7 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	DigitalInput limitReset;
 	public double setpointHeight;
 	public double offsetHeight;
+	public boolean isAtBase;
 
 	
 	public static class PIDConstants {
@@ -39,8 +40,11 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 		public static final double ENCODER_DISTANCE_PER_PULSE = 0;
 		public static final double ABS_TOLERANCE = 0;
 		//In inches
-		public static final double STORE_TO_STEP_LEVEL_DIFFRERANCE = 5.0;
-		public static final double STORE_TO_NEXT_LEVEL_DIFFRERANCE = 18.0;
+		public static final double STORE_TO_STEP_LEVEL_DIFFERENCE = 5.0;
+		public static final double STORE_TO_INTERMEDIATE_DIFFERENCE = 12.0;
+		public static final double INTERMEDIATE_TO_STORE_DIFFERENCE = 3;
+		public static final double CONTAINER_PICK_UP_RAISE_HEIGHT = 18;
+		public static final double CONTAINER_REGRIP_LOWER_HEIGHT = 12;
 		public static final double PLATFORM_DRIVE_OFFSET = 3;
 		public static final double STEP_OFFSET = 8;
 
@@ -98,6 +102,7 @@ public class ChainLiftSubsystem extends PIDSubsystem {
             encoders[x].reset();
         }
     }
+    
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

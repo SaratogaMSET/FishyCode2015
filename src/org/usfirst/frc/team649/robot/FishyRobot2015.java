@@ -63,6 +63,8 @@ public class FishyRobot2015 extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        commandBase.driveForwardRotate(commandBase.oI.driver.getDriveForward(), commandBase.oI.driver.getDriveRotation()).start();
+      
     }
     
     /**

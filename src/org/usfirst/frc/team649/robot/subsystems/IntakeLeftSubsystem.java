@@ -17,6 +17,7 @@ public class IntakeLeftSubsystem extends PIDSubsystem {
 	public Potentiometer pot;
 	public PIDController pid;
 	public DigitalInput touchSensor;
+	public static final double INTAKE_ROLLER_SPEED = 0.4;
 	
 	//CONSTANTS
 
@@ -53,7 +54,6 @@ public class IntakeLeftSubsystem extends PIDSubsystem {
 	public double getPot(){
 		return pot.get();
 	}
-	
 	
 	@Override
 	protected double returnPIDInput() {
