@@ -33,8 +33,8 @@ public class GrabberArmPosition extends Command {
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		pidRight = FishyRobot2015.commandBase.grabberRightSubsystem.getPIDController();
-		pidLeft = FishyRobot2015.commandBase.grabberLeftSubsystem.getPIDController();
+		pidRight = FishyRobot2015.commandBase.intakeRightSubsystem.getPIDController();
+		pidLeft = FishyRobot2015.commandBase.intakeLeftSubsystem.getPIDController();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class GrabberArmPosition extends Command {
 	@Override
 	protected boolean isFinished() {
 		//when both have reached
-		return FishyRobot2015.commandBase.grabberLeftSubsystem.getPot() == relevantSetpointLeft && FishyRobot2015.commandBase.grabberRightSubsystem.getPot() == relevantSetpointRight;
+		return FishyRobot2015.commandBase.intakeLeftSubsystem.getPot() == relevantSetpointLeft && FishyRobot2015.commandBase.intakeRightSubsystem.getPot() == relevantSetpointRight;
 	}
 
 	@Override

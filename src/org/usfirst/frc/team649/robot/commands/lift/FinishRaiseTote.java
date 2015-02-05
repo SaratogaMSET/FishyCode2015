@@ -16,9 +16,9 @@ public class FinishRaiseTote extends Command {
     public FinishRaiseTote(boolean up) {
     	liftPID =  FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
 		if (up) {
-			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight += ChainLiftSubsystem.PIDConstants.STORE_TO_NEXT_LEVEL_DIFFRERANCE;
+			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight += ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
 		} else {
-			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight -= ChainLiftSubsystem.PIDConstants.STORE_TO_NEXT_LEVEL_DIFFRERANCE;
+			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight -= ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
 		}
     }
 

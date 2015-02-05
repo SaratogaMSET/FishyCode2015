@@ -1,18 +1,18 @@
 package org.usfirst.frc.team649.robot.commands;
-import java.awt.ContainerOrderFocusTraversalPolicy;
 
 import org.usfirst.frc.team649.robot.OI;
 import org.usfirst.frc.team649.robot.commands.autowinchcommands.WinchTotesIn;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
-import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveSetDistanceWithPIDCommand;
+import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveSetDistanceWithPID;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.GrabberArmPosition;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
+import org.usfirst.frc.team649.robot.commands.lift.ChangeLiftHeight;
+import org.usfirst.frc.team649.robot.commands.lift.FinishRaiseTote;
 import org.usfirst.frc.team649.robot.commands.lift.RaiseToteToIntermediateLevel;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.commands.lift.ScoreAllTotesAndResetEncoders;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
-import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ContainerGrabberSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
+
 /**
  *
  */
@@ -32,48 +33,20 @@ public class CommandBase {
 	public OI oi = new OI();
 	public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 	public ChainLiftSubsystem chainLiftSubsystem = new ChainLiftSubsystem();
-	public IntakeLeftSubsystem grabberLeftSubsystem = new IntakeLeftSubsystem();
-	public IntakeRightSubsystem grabberRightSubsystem = new IntakeRightSubsystem();
+	public IntakeLeftSubsystem intakeLeftSubsystem = new IntakeLeftSubsystem();
+	public IntakeRightSubsystem intakeRightSubsystem = new IntakeRightSubsystem();
 	public AutoWinchSubsystem autoWinchSubsystem = new AutoWinchSubsystem();
-	//probably wont end up using this at all
-	public CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public ContainerGrabberSubsystem containerGrabberSubsystem = new ContainerGrabberSubsystem();
-
 	
 	public CommandBase() {
-	}
-	
-	public  Command driveForwardRotate(double forward, double rotate){
-		return new DriveForwardRotate(forward, rotate);
-	}
-	
-	public Command changeLevelOfTotes(boolean up) {
-		return new RaiseToteToIntermediateLevel(up);
-	}
-	
-	//lol
-	public Command changeOffSetHeight(boolean storeHeight) {
-		return new ChangeOffsetHeight(storeHeight);
-	}
-	
-	//Suneel was here
-	public Command setArmPosition(int state){
-		return new GrabberArmPosition(state);
-	}
-	
-	public Command intakeTote(){
-		return new IntakeTote();
-	}
-	
-	public Command purgeTote(int power){
-		return new RunRoller(power);
+		
 	}
 	
 	public Command releaseAndGetOut(){
 		CommandGroup sequence = new CommandGroup();
 		
 		sequence.addSequential(new ScoreAllTotesAndResetEncoders());
-    	sequence.addSequential(new DriveSetDistanceWithPIDCommand(DriveDistanceConstants.UNHOOK_BACKWARDS_DISTANCE));
+    	sequence.addSequential(new DriveSetDistanceWithPID(DriveDistanceConstants.UNHOOK_BACKWARDS_DISTANCE));
     	
     	return sequence;
 	}
@@ -130,8 +103,61 @@ public class CommandBase {
     	//move arms out (state position), winch in the three containers, drive forward, all sequential
     	sequence.addSequential(new GrabberArmPosition(2));
     	sequence.addSequential(new WinchTotesIn());
-    	sequence.addSequential(new DriveSetDistanceWithPIDCommand(DriveDistanceConstants.AUTO_DRIVE_DISTANCE));
+    	sequence.addSequential(new DriveSetDistanceWithPID(DriveDistanceConstants.AUTO_DRIVE_DISTANCE));
     	return sequence;
     	
     } 
+    
+	//DRIVETRAIN
+	public  Command driveForwardRotate(double forward, double rotate){
+		return new DriveForwardRotate(forward, rotate);
+	}
+	
+	public Command driveSetDistanceWithPID(double distance) {
+		return new DriveSetDistanceWithPID(distance);
+	}
+	
+	public Command driveSetDistanceWithPID(double distance, double minDriveSpeed) {
+		return new DriveSetDistanceWithPID(distance, minDriveSpeed);
+	}
+	
+	public Command driveSetDistanceWithPID(double distance, double minDriveSpeed, boolean checker) {
+		return new DriveSetDistanceWithPID(distance, minDriveSpeed, checker);
+	}
+	
+	//LIFT
+	public Command raiseToteToIntermediateLevel(boolean up) {
+		return new RaiseToteToIntermediateLevel(up);
+	}
+	
+	public Command finishRaiseTote(boolean up) {
+		return new FinishRaiseTote(up);
+	}
+	
+	public Command changeLiftHeight(double height) {
+		return new ChangeLiftHeight(height);
+	}
+	
+	public Command changeOffSetHeight(boolean storeHeight) {
+		return new ChangeOffsetHeight(storeHeight);
+	}
+	
+	public Command scoreAllTotesAndResetEncoders() {
+		return new ScoreAllTotesAndResetEncoders();
+	}
+	
+	//ARM
+	public Command setArmPosition(int state){
+		return new GrabberArmPosition(state);
+	}
+	
+	public Command intakeTote(){
+		return new IntakeTote();
+	}
+	
+	public Command purgeTote(double power){
+		return new RunRoller(power);
+	}
+	
+
 }
