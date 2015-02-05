@@ -1,8 +1,6 @@
 package org.usfirst.frc.team649.robot.commands.lift;
 
 import org.usfirst.frc.team649.robot.FishyRobot2015;
-import org.usfirst.frc.team649.robot.commands.CommandBase;
-import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,27 +8,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ChangeOffsetHeight extends Command {
+public class ChangeLiftHeight extends Command {
 
 	PIDController liftPID;
-    public ChangeOffsetHeight(boolean platformOrStepHeight) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	double deltaHeight;
+	
+    public ChangeLiftHeight(double height) {
     	liftPID =  FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
-    	if(platformOrStepHeight) {
-    		 FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.PLATFORM_DRIVE_OFFSET;
-    	}
-    	else
-    		 FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.STEP_OFFSET;
-    	
-
-		FishyRobot2015.commandBase.chainLiftSubsystem.platformOrStepOffset = platformOrStepHeight; //on platform or offset
+    	deltaHeight = height;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	liftPID.enable();
-    	liftPID.setSetpoint( FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight +  FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight);
+    	liftPID.setSetpoint(FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight + deltaHeight);
+
     }
 
     // Called repeatedly when this Command is scheduled to run

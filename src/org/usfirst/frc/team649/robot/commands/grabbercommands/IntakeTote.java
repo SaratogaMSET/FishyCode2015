@@ -1,6 +1,8 @@
 package org.usfirst.frc.team649.robot.commands.grabbercommands;
 
 import org.usfirst.frc.team649.robot.FishyRobot2015;
+import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,8 +11,8 @@ public class IntakeTote extends Command {
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		FishyRobot2015.commandBase.grabberLeftSubsystem.roller.set(1.0);
-		FishyRobot2015.commandBase.grabberRightSubsystem.roller.set(1.0);
+		FishyRobot2015.commandBase.grabberLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_SPEED);
+		FishyRobot2015.commandBase.grabberRightSubsystem.roller.set(IntakeRightSubsystem.INTAKE_ROLLER_SPEED);
 	}
 
 	@Override

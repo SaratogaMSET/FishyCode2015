@@ -36,6 +36,7 @@ public class ScoreAllTotesAndResetEncoders extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	 FishyRobot2015.commandBase.chainLiftSubsystem.resetEncoders();
+    	 FishyRobot2015.commandBase.chainLiftSubsystem.isAtBase = true;
     }
 
     // Called when another command which requires one or more of the same

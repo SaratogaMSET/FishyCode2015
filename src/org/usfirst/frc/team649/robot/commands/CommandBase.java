@@ -8,16 +8,17 @@ import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveSetDistanc
 import org.usfirst.frc.team649.robot.commands.grabbercommands.GrabberArmPosition;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
-import org.usfirst.frc.team649.robot.commands.lift.ChangeLevelOfTotes;
+import org.usfirst.frc.team649.robot.commands.lift.RaiseToteToIntermediateLevel;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.commands.lift.ScoreAllTotesAndResetEncoders;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.ContainerGrabberSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.DriveDistanceConstants;
-import org.usfirst.frc.team649.robot.subsystems.GrabberLeftSubsystem;
-import org.usfirst.frc.team649.robot.subsystems.GrabberRightSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -31,11 +32,13 @@ public class CommandBase {
 	public OI oi = new OI();
 	public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 	public ChainLiftSubsystem chainLiftSubsystem = new ChainLiftSubsystem();
-	public GrabberLeftSubsystem grabberLeftSubsystem = new GrabberLeftSubsystem();
-	public GrabberRightSubsystem grabberRightSubsystem = new GrabberRightSubsystem();
+	public IntakeLeftSubsystem grabberLeftSubsystem = new IntakeLeftSubsystem();
+	public IntakeRightSubsystem grabberRightSubsystem = new IntakeRightSubsystem();
 	public AutoWinchSubsystem autoWinchSubsystem = new AutoWinchSubsystem();
 	//probably wont end up using this at all
 	public CameraSubsystem cameraSubsystem = new CameraSubsystem();
+	public ContainerGrabberSubsystem containerGrabberSubsystem = new ContainerGrabberSubsystem();
+
 	
 	public CommandBase() {
 	}
@@ -45,9 +48,10 @@ public class CommandBase {
 	}
 	
 	public Command changeLevelOfTotes(boolean up) {
-		return new ChangeLevelOfTotes(up);
+		return new RaiseToteToIntermediateLevel(up);
 	}
 	
+	//lol
 	public Command changeOffSetHeight(boolean storeHeight) {
 		return new ChangeOffsetHeight(storeHeight);
 	}

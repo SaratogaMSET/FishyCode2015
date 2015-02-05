@@ -127,6 +127,7 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Chain Height", commandBase.chainLiftSubsystem.getHeight());
+        commandBase.driveForwardRotate(commandBase.oi.driver.getDriveForward(), commandBase.oi.driver.getDriveRotation()).start();
     }
     
     /**

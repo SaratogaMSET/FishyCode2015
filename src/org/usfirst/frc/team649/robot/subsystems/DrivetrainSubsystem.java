@@ -84,12 +84,6 @@ public class DrivetrainSubsystem extends PIDSubsystem {
         rawDrive(left, right);
     }
 
-    public void resetEncoders() {
-        for (int x = 0; x < encoders.length; x++) {
-            encoders[x].reset();
-        }
-    }
-
     public void rawDrive(double left, double right) {
         int i = 0;
         for (; i < motors.length / 2; i++) {
@@ -120,6 +114,12 @@ public class DrivetrainSubsystem extends PIDSubsystem {
         return totalVal / numEncoders;
     }
 
+    public void resetEncoders() {
+        for (int x = 0; x < encoders.length; x++) {
+            encoders[x].reset();
+        }
+    }
+    
 	protected double returnPIDInput() {
 		return this.getDistance();
 	}

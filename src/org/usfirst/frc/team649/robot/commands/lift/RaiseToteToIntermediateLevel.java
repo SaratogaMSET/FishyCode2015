@@ -11,18 +11,18 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ChangeLevelOfTotes extends Command {
+public class RaiseToteToIntermediateLevel extends Command {
 
 	private PIDController liftPID;
 
-	public ChangeLevelOfTotes(boolean up) {
+	public RaiseToteToIntermediateLevel(boolean up) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		liftPID =  FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
 		if (up) {
-			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight += ChainLiftSubsystem.PIDConstants.STORE_TO_NEXT_LEVEL_DIFFRERANCE;
+			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight += ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
 		} else {
-			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight += ChainLiftSubsystem.PIDConstants.STORE_TO_NEXT_LEVEL_DIFFRERANCE;
+			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight -= ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
 		}
 	}
 
@@ -43,6 +43,7 @@ public class ChangeLevelOfTotes extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		FishyRobot2015.commandBase.chainLiftSubsystem.isAtBase = false;
 	}
 
 	// Called when another command which requires one or more of the same

@@ -18,17 +18,17 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 /**
  * 
  */
-public class GrabberRightSubsystem extends PIDSubsystem {
+public class IntakeRightSubsystem extends PIDSubsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	
 	public Victor roller, arm;
 	public Potentiometer pot;
 	public PIDController pid;
 	public DigitalInput touchSensor;
-	
+	public static final double INTAKE_ROLLER_SPEED = 0.4;
+
 	public static final class PIDConstants{
 		public static final double P = 0.0;
 		public static final double I = 0.0;
@@ -43,7 +43,7 @@ public class GrabberRightSubsystem extends PIDSubsystem {
 		
 	}	
 	
-    public GrabberRightSubsystem(){
+    public IntakeRightSubsystem(){
     	super("Grabber Right Subsystem", PIDConstants.P, PIDConstants.I, PIDConstants.D);
     	
     	pid = FishyRobot2015.commandBase.grabberRightSubsystem.getPIDController();
