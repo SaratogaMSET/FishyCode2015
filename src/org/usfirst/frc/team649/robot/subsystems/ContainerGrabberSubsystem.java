@@ -26,10 +26,10 @@ public class ContainerGrabberSubsystem extends Subsystem {
 		piston1 = new DoubleSolenoid(RobotMap.CONTAINER_GRABBER.PISTON_1_FORWARD_CHANNEL, RobotMap.CONTAINER_GRABBER.PISTON_1_REVERSE_CHANNEL);
 		piston2 = new DoubleSolenoid(RobotMap.CONTAINER_GRABBER.PISTON_2_FORWARD_CHANNEL, RobotMap.CONTAINER_GRABBER.PISTON_2_REVERSE_CHANNEL);
 		grabberState = GRABBER_DEFAULT_STATE;
-		SetGrabberState(GRABBER_DEFAULT_STATE);
+		setGrabberState(GRABBER_DEFAULT_STATE);
 	}
 	
-	public void SetGrabberState(Value state) {
+	public void setGrabberState(Value state) {
 		if(!state.equals(grabberState)) {
 			grabberState = state;
 				piston1.set(grabberState);
@@ -38,7 +38,13 @@ public class ContainerGrabberSubsystem extends Subsystem {
 		
 	}
 	
-	
+	public int getGrabberState(){
+		if (piston1.get().equals(piston2.get())){
+			return piston1.get().value;
+		}
+		//return the opposite of what the state is if the pistons have not finished moving and arent equal
+		return grabberState.equals(GRABBER_CLOSED_STATE) ? GRABBER_OPENED_STATE.value : GRABBER_CLOSED_STATE.value;
+	}
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

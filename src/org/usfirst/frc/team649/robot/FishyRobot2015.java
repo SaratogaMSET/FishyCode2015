@@ -40,6 +40,9 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
     	autoChooser = new SendableChooser();
     	autoChooser.addObject("Debugger Mode", "debugger mode");
     	autoChooser.addObject("Winch Autonomous", "winch in totes");
+    	autoChooser.addObject("Get Container and Tote", "container and tote");
+    	autoChooser.addObject("Get Just Tote", "just tote");
+    	//with container grabber open go right up to container, run intake, clamp on container, run chain up, get a tote, take it into autozone, just drop tote off, turn right
     	autoChooser.addObject("Do Nothing Autonomous", "none");
     	
     	SmartDashboard.putData("Autonomous Mode", autoChooser);
@@ -64,17 +67,24 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
     	chainEncoderState = false;
     	
     	//obviously names will be changed
-    	switch(autoMode){
+    	switch (autoMode){
     	case "debugger mode":
     		autoCommand = commandBase.debug();
     		break;
     	case "winch in totes":
     		autoCommand = commandBase.autoWinchAndDrive();
     		break;
+    	case "container and totes":
+    		autoCommand = commandBase.autoContainerAndTotePickUp();
+    		break;
+    	case "just tote":
+    		autoCommand = commandBase.autoContainerOnly();
+    		break;
     	case "none":
     		autoCommand = null;
     		break;
     	}
+    	
     	
     	if (autoCommand != null){ //for the case of none
     		autoCommand.start();

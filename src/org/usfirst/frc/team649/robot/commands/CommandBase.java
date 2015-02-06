@@ -1,7 +1,9 @@
 package org.usfirst.frc.team649.robot.commands;
 
+import org.usfirst.frc.team649.robot.FishyRobot2015;
 import org.usfirst.frc.team649.robot.OI;
 import org.usfirst.frc.team649.robot.commands.autowinchcommands.WinchTotesIn;
+import org.usfirst.frc.team649.robot.commands.containerGrabberCommands.ClampContainerGrabber;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveSetDistanceWithPID;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.GrabberArmPosition;
@@ -13,10 +15,11 @@ import org.usfirst.frc.team649.robot.commands.lift.RaiseToteToIntermediateLevel;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.commands.lift.ScoreAllTotesAndResetEncoders;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ContainerGrabberSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
-import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.DriveDistanceConstants;
+import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.EncoderBasedDriving;
 import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 
@@ -37,16 +40,19 @@ public class CommandBase {
 	public IntakeRightSubsystem intakeRightSubsystem = new IntakeRightSubsystem();
 	public AutoWinchSubsystem autoWinchSubsystem = new AutoWinchSubsystem();
 	public ContainerGrabberSubsystem containerGrabberSubsystem = new ContainerGrabberSubsystem();
+	public CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	
 	public CommandBase() {
 		
 	}
 	
-	public Command releaseAndGetOut(){
+	//******** BASIC TELEOP COMMAND GROUPS ********//
+	
+	public Command releaseAllAndGetOut(){
 		CommandGroup sequence = new CommandGroup();
 		
 		sequence.addSequential(new ScoreAllTotesAndResetEncoders());
-    	sequence.addSequential(new DriveSetDistanceWithPID(DriveDistanceConstants.UNHOOK_BACKWARDS_DISTANCE));
+    	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.UNHOOK_BACKWARDS_DISTANCE));
     	
     	return sequence;
 	}
@@ -73,16 +79,58 @@ public class CommandBase {
     		sequence.addSequential(new ChangeOffsetHeight(true)); //automatically updates the internal state variable
     	}
     	sequence.addParallel(new GrabberArmPosition(1));
-    	sequence.addSequential(releaseAndGetOut());
+    	sequence.addSequential(releaseAllAndGetOut());
     	
     	return sequence;
     }
     
-    //idk if this will happen
-    public Command pickUpFirstToteAfterContainer(){
+    //assumes you are there
+    //DO A NULL POINTER CHECK
+    public Command pickUpContainer(){
     	CommandGroup sequence = new CommandGroup();
+    	//if not at base, exit because we cant pick up a container
+    	//NULL POINTER CHECK BECAUSE OF THIS
+    	if (!FishyRobot2015.commandBase.chainLiftSubsystem.isAtBase){
+    		return null;
+    	}
+    	
+    	//otherwise actually raise it
+    	sequence.addSequential(new ClampContainerGrabber(true));
+    	sequence.addSequential(new WaitCommand(200));
+    	sequence.addSequential(new ChangeLiftHeight(ChainLiftSubsystem.PIDConstants.CONTAINER_PICK_UP_RAISE_HEIGHT));
     	return sequence;
     }
+    
+    //
+    public Command fullContainerAndFirstToteSequence(){
+    	CommandGroup sequence = new CommandGroup();
+    	//exit if we are not in the right place...put debugs in here pls
+    	if (pickUpContainer() == null){
+    		return sequence;
+    	}
+    	sequence.addSequential(pickUpContainer());
+    	//NOW CHECK FOR BUTTONS
+    	
+    	//wait until intake button pressed...check for problems with multiple systems TODO
+    	while (!FishyRobot2015.commandBase.oi.operator.isIntakeButtonPressed()){
+    		
+    	}
+    	//pull in tote and unclamp
+    	sequence.addSequential(new IntakeTote());
+    	sequence.addSequential(new WaitCommand(200));
+    	sequence.addSequential(new ClampContainerGrabber(false));
+    	sequence.addSequential(new WaitCommand(100));
+    	//go down and regrip
+    	sequence.addSequential(new ChangeLiftHeight(ChainLiftSubsystem.PIDConstants.CONTAINER_REGRIP_LOWER_HEIGHT));
+    	sequence.addSequential(new WaitCommand(200));
+    	sequence.addSequential(new ClampContainerGrabber(true));
+    	//continue to drive height offset (you should be at intermediate step here), hopefully you catch the tote
+    	sequence.addSequential(new WaitCommand(200));
+    	sequence.addSequential(new FinishRaiseTote(true));
+    	return sequence;
+    }
+
+    //******** AUTONOMOUS ********//
     
     public Command debug(){
     	CommandGroup sequence = new CommandGroup();
@@ -90,6 +138,9 @@ public class CommandBase {
     	sequence.addSequential(new RawMotor(0.4, 0.4));
     	sequence.addSequential(new WaitCommand(1000));
     	sequence.addSequential(new RawMotor(0,0));
+    	
+    	sequence.addSequential(new WaitCommand(1000));
+    	
     	//for chain
     	sequence.addSequential(new RawMotor(0.5));
     	sequence.addSequential(new WaitCommand(1000));
@@ -103,12 +154,56 @@ public class CommandBase {
     	//move arms out (state position), winch in the three containers, drive forward, all sequential
     	sequence.addSequential(new GrabberArmPosition(2));
     	sequence.addSequential(new WinchTotesIn());
-    	sequence.addSequential(new DriveSetDistanceWithPID(DriveDistanceConstants.AUTO_DRIVE_DISTANCE));
+    	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_WINCH_DRIVE_DISTANCE));
     	return sequence;
     	
     } 
     
-	//DRIVETRAIN
+    public Command autoContainerAndTotePickUp(){
+    	CommandGroup sequence = new CommandGroup();
+    	//drive to Container and clamp after making sure its not already clamped
+    	sequence.addSequential(new ClampContainerGrabber(false));
+    	sequence.addSequential(new ScoreAllTotesAndResetEncoders());
+    	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_START_TO_CONTAINER));
+    	sequence.addSequential(new WaitCommand(300));
+    	sequence.addSequential(fullContainerAndFirstToteSequence());
+    	//go forward and pick up the tote
+    	sequence.addParallel(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_TOTE));
+    	
+    	return sequence;
+    }
+    
+    //this is the one you call
+    public Command autoTurnAndDriveToAutoZone(){
+    	CommandGroup sequence = new CommandGroup();
+    	sequence.addSequential(autoContainerAndTotePickUp());
+    	sequence.addSequential(new WaitCommand(400));
+    	//insert turn command TODO
+    	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_AUTO_ZONE));
+    	//drop the tote
+    	sequence.addSequential(new FinishRaiseTote(false)); //check this TODO
+    	return sequence;
+    }
+    
+    public Command autoContainerOnly(){
+    	CommandGroup sequence = new CommandGroup();
+    	
+    	sequence.addSequential(new ClampContainerGrabber(false));
+    	sequence.addSequential(new ScoreAllTotesAndResetEncoders());
+    	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_START_TO_CONTAINER));
+    	sequence.addSequential(new WaitCommand(300));
+    	sequence.addSequential(pickUpContainer());
+    	//insert turn command
+    	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_AUTO_ZONE));
+    	//drop the tote
+    	sequence.addSequential(new FinishRaiseTote(false)); //check this TODO
+    	
+    	return sequence;
+    }
+    
+    //******** COMMANDS ********//
+    
+    //DRIVERTRAIN
 	public  Command driveForwardRotate(double forward, double rotate){
 		return new DriveForwardRotate(forward, rotate);
 	}
