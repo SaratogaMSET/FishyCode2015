@@ -101,7 +101,7 @@ public class CommandBase {
     	return sequence;
     }
     
-    //
+    //called for the full sequence from picking up container to picking up tote afterwards
     public Command fullContainerAndFirstToteSequence(){
     	CommandGroup sequence = new CommandGroup();
     	//exit if we are not in the right place...put debugs in here pls
@@ -132,6 +132,7 @@ public class CommandBase {
 
     //******** AUTONOMOUS ********//
     
+    //runs all motors and displays their encoder values for debugging
     public Command debug(){
     	CommandGroup sequence = new CommandGroup();
     	//for raw motor
@@ -146,8 +147,10 @@ public class CommandBase {
     	sequence.addSequential(new WaitCommand(1000));
     	sequence.addSequential(new RawMotor(0));
     	return sequence;
+    	//suneel was here...and everywhere
     }
     
+    // winch all in and then run out of there man!!!! LOLOLOLOLOLOLOLOL k bye
     public Command autoWinchAndDrive(){
     	CommandGroup sequence = new CommandGroup();
     	
@@ -159,6 +162,8 @@ public class CommandBase {
     	
     } 
     
+    //part of full sequence
+    //pick up container and tote only, separation need bc of parallel v sequential issues...fix this TODO
     public Command autoContainerAndTotePickUp(){
     	CommandGroup sequence = new CommandGroup();
     	//drive to Container and clamp after making sure its not already clamped
@@ -169,18 +174,20 @@ public class CommandBase {
     	sequence.addSequential(fullContainerAndFirstToteSequence());
     	//go forward and pick up the tote
     	sequence.addParallel(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_TOTE));
-    	
+    	//god loves you
     	return sequence;
     }
     
-    //this is the one you call
-    public Command autoTurnAndDriveToAutoZone(){
+    //pick up container and then tote and go away
+    //this is the one you call, split up for reasons above
+    public Command autoFullContainerAndToteSequence(){
     	CommandGroup sequence = new CommandGroup();
+    	
     	sequence.addSequential(autoContainerAndTotePickUp());
     	sequence.addSequential(new WaitCommand(400));
     	//insert turn command TODO
     	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_AUTO_ZONE));
-    	//drop the tote
+    	//drop the tote, but keep holding container up
     	sequence.addSequential(new FinishRaiseTote(false)); //check this TODO
     	return sequence;
     }
@@ -195,8 +202,7 @@ public class CommandBase {
     	sequence.addSequential(pickUpContainer());
     	//insert turn command
     	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_AUTO_ZONE));
-    	//drop the tote
-    	sequence.addSequential(new FinishRaiseTote(false)); //check this TODO
+    	//keep holding tote
     	
     	return sequence;
     }

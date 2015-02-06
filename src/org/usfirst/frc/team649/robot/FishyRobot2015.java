@@ -75,7 +75,7 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
     		autoCommand = commandBase.autoWinchAndDrive();
     		break;
     	case "container and totes":
-    		autoCommand = commandBase.autoContainerAndTotePickUp();
+    		autoCommand = commandBase.autoFullContainerAndToteSequence();
     		break;
     	case "just tote":
     		autoCommand = commandBase.autoContainerOnly();
@@ -138,6 +138,10 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Chain Height", commandBase.chainLiftSubsystem.getHeight());
         commandBase.driveForwardRotate(commandBase.oi.driver.getDriveForward(), commandBase.oi.driver.getDriveRotation()).start();
+        
+        SmartDashboard.putData("Chain Encoder", commandBase.chainLiftSubsystem.encoders[0]);
+        SmartDashboard.putData("Drive Encoder Left", commandBase.drivetrainSubsystem.encoders[0]);
+        SmartDashboard.putData("Drive Encoder Right", commandBase.drivetrainSubsystem.encoders[1]);
     }
     
     /**

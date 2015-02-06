@@ -31,12 +31,18 @@ public class DrivetrainSubsystem extends PIDSubsystem {
         public static final double MAX_MOTOR_POWER = 0.5;
         public static double MIN_MOTOR_POWER = 0.25;
         
+        //autonomous drive constants
+        
+        //winch
         public static final double AUTO_WINCH_DRIVE_DISTANCE = -14 * 12;
     	public static final double UNHOOK_BACKWARDS_DISTANCE = -100;
+    	
+    	//container pickup
     	public static final double AUTO_START_TO_CONTAINER = 100;
         public static final double AUTO_CONTAINER_TO_AUTO_ZONE = 222;
         public static final double AUTO_CONTAINER_TO_TOTE = 649;
         
+        //others
     	public static final double AUTO_P = 0.4;
     	public static final double AUTO_I = 0.0;
     	public static final double AUTO_D = 0.0;
