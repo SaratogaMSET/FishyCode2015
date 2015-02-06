@@ -6,6 +6,7 @@ import org.usfirst.frc.team649.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -17,11 +18,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class DrivetrainSubsystem extends PIDSubsystem {
+public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDOutput {
     
     private SpeedController[] motors;
     public Encoder[] encoders;
-    public PIDController pid;
+    public PIDController encoderPID;
+    public PIDController gyroPID;
+    public Gyro gyro;
 	public  double currentInput;
 	public  double oldInput;
 	private Vector lastRates;
@@ -48,6 +51,7 @@ public class DrivetrainSubsystem extends PIDSubsystem {
     	public static final double AUTO_D = 0.0;
     	public static final double ABS_TOLERANCE = 0.0;
     	public static final double OUTPUT_RANGE = 0.0;
+    	public static final double AUTO_GRYO_TURN_ANGLE = 90;
     }
     
     public static class RampingConstants {
@@ -65,14 +69,15 @@ public class DrivetrainSubsystem extends PIDSubsystem {
     	for (int i = 0; i < RobotMap.DRIVE_TRAIN.MOTORS.length; i++) {
             motors[i] = new Victor(RobotMap.DRIVE_TRAIN.MOTORS[i]);
         }
-    	pid = this.getPIDController();
-    	pid.setAbsoluteTolerance(EncoderBasedDriving.ABS_TOLERANCE);
-    	pid.setOutputRange(EncoderBasedDriving.MIN_MOTOR_POWER, EncoderBasedDriving.MAX_MOTOR_POWER);
+    	encoderPID = this.getPIDController();
+    	encoderPID.setAbsoluteTolerance(EncoderBasedDriving.ABS_TOLERANCE);
+    	encoderPID.setOutputRange(EncoderBasedDriving.MIN_MOTOR_POWER, EncoderBasedDriving.MAX_MOTOR_POWER);
     	encoders = new Encoder[RobotMap.DRIVE_TRAIN.ENCODERS.length / 2];
         for (int x = 0; x < RobotMap.DRIVE_TRAIN.ENCODERS.length; x += 2) {
             encoders[x / 2] = new Encoder(RobotMap.DRIVE_TRAIN.ENCODERS[x], RobotMap.DRIVE_TRAIN.ENCODERS[x + 1], x == 0, EncodingType.k2X);
             encoders[x / 2].setDistancePerPulse(EncoderBasedDriving.ENCODER_DISTANCE_PER_PULSE);
         }
+        gyro = new Gyro(RobotMap.DRIVE_TRAIN.GRYO);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -140,5 +145,15 @@ public class DrivetrainSubsystem extends PIDSubsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+	@Override
+	public void pidWrite(double output) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
 
