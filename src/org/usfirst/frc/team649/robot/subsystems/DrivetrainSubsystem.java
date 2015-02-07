@@ -86,11 +86,6 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     // here. Call these from Commands.
     
     
-
-    public boolean isMotorRamping() {
-    	return RampingConstants.rampMotors;
-    }
-    
     public void driveFwdRot(double fwd, double rot) {
         double left = fwd + rot, right = fwd - rot;
         double max = Math.max(1, Math.max(Math.abs(left), Math.abs(right)));

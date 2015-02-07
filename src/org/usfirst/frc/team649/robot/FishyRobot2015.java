@@ -2,6 +2,7 @@
 package org.usfirst.frc.team649.robot;
 
 import org.usfirst.frc.team649.robot.commands.CommandBase;
+import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -19,9 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
- * @param <driveLeftEncoderState>
  */
-public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
+public class FishyRobot2015 extends IterativeRobot {
 
 	public static CommandBase commandBase = new CommandBase();
 
@@ -121,6 +121,9 @@ public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
         // this line or comment it out.
     	
     	//FIGURE OUT HOW TO CLEAR SMARTDASHBOARD REMOTELY
+    	
+
+    	
     }
 
     /**

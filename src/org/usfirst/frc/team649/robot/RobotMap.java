@@ -23,7 +23,8 @@ public class RobotMap {
 	}
 	
 	public static final class DRIVE_TRAIN {
-		public static final int[] MOTORS = new int[] {7,6,5,4}; //updated, these are accurate based on samay's thing
+		
+		public static final int[] MOTORS = new int[] {7,6,5,4}; 
         public static final int[] ENCODERS = new int[]{3, 4, 6, 7};
         public static final int GRYO = 0;
 
