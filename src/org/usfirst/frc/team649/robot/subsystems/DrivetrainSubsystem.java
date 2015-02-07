@@ -1,19 +1,16 @@
 package org.usfirst.frc.team649.robot.subsystems;
 
-import java.util.Vector;
 
 import org.usfirst.frc.team649.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
@@ -27,7 +24,7 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     public Gyro gyro;
     
     public static class EncoderBasedDriving {
-    	private static final double ENCODER_DISTANCE_PER_PULSE = -4 * Math.PI / 128;
+    	private static final double ENCODER_DISTANCE_PER_PULSE = -6 * Math.PI / 128;
         public static final double MAX_MOTOR_POWER = 0.5;
         public static double MIN_MOTOR_POWER = 0.25;
         
@@ -52,8 +49,10 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     
     public static class GyroBasedDriving {
     	public static final double AUTO_GRYO_TURN_ANGLE = 90;
-        public static double gyroStartValue;
-
+        public static final double AUTO_P = 0.001;
+    	public static final double AUTO_I = 0.0;
+    	public static final double AUTO_D = 0.0001;
+    	public static final double ABS_TOLERANCE = 12000.0;
 
     }
     public static class RampingConstants {
@@ -69,17 +68,19 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     	super("Drivetrain", EncoderBasedDriving.AUTO_P, EncoderBasedDriving.AUTO_I, EncoderBasedDriving.AUTO_D);
     	motors = new SpeedController[RobotMap.DRIVE_TRAIN.MOTORS.length];
     	for (int i = 0; i < RobotMap.DRIVE_TRAIN.MOTORS.length; i++) {
-            motors[i] = new Victor(RobotMap.DRIVE_TRAIN.MOTORS[i]);
+            motors[i] = new Talon(RobotMap.DRIVE_TRAIN.MOTORS[i]);
         }
     	encoderPID = this.getPIDController();
     	encoderPID.setAbsoluteTolerance(EncoderBasedDriving.ABS_TOLERANCE);
     	encoderPID.setOutputRange(EncoderBasedDriving.MIN_MOTOR_POWER, EncoderBasedDriving.MAX_MOTOR_POWER);
     	encoders = new Encoder[RobotMap.DRIVE_TRAIN.ENCODERS.length / 2];
-        for (int x = 0; x < RobotMap.DRIVE_TRAIN.ENCODERS.length; x += 2) {
-            encoders[x / 2] = new Encoder(RobotMap.DRIVE_TRAIN.ENCODERS[x], RobotMap.DRIVE_TRAIN.ENCODERS[x + 1], x == 0, EncodingType.k2X);
-            encoders[x / 2].setDistancePerPulse(EncoderBasedDriving.ENCODER_DISTANCE_PER_PULSE);
-        }
+        encoders[0] = new Encoder(RobotMap.DRIVE_TRAIN.ENCODERS[0], RobotMap.DRIVE_TRAIN.ENCODERS[1]);
+        encoders[1] = new Encoder(RobotMap.DRIVE_TRAIN.ENCODERS[2], RobotMap.DRIVE_TRAIN.ENCODERS[3]);
+        encoders[0].setDistancePerPulse(EncoderBasedDriving.ENCODER_DISTANCE_PER_PULSE);
+        encoders[1].setDistancePerPulse(EncoderBasedDriving.ENCODER_DISTANCE_PER_PULSE);
         gyro = new Gyro(RobotMap.DRIVE_TRAIN.GRYO);
+        gyroPID = new PIDController(GyroBasedDriving.AUTO_P, GyroBasedDriving.AUTO_I, GyroBasedDriving.AUTO_D, this, this);
+        gyroPID.setAbsoluteTolerance(GyroBasedDriving.ABS_TOLERANCE);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -148,8 +149,13 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void setGyroOffset() {
-    	GyroBasedDriving.gyroStartValue = gyro.getAngle();
+    // GYRO
+    public void resetGyro() {
+    	gyro.reset();
+    }
+    
+    public PIDController getGyroPIDControler() {
+    	return gyroPID;
     }
 	@Override
 	public void pidWrite(double output) {
@@ -159,7 +165,7 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
 	@Override
 	public double pidGet() {
 		// TODO Auto-generated method stub
-		return gyro.getAngle() - GyroBasedDriving.gyroStartValue;
+		return gyro.getAngle();
 	}
 }
 

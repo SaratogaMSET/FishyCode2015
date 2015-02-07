@@ -6,6 +6,7 @@ import org.usfirst.frc.team649.robot.commands.autowinchcommands.WinchTotesIn;
 import org.usfirst.frc.team649.robot.commands.containergrabbercommands.ClampContainerGrabber;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveSetDistanceWithPID;
+import org.usfirst.frc.team649.robot.commands.drivetraincommands.TurnWithPIDCommand;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.GrabberArmPosition;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
@@ -212,6 +213,10 @@ public class CommandBase {
     //DRIVERTRAIN
 	public  Command driveForwardRotate(double forward, double rotate){
 		return new DriveForwardRotate(forward, rotate);
+	}
+	
+	public Command turnWithPIDCommand(double setPoint) {
+		return new TurnWithPIDCommand(setPoint);
 	}
 	
 	public Command driveSetDistanceWithPID(double distance) {
