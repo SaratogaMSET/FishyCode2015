@@ -5,7 +5,6 @@ import org.usfirst.frc.team649.robot.commands.CommandBase;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -21,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  * @param <driveLeftEncoderState>
  */
-public class FishyRobot2015<driveLeftEncoderState> extends IterativeRobot {
+public class FishyRobot2015 extends IterativeRobot {
 
 	public static CommandBase commandBase = new CommandBase();
 
