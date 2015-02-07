@@ -25,10 +25,7 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     public PIDController encoderPID;
     public PIDController gyroPID;
     public Gyro gyro;
-	public  double currentInput;
-	public  double oldInput;
-	private Vector lastRates;
-	
+    
     public static class EncoderBasedDriving {
     	private static final double ENCODER_DISTANCE_PER_PULSE = -4 * Math.PI / 128;
         public static final double MAX_MOTOR_POWER = 0.5;
@@ -51,9 +48,14 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     	public static final double AUTO_D = 0.0;
     	public static final double ABS_TOLERANCE = 0.0;
     	public static final double OUTPUT_RANGE = 0.0;
-    	public static final double AUTO_GRYO_TURN_ANGLE = 90;
     }
     
+    public static class GyroBasedDriving {
+    	public static final double AUTO_GRYO_TURN_ANGLE = 90;
+        public static double gyroStartValue;
+
+
+    }
     public static class RampingConstants {
     	public static final double ACCELERATION_LIMIT = .34;
     	public static final double DECELERATION_LIMIT = .34;
@@ -145,15 +147,19 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    public void setGyroOffset() {
+    	GyroBasedDriving.gyroStartValue = gyro.getAngle();
+    }
 	@Override
 	public void pidWrite(double output) {
 		// TODO Auto-generated method stub
-		
+		driveFwdRot(0, output);
 	}
 	@Override
 	public double pidGet() {
 		// TODO Auto-generated method stub
-		return 0;
+		return gyro.getAngle() - GyroBasedDriving.gyroStartValue;
 	}
 }
 
