@@ -25,7 +25,7 @@ public class AutoWinchSubsystem extends Subsystem {
 	public static final double SERVO_RELEASE_STATE = 159;
 	
 	public AutoWinchSubsystem() {
-		motor = new Victor(RobotMap.AUTO_WINCH.MOTOR);
+		//motor = new Victor(RobotMap.AUTO_WINCH.MOTOR);
 		hal = new DigitalInput(RobotMap.AUTO_WINCH.LIM);
 		servo = new Servo(RobotMap.AUTO_WINCH.SERVO);
 		servo.setAngle(SERVO_DEFAULT_STATE);

@@ -40,23 +40,23 @@ public class RobotMap {
 	}
 	
 	public static final class LEFT_GRABBER {
-		public static final int ROLLER_MOTOR = 12;
-		public static final int ARM_MOTOR = 11;
-		public static final int POT = 200;
-		public static final int LIMIT_SWITCH = 111;
+		public static final int ROLLER_MOTOR = 2;
+		public static final int ARM_MOTOR = 3;
+		public static final int POT = 1;
+		public static final int LIMIT_SWITCH = 2;
 	}
 	
 	public static final class RIGHT_GRABBER {
-		public static final int ROLLER_MOTOR = 2;
-		public static final int ARM_MOTOR = 3;
-		public static final int POT = 115;
-		public static final int LIMIT_SWITCH = 123;
+		public static final int ROLLER_MOTOR = 8;
+		public static final int ARM_MOTOR = 9;
+		public static final int POT = 2;
+		public static final int LIMIT_SWITCH = 12;
 	}
 	
 	public static final class AUTO_WINCH {
-		public static final int MOTOR = 8;
-		public static final int LIM = 2;
-		public static final int SERVO = 3;
+		public static final int MOTOR = 12;
+		public static final int LIM = 13;
+		public static final int SERVO = 11;
 		
 	}
 	

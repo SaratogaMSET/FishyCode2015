@@ -40,10 +40,12 @@ public class IntakeLeftSubsystem extends PIDSubsystem {
 	
 	public IntakeLeftSubsystem(){
 		super("Grabber Left Subsystem", PIDConstants.P, PIDConstants.I, PIDConstants.D);
-    	
+    	/*
+    	 * to do this you have to call the class before its done being built...
+    	 * need a method to assign pids after
     	pid =  FishyRobot2015.intakeLeftSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
-    	
+    	*/
     	//potentiometer
     	pot = new AnalogPotentiometer(RobotMap.LEFT_GRABBER.POT);
     	

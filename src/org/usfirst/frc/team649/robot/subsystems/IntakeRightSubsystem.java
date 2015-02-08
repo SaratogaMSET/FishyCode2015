@@ -46,10 +46,11 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 	
     public IntakeRightSubsystem(){
     	super("Grabber Right Subsystem", PIDConstants.P, PIDConstants.I, PIDConstants.D);
-    	
+    	/*
+    	 * see intakeLeftSubsystem
     	pid = FishyRobot2015.intakeRightSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
-    	
+    	*/
     	//potentiometer
     	pot = new AnalogPotentiometer(RobotMap.RIGHT_GRABBER.POT);
     	

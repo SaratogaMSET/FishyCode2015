@@ -53,7 +53,7 @@ public class FishyRobot2015 extends IterativeRobot {
     	chainLiftSubsystem = new ChainLiftSubsystem();
     	intakeLeftSubsystem = new IntakeLeftSubsystem();
     	intakeRightSubsystem = new IntakeRightSubsystem();
-    	autoWinchSubsystem = new AutoWinchSubsystem();
+    //	autoWinchSubsystem = new AutoWinchSubsystem();
     	containerGrabberSubsystem = new ContainerGrabberSubsystem();
     	cameraSubsystem = new CameraSubsystem();
     	oi = new OI();
