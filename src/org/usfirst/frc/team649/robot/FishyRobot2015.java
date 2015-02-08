@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team649.robot;
 
-import org.usfirst.frc.team649.robot.commands.CommandBase;
+import org.usfirst.frc.team649.robot.commandgroups.AutoContainerOnly;
+import org.usfirst.frc.team649.robot.commandgroups.AutoFullContainerAndToteSequence;
+import org.usfirst.frc.team649.robot.commandgroups.AutoWinchAndDrive;
+import org.usfirst.frc.team649.robot.commandgroups.Debug;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
@@ -10,7 +13,6 @@ import org.usfirst.frc.team649.robot.subsystems.ContainerGrabberSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
-import org.usfirst.frc.team649.robot.triggers.isAtStepOffset;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -82,34 +84,34 @@ public class FishyRobot2015 extends IterativeRobot {
 
     public void autonomousInit() {
 //        // schedule the autonomous command (example)
-//    	autoMode = (String) autoChooser.getSelected();
-//    	driveLeftEncoderState = false;
-//    	driveRightEncoderState = false;
-//    	chainEncoderState = false;
-//    	
-//    	//obviously names will be changed
-//    	switch (autoMode){
-//    	case "debugger mode":
-//    		autoCommand = commandBase.debug();
-//    		break;
-//    	case "winch in totes":
-//    		autoCommand = commandBase.autoWinchAndDrive();
-//    		break;
-//    	case "container and totes":
-//    		autoCommand = commandBase.autoFullContainerAndToteSequence();
-//    		break;
-//    	case "just tote":
-//    		autoCommand = commandBase.autoContainerOnly();
-//    		break;
-//    	case "none":
-//    		autoCommand = null;
-//    		break;
-//    	}
+    	autoMode = (String) autoChooser.getSelected();
+    	driveLeftEncoderState = false;
+    	driveRightEncoderState = false;
+    	chainEncoderState = false;
+    	
+    	//obviously names will be changed
+    	switch (autoMode){
+    	case "debugger mode":
+    		autoCommand = new Debug();
+    		break;
+    	case "winch in totes":
+    		autoCommand = new AutoWinchAndDrive();
+    		break;
+    	case "container and totes":
+    		autoCommand = new AutoFullContainerAndToteSequence();
+    		break;
+    	case "just tote":
+    		autoCommand = new AutoContainerOnly();
+    		break;
+    	case "none":
+    		autoCommand = null;
+    		break;
+    	}
 ////    	
 //    	
-//    	if (autoCommand != null){ //for the case of none
-//    		autoCommand.start();
-//    	}
+    	if (autoCommand != null){ //for the case of none
+    		autoCommand.start();
+    	}
     }
 
     /**

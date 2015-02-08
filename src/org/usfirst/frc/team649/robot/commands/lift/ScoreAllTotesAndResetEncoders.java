@@ -1,7 +1,6 @@
 package org.usfirst.frc.team649.robot.commands.lift;
 
 import org.usfirst.frc.team649.robot.FishyRobot2015;
-import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;

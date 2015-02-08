@@ -1,6 +1,5 @@
 package org.usfirst.frc.team649.robot.commands.drivetraincommands;
 
-import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team649.robot.FishyRobot2015;
 
