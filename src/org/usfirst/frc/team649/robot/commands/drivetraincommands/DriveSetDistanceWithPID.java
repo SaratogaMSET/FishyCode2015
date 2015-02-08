@@ -49,8 +49,7 @@ public class DriveSetDistanceWithPID extends Command {
 		// Display.printToOutputStream("starting drive PID: " +
 		// DriverStation.getInstance().getMatchTime() + ", dist: " + distance);
 		DrivetrainSubsystem.EncoderBasedDriving.MIN_MOTOR_POWER = minDriveSpeed;
-		this.pid = FishyRobot2015.commandBase.drivetrainSubsystem
-				.getPIDController();
+		this.pid = FishyRobot2015.commandBase.drivetrainSubsystem.getPIDController();
 		pid.setPID(DrivetrainSubsystem.EncoderBasedDriving.AUTO_P,
 				DrivetrainSubsystem.EncoderBasedDriving.AUTO_I,
 				DrivetrainSubsystem.EncoderBasedDriving.AUTO_D);
@@ -84,8 +83,7 @@ public class DriveSetDistanceWithPID extends Command {
 		// }
 		//
 		// return false;
-		return Math.abs(FishyRobot2015.commandBase.drivetrainSubsystem
-				.getDistance()) >= Math.abs(distance);
+		return Math.abs(FishyRobot2015.commandBase.drivetrainSubsystem.getDistance()) >= Math.abs(distance);
 	}
 
 	// Called once after isFinished returns true

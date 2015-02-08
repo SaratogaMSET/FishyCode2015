@@ -2,11 +2,11 @@
 package org.usfirst.frc.team649.robot;
 
 import org.usfirst.frc.team649.robot.commands.CommandBase;
+import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -25,6 +25,9 @@ public class FishyRobot2015 extends IterativeRobot {
 
 	public static CommandBase commandBase = new CommandBase();
 
+	
+	DrivetrainSubsystem drivetrainSubsytem = new DrivetrainSubsystem();
+	ChainLiftSubsystem chainLiftSubsytem = new ChainLiftSubsystem();
 	public SendableChooser autoChooser;
 	public Command autoCommand;
 	public String autoMode;
@@ -35,8 +38,6 @@ public class FishyRobot2015 extends IterativeRobot {
      */
     public void robotInit() {
     	
-    	NetworkTable table;
-    	Preferences prefs;
     	autoChooser = new SendableChooser();
     	autoChooser.addObject("Debugger Mode", "debugger mode");
     	autoChooser.addObject("Winch Autonomous", "winch in totes");
@@ -84,7 +85,7 @@ public class FishyRobot2015 extends IterativeRobot {
     		autoCommand = null;
     		break;
     	}
-    	
+//    	
     	
     	if (autoCommand != null){ //for the case of none
     		autoCommand.start();
@@ -152,5 +153,6 @@ public class FishyRobot2015 extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+        
     }
 }

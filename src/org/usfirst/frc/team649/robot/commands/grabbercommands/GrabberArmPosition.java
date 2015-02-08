@@ -48,7 +48,7 @@ public class GrabberArmPosition extends Command {
 	@Override
 	protected boolean isFinished() {
 		//when both have reached
-		return FishyRobot2015.commandBase.intakeLeftSubsystem.getPot() == relevantSetpointLeft && FishyRobot2015.commandBase.intakeRightSubsystem.getPot() == relevantSetpointRight;
+		return true; //FishyRobot2015.commandBase.intakeLeftSubsystem.getPot() == relevantSetpointLeft && FishyRobot2015.commandBase.intakeRightSubsystem.getPot() == relevantSetpointRight;
 	}
 
 	@Override

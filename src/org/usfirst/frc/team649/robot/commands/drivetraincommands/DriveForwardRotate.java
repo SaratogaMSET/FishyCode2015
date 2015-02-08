@@ -2,6 +2,7 @@ package org.usfirst.frc.team649.robot.commands.drivetraincommands;
 
 import org.usfirst.frc.team649.robot.commands.CommandBase;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team649.robot.FishyRobot2015;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -20,11 +21,8 @@ public class DriveForwardRotate extends Command {
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
-//    	if(org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.isMotorRamping()) {
-//    		//linearRamping(forwardVal);
-//    	}
-    	org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.driveFwdRot(forwardVal, rotateVal);
+    protected void initialize() {  	
+    	FishyRobot2015.commandBase.drivetrainSubsystem.driveFwdRot(forwardVal, rotateVal);
 
     }
 
@@ -45,15 +43,5 @@ public class DriveForwardRotate extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-    
-//    protected void linearRamping(double toRamp) {
-//    	if(org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.currentInput - org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.ACCELERATION_LIMIT) {
-//    		forwardVal = org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_UP_CONSTANT;
-//    	}
-//    	else if(org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.currentInput - org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.oldInput > DrivetrainSubsystem.RampingConstants.DECELERATION_LIMIT) {
-//    		forwardVal = org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.getVelocity() + DrivetrainSubsystem.RampingConstants.RAMP_DOWN_CONSTANT;
-//    	}
-//    	else
-//    		forwardVal = forwardVal;
-//    }
+
 }
