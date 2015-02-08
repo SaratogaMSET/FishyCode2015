@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -60,7 +61,6 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     	public static final double DECELERATION_LIMIT = .34;
     	public static final double RAMP_UP_CONSTANT = .20;
     	public static final double RAMP_DOWN_CONSTANT = 1;
-    	private static boolean rampMotors = false;
 
     }
     
