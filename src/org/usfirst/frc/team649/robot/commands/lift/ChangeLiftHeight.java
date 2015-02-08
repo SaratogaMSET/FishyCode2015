@@ -14,14 +14,14 @@ public class ChangeLiftHeight extends Command {
 	double deltaHeight;
 	
     public ChangeLiftHeight(double height) {
-    	liftPID =  FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
+    	liftPID =  FishyRobot2015.chainLiftSubsystem.getPIDController();
     	deltaHeight = height;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	liftPID.enable();
-    	liftPID.setSetpoint(FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight + deltaHeight);
+    	liftPID.setSetpoint(FishyRobot2015.chainLiftSubsystem.setpointHeight + deltaHeight);
 
     }
 
@@ -31,7 +31,7 @@ public class ChangeLiftHeight extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		return ((FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight + FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight) ==  FishyRobot2015.commandBase.chainLiftSubsystem.getHeight() ||  FishyRobot2015.commandBase.chainLiftSubsystem.isMaxLimitPressed() ||  FishyRobot2015.commandBase.chainLiftSubsystem.isResetLimitPressed());
+		return ((FishyRobot2015.chainLiftSubsystem.setpointHeight + FishyRobot2015.chainLiftSubsystem.offsetHeight) ==  FishyRobot2015.chainLiftSubsystem.getHeight() ||  FishyRobot2015.chainLiftSubsystem.isMaxLimitPressed() ||  FishyRobot2015.chainLiftSubsystem.isResetLimitPressed());
     }
 
     // Called once after isFinished returns true

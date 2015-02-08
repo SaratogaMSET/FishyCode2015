@@ -2,8 +2,15 @@
 package org.usfirst.frc.team649.robot;
 
 import org.usfirst.frc.team649.robot.commands.CommandBase;
+import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
+import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.ContainerGrabberSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
+import org.usfirst.frc.team649.robot.triggers.isAtStepOffset;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -23,11 +30,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class FishyRobot2015 extends IterativeRobot {
 
-	public static CommandBase commandBase = new CommandBase();
+	public static OI oi;
+	public static DrivetrainSubsystem drivetrainSubsystem;
+	public static ChainLiftSubsystem chainLiftSubsystem;
+	public static IntakeLeftSubsystem intakeLeftSubsystem;
+	public static IntakeRightSubsystem intakeRightSubsystem;
+	public static AutoWinchSubsystem autoWinchSubsystem;
+	public static ContainerGrabberSubsystem containerGrabberSubsystem;
+	public static CameraSubsystem cameraSubsystem;
 
 	
-	DrivetrainSubsystem drivetrainSubsytem = new DrivetrainSubsystem();
-	ChainLiftSubsystem chainLiftSubsytem = new ChainLiftSubsystem();
 	public SendableChooser autoChooser;
 	public Command autoCommand;
 	public String autoMode;
@@ -37,6 +49,14 @@ public class FishyRobot2015 extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	drivetrainSubsystem = new DrivetrainSubsystem();
+    	chainLiftSubsystem = new ChainLiftSubsystem();
+    	intakeLeftSubsystem = new IntakeLeftSubsystem();
+    	intakeRightSubsystem = new IntakeRightSubsystem();
+    	autoWinchSubsystem = new AutoWinchSubsystem();
+    	containerGrabberSubsystem = new ContainerGrabberSubsystem();
+    	cameraSubsystem = new CameraSubsystem();
+    	oi = new OI();
     	
     	autoChooser = new SendableChooser();
     	autoChooser.addObject("Debugger Mode", "debugger mode");
@@ -61,35 +81,35 @@ public class FishyRobot2015 extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
-    	autoMode = (String) autoChooser.getSelected();
-    	driveLeftEncoderState = false;
-    	driveRightEncoderState = false;
-    	chainEncoderState = false;
-    	
-    	//obviously names will be changed
-    	switch (autoMode){
-    	case "debugger mode":
-    		autoCommand = commandBase.debug();
-    		break;
-    	case "winch in totes":
-    		autoCommand = commandBase.autoWinchAndDrive();
-    		break;
-    	case "container and totes":
-    		autoCommand = commandBase.autoFullContainerAndToteSequence();
-    		break;
-    	case "just tote":
-    		autoCommand = commandBase.autoContainerOnly();
-    		break;
-    	case "none":
-    		autoCommand = null;
-    		break;
-    	}
+//        // schedule the autonomous command (example)
+//    	autoMode = (String) autoChooser.getSelected();
+//    	driveLeftEncoderState = false;
+//    	driveRightEncoderState = false;
+//    	chainEncoderState = false;
 //    	
-    	
-    	if (autoCommand != null){ //for the case of none
-    		autoCommand.start();
-    	}
+//    	//obviously names will be changed
+//    	switch (autoMode){
+//    	case "debugger mode":
+//    		autoCommand = commandBase.debug();
+//    		break;
+//    	case "winch in totes":
+//    		autoCommand = commandBase.autoWinchAndDrive();
+//    		break;
+//    	case "container and totes":
+//    		autoCommand = commandBase.autoFullContainerAndToteSequence();
+//    		break;
+//    	case "just tote":
+//    		autoCommand = commandBase.autoContainerOnly();
+//    		break;
+//    	case "none":
+//    		autoCommand = null;
+//    		break;
+//    	}
+////    	
+//    	
+//    	if (autoCommand != null){ //for the case of none
+//    		autoCommand.start();
+//    	}
     }
 
     /**
@@ -99,13 +119,13 @@ public class FishyRobot2015 extends IterativeRobot {
         Scheduler.getInstance().run();
         
         if (autoMode.equals("debugger mode") && !autoCommand.isRunning()){
-        	if (commandBase.drivetrainSubsystem.encoders[0].get() != 0){
+        	if (drivetrainSubsystem.encoders[0].get() != 0){
         		driveLeftEncoderState = true;
         	}
-        	if (commandBase.drivetrainSubsystem.encoders[1].get() != 0){
+        	if (drivetrainSubsystem.encoders[1].get() != 0){
         		driveRightEncoderState = true;
         	}
-        	if (commandBase.chainLiftSubsystem.getHeight() != 0){
+        	if (chainLiftSubsystem.getHeight() != 0){
         		chainEncoderState = true;
         	}
         }
@@ -140,15 +160,18 @@ public class FishyRobot2015 extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Chain Height", commandBase.chainLiftSubsystem.getHeight());
-        commandBase.driveForwardRotate(commandBase.oi.driver.getDriveForward(), commandBase.oi.driver.getDriveRotation()).start();
+        SmartDashboard.putNumber("Chain Height", chainLiftSubsystem.getHeight());
+        new DriveForwardRotate(oi.driver.getDriveForward(), oi.driver.getDriveRotation()).start();
+       
+        //driveForwardRotate(oi.driver.getDriveForward(), oi.driver.getDriveRotation()).start();
         
-        SmartDashboard.putData("Chain Encoder", commandBase.chainLiftSubsystem.encoders[0]);
-        SmartDashboard.putData("Drive Encoder Left", commandBase.drivetrainSubsystem.encoders[0]);
-        SmartDashboard.putData("Drive Encoder Right", commandBase.drivetrainSubsystem.encoders[1]);
+        SmartDashboard.putData("Chain Encoder", chainLiftSubsystem.encoders[0]);
+        SmartDashboard.putData("Drive Encoder Left", drivetrainSubsystem.encoders[0]);
+        SmartDashboard.putData("Drive Encoder Right", drivetrainSubsystem.encoders[1]);
     }
     
-    /**
+
+	/**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {

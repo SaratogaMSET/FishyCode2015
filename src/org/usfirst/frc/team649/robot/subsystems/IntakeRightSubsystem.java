@@ -36,17 +36,18 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 		public static final double ABS_TOLERANCE = 0;
 		
 		public static final double ARM_POS_RELEASE = 1000000.0;
-		//for pulling in totes
 		public static final double ARM_POS_GRABBING = 0.0;
-		//for both arms completely back
 		public static final double ARM_POS_STORING = 6000000.0;
 		
+		public static final int GRABBING_STATE = 0;
+		public static final int RELEASING_STATE = 1;
+		public static final int STORE_STATE = 2;
 	}	
 	
     public IntakeRightSubsystem(){
     	super("Grabber Right Subsystem", PIDConstants.P, PIDConstants.I, PIDConstants.D);
     	
-    	pid = FishyRobot2015.commandBase.intakeRightSubsystem.getPIDController();
+    	pid = FishyRobot2015.intakeRightSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
     	
     	//potentiometer

@@ -1,26 +1,25 @@
 package org.usfirst.frc.team649.robot.commands.grabbercommands;
 
 import org.usfirst.frc.team649.robot.FishyRobot2015;
-import org.usfirst.frc.team649.robot.RobotMap;
-import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem.PIDConstants;
 import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GrabberArmPosition extends Command {
+public class SetIntakeArmPosition extends Command {
 	double relevantSetpointRight;
 	double relevantSetpointLeft;
 	PIDController pidLeft, pidRight;
 	
-	public GrabberArmPosition(int st){
+	public SetIntakeArmPosition(int st){
 		//0 is grabbing, 1 is releasing, 2 is storage
-		 if (st == 0){
+		 if (st == PIDConstants.GRABBING_STATE){
 			 relevantSetpointRight = IntakeRightSubsystem.PIDConstants.ARM_POS_GRABBING;
 			 relevantSetpointLeft = IntakeLeftSubsystem.PIDConstants.ARM_POS_GRABBING;
 		 }
-		 else if (st == 1){
+		 else if (st == PIDConstants.RELEASING_STATE){
 			 relevantSetpointRight = IntakeRightSubsystem.PIDConstants.ARM_POS_RELEASE;
 			 relevantSetpointLeft = IntakeLeftSubsystem.PIDConstants.ARM_POS_RELEASE;
 		 }
@@ -33,8 +32,8 @@ public class GrabberArmPosition extends Command {
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		pidRight = FishyRobot2015.commandBase.intakeRightSubsystem.getPIDController();
-		pidLeft = FishyRobot2015.commandBase.intakeLeftSubsystem.getPIDController();
+		pidRight = FishyRobot2015.intakeRightSubsystem.getPIDController();
+		pidLeft = FishyRobot2015.intakeLeftSubsystem.getPIDController();
 	}
 
 	@Override

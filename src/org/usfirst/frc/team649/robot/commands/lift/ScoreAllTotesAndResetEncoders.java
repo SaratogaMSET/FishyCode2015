@@ -16,7 +16,7 @@ public class ScoreAllTotesAndResetEncoders extends Command {
         // eg. requires(chassis);
     	
     	//reset to platform always if not already
-    	FishyRobot2015.commandBase.chainLiftSubsystem.platformOrStepOffset = true;
+    	FishyRobot2015.chainLiftSubsystem.platformOrStepOffset = true;
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class ScoreAllTotesAndResetEncoders extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	 FishyRobot2015.commandBase.chainLiftSubsystem.setPower(ChainLiftSubsystem.PIDConstants.UNLOAD_TOTES_MOTOR_POWER);
+    	 FishyRobot2015.chainLiftSubsystem.setPower(ChainLiftSubsystem.PIDConstants.UNLOAD_TOTES_MOTOR_POWER);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,8 +35,8 @@ public class ScoreAllTotesAndResetEncoders extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	 FishyRobot2015.commandBase.chainLiftSubsystem.resetEncoders();
-    	 FishyRobot2015.commandBase.chainLiftSubsystem.isAtBase = true;
+    	 FishyRobot2015.chainLiftSubsystem.resetEncoders();
+    	 FishyRobot2015.chainLiftSubsystem.isAtBase = true;
     }
 
     // Called when another command which requires one or more of the same

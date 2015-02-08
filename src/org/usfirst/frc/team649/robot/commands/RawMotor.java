@@ -5,17 +5,21 @@ import org.usfirst.frc.team649.robot.FishyRobot2015;
 import edu.wpi.first.wpilibj.command.Command;
 
 
+
 //runs motor of a given group of motors, allows for commandGroup raw control in debugging
 public class RawMotor extends Command {
 
 	//for drivetrain
 	public RawMotor(double left, double right) {
-		org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.drivetrainSubsystem.rawDrive(left, right);
+		//TODO: Wont Work... not a command
+		FishyRobot2015.drivetrainSubsystem.rawDrive(left, right);
 	}
 	
+	//for lift
 	public RawMotor(double chainPower){
-		org.usfirst.frc.team649.robot.FishyRobot2015.commandBase.chainLiftSubsystem.setPower(chainPower);
+		FishyRobot2015.chainLiftSubsystem.setPower(chainPower);
 	}
+
 
 	@Override
 	protected void execute() {

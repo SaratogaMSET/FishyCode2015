@@ -23,14 +23,14 @@ public class TurnWithPIDCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	this.pid = FishyRobot2015.commandBase.drivetrainSubsystem.getGyroPIDControler();
+    	this.pid = FishyRobot2015.drivetrainSubsystem.getGyroPIDControler();
     	
 		pid.setPID(DrivetrainSubsystem.GyroBasedDriving.AUTO_P,
 				DrivetrainSubsystem.GyroBasedDriving.AUTO_I,
 				DrivetrainSubsystem.GyroBasedDriving.AUTO_D);
 		pid.setPercentTolerance(10.0);
 		pid.setSetpoint(setAngle);
-		FishyRobot2015.commandBase.drivetrainSubsystem.resetGyro();
+		FishyRobot2015.drivetrainSubsystem.resetGyro();
 		pid.enable();
     }
 
@@ -46,7 +46,7 @@ public class TurnWithPIDCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	pid.disable();
-		FishyRobot2015.commandBase.drivetrainSubsystem.driveFwdRot(0, 0);
+		FishyRobot2015.drivetrainSubsystem.driveFwdRot(0, 0);
     }
 
     // Called when another command which requires one or more of the same

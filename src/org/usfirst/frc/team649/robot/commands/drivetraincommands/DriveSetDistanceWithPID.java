@@ -49,12 +49,12 @@ public class DriveSetDistanceWithPID extends Command {
 		// Display.printToOutputStream("starting drive PID: " +
 		// DriverStation.getInstance().getMatchTime() + ", dist: " + distance);
 		DrivetrainSubsystem.EncoderBasedDriving.MIN_MOTOR_POWER = minDriveSpeed;
-		this.pid = FishyRobot2015.commandBase.drivetrainSubsystem.getPIDController();
+		this.pid = FishyRobot2015.drivetrainSubsystem.getPIDController();
 		pid.setPID(DrivetrainSubsystem.EncoderBasedDriving.AUTO_P,
 				DrivetrainSubsystem.EncoderBasedDriving.AUTO_I,
 				DrivetrainSubsystem.EncoderBasedDriving.AUTO_D);
 		pid.setSetpoint(distance);
-		FishyRobot2015.commandBase.drivetrainSubsystem.resetEncoders();
+		FishyRobot2015.drivetrainSubsystem.resetEncoders();
 		// drivetrainSubsystem.startEncoders();
 		pid.enable();
 		onTargetStartTime = -1;
@@ -83,7 +83,7 @@ public class DriveSetDistanceWithPID extends Command {
 		// }
 		//
 		// return false;
-		return Math.abs(FishyRobot2015.commandBase.drivetrainSubsystem.getDistance()) >= Math.abs(distance);
+		return Math.abs(FishyRobot2015.drivetrainSubsystem.getDistance()) >= Math.abs(distance);
 	}
 
 	// Called once after isFinished returns true
@@ -92,7 +92,7 @@ public class DriveSetDistanceWithPID extends Command {
 		// DriverStation.getInstance().getMatchTime() + ", dist: " +
 		// driveTrainSubsystem.getDistance());
 		pid.disable();
-		FishyRobot2015.commandBase.drivetrainSubsystem.driveFwdRot(0, 0);
+		FishyRobot2015.drivetrainSubsystem.driveFwdRot(0, 0);
 		finishedChecker = true;
 	}
 

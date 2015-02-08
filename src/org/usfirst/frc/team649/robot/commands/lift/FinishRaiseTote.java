@@ -14,18 +14,18 @@ public class FinishRaiseTote extends Command {
 	private PIDController liftPID;
 
     public FinishRaiseTote(boolean up) {
-    	liftPID =  FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
+    	liftPID =  FishyRobot2015.chainLiftSubsystem.getPIDController();
 		if (up) {
-			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight += ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
+			 FishyRobot2015.chainLiftSubsystem.setpointHeight += ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
 		} else {
-			 FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight -= ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
+			 FishyRobot2015.chainLiftSubsystem.setpointHeight -= ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
 		}
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	liftPID.enable();
-		liftPID.setSetpoint(FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight +  FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight);
+		liftPID.setSetpoint(FishyRobot2015.chainLiftSubsystem.setpointHeight +  FishyRobot2015.chainLiftSubsystem.offsetHeight);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -40,7 +40,7 @@ public class FinishRaiseTote extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	FishyRobot2015.commandBase.chainLiftSubsystem.isAtBase = false;
+    	FishyRobot2015.chainLiftSubsystem.isAtBase = false;
     }
 
     // Called when another command which requires one or more of the same

@@ -16,21 +16,21 @@ public class ChangeOffsetHeight extends Command {
     public ChangeOffsetHeight(boolean platformOrStepHeight) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	liftPID =  FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
+    	liftPID =  FishyRobot2015.chainLiftSubsystem.getPIDController();
     	if(platformOrStepHeight) {
-    		 FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.PLATFORM_DRIVE_OFFSET;
+    		 FishyRobot2015.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.PLATFORM_DRIVE_OFFSET;
     	}
     	else
-    		 FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.STEP_OFFSET;
+    		 FishyRobot2015.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.STEP_OFFSET;
     	
 
-		FishyRobot2015.commandBase.chainLiftSubsystem.platformOrStepOffset = platformOrStepHeight; //on platform or offset
+		FishyRobot2015.chainLiftSubsystem.platformOrStepOffset = platformOrStepHeight; //on platform or offset
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	liftPID.enable();
-    	liftPID.setSetpoint( FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight +  FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight);
+    	liftPID.setSetpoint( FishyRobot2015.chainLiftSubsystem.setpointHeight +  FishyRobot2015.chainLiftSubsystem.offsetHeight);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -39,7 +39,7 @@ public class ChangeOffsetHeight extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		return ((FishyRobot2015.commandBase.chainLiftSubsystem.setpointHeight + FishyRobot2015.commandBase.chainLiftSubsystem.offsetHeight) ==  FishyRobot2015.commandBase.chainLiftSubsystem.getHeight() ||  FishyRobot2015.commandBase.chainLiftSubsystem.isMaxLimitPressed() ||  FishyRobot2015.commandBase.chainLiftSubsystem.isResetLimitPressed());
+		return ((FishyRobot2015.chainLiftSubsystem.setpointHeight + FishyRobot2015.chainLiftSubsystem.offsetHeight) ==  FishyRobot2015.chainLiftSubsystem.getHeight() ||  FishyRobot2015.chainLiftSubsystem.isMaxLimitPressed() ||  FishyRobot2015.chainLiftSubsystem.isResetLimitPressed());
     }
 
     // Called once after isFinished returns true

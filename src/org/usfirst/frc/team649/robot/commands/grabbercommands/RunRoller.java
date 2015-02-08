@@ -10,8 +10,8 @@ public class RunRoller extends Command {
 
 	//allows for a command to stop
 	public RunRoller(double speed){
-		FishyRobot2015.commandBase.intakeLeftSubsystem.roller.set(speed);
-		FishyRobot2015.commandBase.intakeRightSubsystem.roller.set(speed);
+		FishyRobot2015.intakeLeftSubsystem.roller.set(speed);
+		FishyRobot2015.intakeRightSubsystem.roller.set(speed);
 	}
 	@Override
 	protected void initialize() {

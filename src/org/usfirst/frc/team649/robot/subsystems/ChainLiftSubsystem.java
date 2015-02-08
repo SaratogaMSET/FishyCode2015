@@ -60,7 +60,7 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	 	for (int i = 0; i < RobotMap.CHAIN_LIFT.MOTORS.length; i++) {
             motors[i] = new Victor(RobotMap.CHAIN_LIFT.MOTORS[i]);
         }
-    	pid = FishyRobot2015.commandBase.chainLiftSubsystem.getPIDController();
+    	pid = FishyRobot2015.chainLiftSubsystem.getPIDController();
     	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
     	
     	platformOrStepOffset = true;

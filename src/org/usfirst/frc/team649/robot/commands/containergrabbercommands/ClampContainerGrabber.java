@@ -13,7 +13,7 @@ public class ClampContainerGrabber extends Command {
 	
 	public ClampContainerGrabber(boolean clamp){
 		referencePos = clamp ? ContainerGrabberSubsystem.GRABBER_CLOSED_STATE : ContainerGrabberSubsystem.GRABBER_OPENED_STATE;
-		FishyRobot2015.commandBase.containerGrabberSubsystem.setGrabberState(referencePos);
+		FishyRobot2015.containerGrabberSubsystem.setGrabberState(referencePos);
 	}
 	@Override
 	protected void initialize() {
@@ -30,7 +30,7 @@ public class ClampContainerGrabber extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return FishyRobot2015.commandBase.containerGrabberSubsystem.getGrabberState() == referencePos.value;
+		return FishyRobot2015.containerGrabberSubsystem.getGrabberState() == referencePos.value;
 	}
 
 	@Override

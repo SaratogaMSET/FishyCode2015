@@ -7,7 +7,7 @@ import org.usfirst.frc.team649.robot.commands.containergrabbercommands.ClampCont
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveSetDistanceWithPID;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.TurnWithPIDCommand;
-import org.usfirst.frc.team649.robot.commands.grabbercommands.GrabberArmPosition;
+import org.usfirst.frc.team649.robot.commands.grabbercommands.SetIntakeArmPosition;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeLiftHeight;
@@ -66,7 +66,7 @@ public class CommandBase {
     	if (chainLiftSubsystem.platformOrStepOffset){
     		sequence.addSequential(new ChangeOffsetHeight(false)); //automatically updates the internal state variable
     	}
-    	sequence.addParallel(new GrabberArmPosition(2));
+    	sequence.addParallel(new SetIntakeArmPosition(2));
     	//do whatever
     	return sequence;
     }
@@ -79,7 +79,7 @@ public class CommandBase {
     	if (!chainLiftSubsystem.platformOrStepOffset){
     		sequence.addSequential(new ChangeOffsetHeight(true)); //automatically updates the internal state variable
     	}
-    	sequence.addParallel(new GrabberArmPosition(1));
+    	sequence.addParallel(new SetIntakeArmPosition(1));
     	sequence.addSequential(releaseAllAndGetOut());
     	
     	return sequence;
@@ -91,7 +91,7 @@ public class CommandBase {
     	CommandGroup sequence = new CommandGroup();
     	//if not at base, exit because we cant pick up a container
     	//NULL POINTER CHECK BECAUSE OF THIS
-    	if (!FishyRobot2015.commandBase.chainLiftSubsystem.isAtBase){
+    	if (!FishyRobot2015.chainLiftSubsystem.isAtBase){
     		return null;
     	}
     	
@@ -113,9 +113,10 @@ public class CommandBase {
     	//NOW CHECK FOR BUTTONS
     	
     	//wait until intake button pressed...check for problems with multiple systems TODO
-    	while (!FishyRobot2015.commandBase.oi.operator.isIntakeButtonPressed()){
+    	while(!FishyRobot2015.oi.operator.isIntakeButtonPressed()) {
     		
     	}
+
     	//pull in tote and unclamp
     	sequence.addSequential(new IntakeTote());
     	sequence.addSequential(new WaitCommand(200));
@@ -156,7 +157,7 @@ public class CommandBase {
     	CommandGroup sequence = new CommandGroup();
     	
     	//move arms out (state position), winch in the three containers, drive forward, all sequential
-    	sequence.addSequential(new GrabberArmPosition(2));
+    	sequence.addSequential(new SetIntakeArmPosition(2));
     	sequence.addSequential(new WinchTotesIn());
     	sequence.addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_WINCH_DRIVE_DISTANCE));
     	return sequence;
@@ -254,7 +255,7 @@ public class CommandBase {
 	
 	//ARM
 	public Command setArmPosition(int state){
-		return new GrabberArmPosition(state);
+		return new SetIntakeArmPosition(state);
 	}
 	
 	public Command intakeTote(){
