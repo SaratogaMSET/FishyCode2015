@@ -37,8 +37,8 @@ public class IntakeTote extends Command {
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-		FishyRobot2015.intakeLeftSubsystem.roller.set(0);
-		FishyRobot2015.intakeRightSubsystem.roller.set(0);
+		FishyRobot2015.intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_OFF_SPEED);
+		FishyRobot2015.intakeRightSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_OFF_SPEED);
 	}
 
 	@Override

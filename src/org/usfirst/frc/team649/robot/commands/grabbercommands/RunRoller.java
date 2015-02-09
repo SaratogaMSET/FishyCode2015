@@ -3,6 +3,8 @@
 package org.usfirst.frc.team649.robot.commands.grabbercommands;
 
 import org.usfirst.frc.team649.robot.FishyRobot2015;
+import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -30,6 +32,8 @@ public class RunRoller extends Command {
 
 	@Override
 	protected void end() {
+		FishyRobot2015.intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_OFF_SPEED);
+		FishyRobot2015.intakeRightSubsystem.roller.set(IntakeRightSubsystem.INTAKE_ROLLER_OFF_SPEED);
 	}
 
 	@Override

@@ -5,7 +5,11 @@ import org.usfirst.frc.team649.robot.commandgroups.AutoContainerOnly;
 import org.usfirst.frc.team649.robot.commandgroups.AutoFullContainerAndToteSequence;
 import org.usfirst.frc.team649.robot.commandgroups.AutoWinchAndDrive;
 import org.usfirst.frc.team649.robot.commandgroups.Debug;
+import org.usfirst.frc.team649.robot.commandgroups.ScoreTotesOnPlatform;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
+import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
+import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
+import org.usfirst.frc.team649.robot.commands.grabbercommands.SetIntakeArmPosition;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
@@ -13,6 +17,7 @@ import org.usfirst.frc.team649.robot.subsystems.ContainerGrabberSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
+import org.usfirst.frc.team649.robot.triggers.GrabArmTrigger;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -57,7 +62,7 @@ public class FishyRobot2015 extends IterativeRobot {
     	intakeRightSubsystem = new IntakeRightSubsystem();
     //	autoWinchSubsystem = new AutoWinchSubsystem();
     	containerGrabberSubsystem = new ContainerGrabberSubsystem();
-    	cameraSubsystem = new CameraSubsystem();
+    	//cameraSubsystem = new CameraSubsystem();
     	oi = new OI();
     	
     	autoChooser = new SendableChooser();
@@ -164,8 +169,24 @@ public class FishyRobot2015 extends IterativeRobot {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Chain Height", chainLiftSubsystem.getHeight());
         new DriveForwardRotate(oi.driver.getDriveForward(), oi.driver.getDriveRotation()).start();
-       
-        //driveForwardRotate(oi.driver.getDriveForward(), oi.driver.getDriveRotation()).start();
+        if(oi.operator.purgeButton.get()) {
+        	new RunRoller(IntakeLeftSubsystem.PURGE_ROLLER_SPEED).start();;
+        }
+        if(oi.operator.intakeButton.get()) {
+        	new IntakeTote().start();
+        }
+        if(oi.operator.scoreAllButton.get()) {
+        	new ScoreTotesOnPlatform().start();
+        }
+        if(oi.operator.isGrabArmState()) {
+        	new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.GRABBING_STATE);
+        }
+        if(oi.operator.isReleaseArmState()) {
+        	new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.RELEASING_STATE);
+        }
+        if(oi.operator.isStoreArmState()) {
+        	new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.STORE_STATE);
+        }
         
         SmartDashboard.putData("Chain Encoder", chainLiftSubsystem.encoders[0]);
         SmartDashboard.putData("Drive Encoder Left", drivetrainSubsystem.encoders[0]);

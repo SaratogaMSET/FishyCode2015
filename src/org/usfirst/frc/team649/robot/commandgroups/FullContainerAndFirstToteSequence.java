@@ -26,7 +26,7 @@ public class FullContainerAndFirstToteSequence extends CommandGroup {
 
 		// wait until intake button pressed...check for problems with multiple
 		// systems TODO
-		while (!FishyRobot2015.oi.operator.isIntakeButtonPressed()) {
+		while (!FishyRobot2015.oi.operator.purgeButton.get()) {
 
 		}
 
