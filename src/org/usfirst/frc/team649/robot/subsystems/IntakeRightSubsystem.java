@@ -28,6 +28,7 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 	public DigitalInput touchSensor;
 	public static final double INTAKE_ROLLER_SPEED = 0.4;
 	public static final double INTAKE_ROLLER_OFF_SPEED = 0;
+	public static final double PURGE_ROLLER_SPEED = -0.4;
 
 	public static final class PIDConstants{
 		public static final double P = 0.0;

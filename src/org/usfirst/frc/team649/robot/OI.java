@@ -1,14 +1,9 @@
 package org.usfirst.frc.team649.robot;
 
-import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
-import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
-import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
-import org.usfirst.frc.team649.robot.triggers.GrabArmTrigger;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
