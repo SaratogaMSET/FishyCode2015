@@ -18,8 +18,10 @@ public class OI {
 	public Joystick operatorJoystick;
 	public Joystick driveJoystickHorizontal;
 	public Joystick driveJoystickVertical;
+	public Joystick manualJoystick;
 	public Operator operator;
 	public Driver driver;
+	public Manual manual;
 
 	
 	public OI() {
@@ -27,8 +29,10 @@ public class OI {
 		// i think...i cant remember actually
 		driveJoystickVertical = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_DRIVER_RIGHT);
 		driveJoystickHorizontal = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_DRIVER_LEFT);
+		manualJoystick = new Joystick(RobotMap.JOYSTICKS.JOYSTICK_MANUAL);
 		driver = new Driver();
 		operator = new Operator();
+		manual = new Manual();
 		
 	}
 
@@ -40,12 +44,7 @@ public class OI {
 		public Button scoreAllButton = new JoystickButton(operatorJoystick, 7);
 		public Button stepButton = new JoystickButton(operatorJoystick, 8);
 		public Button storeButton = new JoystickButton(operatorJoystick, 9);
-		 
-		public Operator() {
-//			purgeButton.whileHeld(new RunRoller(IntakeRightSubsystem.INTAKE_ROLLER_SPEED));
-//			intakeButton.whenPressed(new IntakeTote());
-//			raiseToteButton.whenPressed(new R);
-		}
+		public Button containerButton = new JoystickButton(operatorJoystick, 10);
 		
 		public boolean isGrabArmState() {
 	        return (operatorJoystick.getThrottle() > 0.9);
@@ -85,5 +84,14 @@ public class OI {
 			return value;
 		}
 
+	}
+	
+	public class Manual {
+		public Button moveArmsIn = new JoystickButton(manualJoystick, 0);
+		public Button moveArmsOut = new JoystickButton(manualJoystick, 1);
+		public Button runRollersIn = new JoystickButton(manualJoystick, 2);
+		public Button runRollersOut = new JoystickButton(manualJoystick, 3);
+		public Button togglePiston = new JoystickButton(manualJoystick, 4);
+		public Button runAutoWinch = new JoystickButton(manualJoystick, 5);
 	}
 }

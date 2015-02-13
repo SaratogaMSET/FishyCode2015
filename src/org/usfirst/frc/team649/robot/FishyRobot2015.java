@@ -5,11 +5,14 @@ import org.usfirst.frc.team649.robot.commandgroups.AutoContainerOnly;
 import org.usfirst.frc.team649.robot.commandgroups.AutoFullContainerAndToteSequence;
 import org.usfirst.frc.team649.robot.commandgroups.AutoWinchAndDrive;
 import org.usfirst.frc.team649.robot.commandgroups.Debug;
+import org.usfirst.frc.team649.robot.commandgroups.FullContainerAndFirstToteSequence;
+import org.usfirst.frc.team649.robot.commandgroups.FullRaiseTote;
 import org.usfirst.frc.team649.robot.commandgroups.ScoreTotesOnPlatform;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.SetIntakeArmPosition;
+import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
@@ -20,7 +23,9 @@ import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 import org.usfirst.frc.team649.robot.triggers.GrabArmTrigger;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -178,6 +183,22 @@ public class FishyRobot2015 extends IterativeRobot {
         if(oi.operator.scoreAllButton.get()) {
         	new ScoreTotesOnPlatform().start();
         }
+        if(oi.operator.raiseToteButton.get()) {
+        	new FullRaiseTote(ChainLiftSubsystem.PIDConstants.UP).start();
+        }
+        if(oi.operator.lowerToteButton.get()) {
+        	new FullRaiseTote(ChainLiftSubsystem.PIDConstants.DOWN).start();
+        }
+        if(oi.operator.containerButton.get()) {
+        	new FullContainerAndFirstToteSequence().start();
+        }
+        if(oi.operator.stepButton.get()) {
+        	new ChangeOffsetHeight(ChainLiftSubsystem.PIDConstants.STEP_HEIGHT);
+        }
+        if(oi.operator.storeButton.get()) {
+        	new ChangeOffsetHeight(ChainLiftSubsystem.PIDConstants.PLATFORM_HEIGHT);
+        }
+        //if(oi.operator.)
         if(oi.operator.isGrabArmState()) {
         	new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.GRABBING_STATE);
         }
@@ -188,6 +209,36 @@ public class FishyRobot2015 extends IterativeRobot {
         	new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.STORE_STATE);
         }
         
+        
+        /****************MANUAL**********************/
+        
+        chainLiftSubsystem.setPower((oi.manualJoystick.getAxis(Joystick.AxisType.kY));
+        
+        if(oi.manual.moveArmsIn.get()) {
+        	intakeLeftSubsystem.arm.set(0.4);
+        	//setIntakeArmsPower(INTAKE_ARM_IN_POWER);
+        } 
+        
+        if(operatorJoystick.getRawButton(9)) {
+        	setIntakeArmsPower(INTAKE_ARM_OUT_POWER);
+        }
+        
+        if(operatorJoystick.getRawButton(5)) {
+        	setRollerPower(ROLLER_OUT_POWER);
+        }
+        
+        if(operatorJoystick.getRawButton(3)) {
+        	setRollerPower(ROLLERS_IN_POWER);
+        }
+        
+        if(operatorJoystick.getRawButton(1) && operatorJoystick.getRawButton(1) != grabberState) {
+        	grabberState = !grabberState;
+        	setGrabberPistons(grabberState ? Value.kForward: Value.kReverse);
+        }
+        
+        if(operatorJoystick.getRawButton(10)) {
+        	runAutoWinch(AUTO_WINCH_IN_POWER);
+        }
         SmartDashboard.putData("Chain Encoder", chainLiftSubsystem.encoders[0]);
         SmartDashboard.putData("Drive Encoder Left", drivetrainSubsystem.encoders[0]);
         SmartDashboard.putData("Drive Encoder Right", drivetrainSubsystem.encoders[1]);

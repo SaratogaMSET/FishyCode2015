@@ -70,6 +70,9 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 		return pot.get();
 	}
     
+	public boolean isLimitPressed() {
+		return !touchSensor.get();
+	}
 
 	@Override
 	protected double returnPIDInput() {

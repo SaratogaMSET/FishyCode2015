@@ -42,6 +42,6 @@ public class FullContainerAndFirstToteSequence extends CommandGroup {
 		// continue to drive height offset (you should be at intermediate step
 		// here), hopefully you catch the tote
 		addSequential(new WaitCommand(200));
-		addSequential(new FinishRaiseTote(true));
+		addSequential(new FinishRaiseTote(ChainLiftSubsystem.PIDConstants.UP));
 	}
 }

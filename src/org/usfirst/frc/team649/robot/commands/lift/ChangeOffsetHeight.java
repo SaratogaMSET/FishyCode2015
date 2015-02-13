@@ -12,18 +12,18 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ChangeOffsetHeight extends Command {
 
 	PIDController liftPID;
-    public ChangeOffsetHeight(boolean platformOrStepHeight) {
+    public ChangeOffsetHeight(boolean platformHeight) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	liftPID =  FishyRobot2015.chainLiftSubsystem.getPIDController();
-    	if(platformOrStepHeight) {
+    	if(platformHeight) {
     		 FishyRobot2015.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.PLATFORM_DRIVE_OFFSET;
     	}
     	else
     		 FishyRobot2015.chainLiftSubsystem.offsetHeight = ChainLiftSubsystem.PIDConstants.STEP_OFFSET;
     	
 
-		FishyRobot2015.chainLiftSubsystem.platformOrStepOffset = platformOrStepHeight; //on platform or offset
+		FishyRobot2015.chainLiftSubsystem.platformOrStepOffset = platformHeight; //on platform or offset
     }
 
     // Called just before this Command runs the first time
