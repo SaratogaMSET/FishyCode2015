@@ -66,6 +66,7 @@ public class FishyRobot2015 extends IterativeRobot {
     	oi = new OI();
     	
     	autoChooser = new SendableChooser();
+    	
     	autoChooser.addObject("Debugger Mode", "debugger mode");
     	autoChooser.addObject("Winch Autonomous", "winch in totes");
     	autoChooser.addObject("Get Container and Tote", "container and tote");
