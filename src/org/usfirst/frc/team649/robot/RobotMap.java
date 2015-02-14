@@ -49,35 +49,21 @@ public class RobotMap {
 		public static final int ARM_LIMIT_SWITCH = 19;
 	}
 	
-	//NO PORT 11
 	public static final class RIGHT_GRABBER {
-<<<<<<< HEAD
 		public static final int ROLLER_MOTOR = 12;
 		public static final int ARM_MOTOR = 13;
-=======
-		public static final int ROLLER_MOTOR = 0;
-		public static final int ARM_MOTOR = 9;
->>>>>>> branch 'master' of https://github.com/SaratogaMSET/FishyCode2015.git
 		public static final int POT = 2;
-<<<<<<< HEAD
-		//public static final int LIMIT_SWITCH = 5;
+
 		public static final int TOTE_LIMIT_SWITCH = 9;
 		public static final int ARM_LIMIT_SWITCH = 20;
-=======
-		public static final int LIMIT_SWITCH = 1;
->>>>>>> branch 'master' of https://github.com/SaratogaMSET/FishyCode2015.git
+
+
 	}
 	
 	public static final class AUTO_WINCH {
-<<<<<<< HEAD
 		public static final int MOTOR = 14;
 		public static final int LIM = 16;
 		public static final int SERVO = 15;
-=======
-		public static final int MOTOR = 8;
-		public static final int LIM = 13;
-		public static final int SERVO = 14;
->>>>>>> branch 'master' of https://github.com/SaratogaMSET/FishyCode2015.git
 		
 	}
 	

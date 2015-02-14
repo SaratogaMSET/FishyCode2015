@@ -18,6 +18,8 @@ public class IntakeLeftSubsystem extends PIDSubsystem {
 	public DigitalInput totesLimit;
 	public DigitalInput armLimit;
 	public static final double INTAKE_ROLLER_SPEED = 0.4;
+	public static final double INTAKE_ROLLER_OFF_SPEED = 0;
+	public static final double PURGE_ROLLER_SPEED = -0.4;
 	
 	//CONSTANTS
 
