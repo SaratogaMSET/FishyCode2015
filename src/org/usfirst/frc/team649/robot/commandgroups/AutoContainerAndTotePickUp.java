@@ -19,7 +19,7 @@ public class AutoContainerAndTotePickUp extends CommandGroup {
     	addSequential(new ClampContainerGrabber(false));
     	addSequential(new ScoreAllTotesAndResetEncoders());
     	addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_START_TO_CONTAINER));
-    	addSequential(new WaitCommand(300));
+    	addSequential(new WaitCommand(.3));
     	addSequential(new FullContainerAndFirstToteSequence());
     	//go forward and pick up the tote
     	addParallel(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_TOTE));

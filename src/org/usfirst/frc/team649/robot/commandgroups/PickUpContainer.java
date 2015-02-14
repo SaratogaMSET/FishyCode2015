@@ -19,7 +19,7 @@ public class PickUpContainer extends CommandGroup {
 		} else {
 			// otherwise actually raise it
 			addSequential(new ClampContainerGrabber(true));
-			addSequential(new WaitCommand(200));
+			addSequential(new WaitCommand(.2));
 			addSequential(new ChangeLiftHeight(ChainLiftSubsystem.PIDConstants.CONTAINER_PICK_UP_RAISE_HEIGHT));
 		}
 	}

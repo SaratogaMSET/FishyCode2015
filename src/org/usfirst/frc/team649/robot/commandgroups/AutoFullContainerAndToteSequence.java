@@ -16,7 +16,7 @@ public class AutoFullContainerAndToteSequence extends CommandGroup {
     
     public  AutoFullContainerAndToteSequence() {
     	addSequential(new AutoContainerAndTotePickUp());
-    	addSequential(new WaitCommand(400));
+    	addSequential(new WaitCommand(.4));
     	addSequential(new TurnWithPIDCommand(GyroBasedDriving.AUTO_GRYO_TURN_ANGLE));
     	addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_AUTO_ZONE));
     	//drop the tote, but keep holding container up
