@@ -22,7 +22,7 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 	public PIDController pid;
 	public DigitalInput toteLimit;
 	public DigitalInput armLimit;
-	public static final double INTAKE_ROLLER_SPEED = 0.4;
+	public static final double PURGE_ROLLER_SPEED = -0.4;
 
 	public static final class PIDConstants{
 		public static final double P = 0.0;
@@ -74,6 +74,7 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 	public boolean isArmLimitPressed() {
 		return armLimit.get();
 	}
+
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub

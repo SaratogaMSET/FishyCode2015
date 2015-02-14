@@ -5,11 +5,14 @@ import org.usfirst.frc.team649.robot.commandgroups.AutoContainerOnly;
 import org.usfirst.frc.team649.robot.commandgroups.AutoFullContainerAndToteSequence;
 import org.usfirst.frc.team649.robot.commandgroups.AutoWinchAndDrive;
 import org.usfirst.frc.team649.robot.commandgroups.Debug;
+import org.usfirst.frc.team649.robot.commandgroups.FullContainerAndFirstToteSequence;
+import org.usfirst.frc.team649.robot.commandgroups.FullRaiseTote;
 import org.usfirst.frc.team649.robot.commandgroups.ScoreTotesOnPlatform;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.SetIntakeArmPosition;
+import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
@@ -19,7 +22,9 @@ import org.usfirst.frc.team649.robot.subsystems.IntakeLeftSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -177,6 +182,22 @@ public class FishyRobot2015 extends IterativeRobot {
         if(oi.operator.scoreAllButton.get()) {
         	new ScoreTotesOnPlatform().start();
         }
+        if(oi.operator.raiseToteButton.get()) {
+        	new FullRaiseTote(ChainLiftSubsystem.PIDConstants.UP).start();
+        }
+        if(oi.operator.lowerToteButton.get()) {
+        	new FullRaiseTote(ChainLiftSubsystem.PIDConstants.DOWN).start();
+        }
+        if(oi.operator.containerButton.get()) {
+        	new FullContainerAndFirstToteSequence().start();
+        }
+        if(oi.operator.stepButton.get()) {
+        	new ChangeOffsetHeight(ChainLiftSubsystem.PIDConstants.STEP_HEIGHT);
+        }
+        if(oi.operator.storeButton.get()) {
+        	new ChangeOffsetHeight(ChainLiftSubsystem.PIDConstants.PLATFORM_HEIGHT);
+        }
+        //if(oi.operator.)
         if(oi.operator.isGrabArmState()) {
         	new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.GRABBING_STATE);
         }
@@ -185,6 +206,46 @@ public class FishyRobot2015 extends IterativeRobot {
         }
         if(oi.operator.isStoreArmState()) {
         	new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.STORE_STATE);
+        }
+        
+        
+        /****************MANUAL**********************/
+        
+        chainLiftSubsystem.setPower((oi.manualJoystick.getAxis(Joystick.AxisType.kY)));
+        
+        if(oi.manual.moveArmsIn.get()) {
+        	intakeLeftSubsystem.arm.set(0.4);
+        	intakeRightSubsystem.arm.set(0.4);
+        	//setIntakeArmsPower(INTAKE_ARM_IN_POWER);
+        } else if(oi.manual.moveArmsOut.get()) {
+        	intakeLeftSubsystem.arm.set(-0.5);
+        	intakeRightSubsystem.arm.set(-0.5);
+        } else {
+        	intakeLeftSubsystem.arm.set(0.0);
+        	intakeRightSubsystem.arm.set(0.0);
+        }
+        
+        if(oi.manual.runAutoWinch.get()) {
+        	autoWinchSubsystem.setPower(1.0);
+        } else {
+        	autoWinchSubsystem.setPower(0);
+        }
+        
+        if(oi.manual.runRollersIn.get()) {
+        	intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_SPEED);
+        	intakeRightSubsystem.roller.set(IntakeRightSubsystem.INTAKE_ROLLER_SPEED);
+        } else if(oi.manual.runRollersOut.get()) {
+        	intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.PURGE_ROLLER_SPEED);
+        	intakeRightSubsystem.roller.set(IntakeRightSubsystem.PURGE_ROLLER_SPEED);
+        } else {
+        	intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_OFF_SPEED);
+        	intakeRightSubsystem.roller.set(IntakeRightSubsystem.INTAKE_ROLLER_OFF_SPEED);
+
+        }
+        
+        if(oi.manual.togglePiston.get() && oi.manual.togglePiston.get() != containerGrabberSubsystem.grabberStateBooleanForManualOnly) {
+        	containerGrabberSubsystem.grabberStateBooleanForManualOnly = !containerGrabberSubsystem.grabberStateBooleanForManualOnly;
+        	containerGrabberSubsystem.setGrabberState(containerGrabberSubsystem.grabberStateBooleanForManualOnly ? Value.kForward: Value.kReverse);
         }
         
         SmartDashboard.putData("Chain Encoder", chainLiftSubsystem.encoders[0]);
