@@ -82,9 +82,8 @@ public class ChainLiftSubsystem extends PIDSubsystem {
     }
 	
     public void setPower(double power) {
-        for (int i =0; i < motors.length; i++) {
-            motors[i].set(power);
-        }
+        motors[0].set(power);
+        motors[1].set(power);
     }
     
     public boolean isMaxLimitPressed() {
