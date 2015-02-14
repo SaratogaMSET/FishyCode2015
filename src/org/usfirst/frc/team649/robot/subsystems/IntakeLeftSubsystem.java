@@ -15,10 +15,9 @@ public class IntakeLeftSubsystem extends PIDSubsystem {
 	public Victor roller, arm;
 	public Potentiometer pot;
 	public PIDController pid;
-	public DigitalInput touchSensor;
+	public DigitalInput totesLimit;
+	public DigitalInput armLimit;
 	public static final double INTAKE_ROLLER_SPEED = 0.4;
-	public static final double INTAKE_ROLLER_OFF_SPEED = 0;
-	public static final double PURGE_ROLLER_SPEED = -0.4;
 	
 	//CONSTANTS
 
@@ -54,11 +53,21 @@ public class IntakeLeftSubsystem extends PIDSubsystem {
     	roller = new Victor(RobotMap.LEFT_GRABBER.ROLLER_MOTOR);
     	arm = new Victor(RobotMap.LEFT_GRABBER.ARM_MOTOR);
     	
-    	touchSensor = new DigitalInput(RobotMap.LEFT_GRABBER.LIMIT_SWITCH);
+    	totesLimit = new DigitalInput(RobotMap.LEFT_GRABBER.TOTE_LIMIT_SWITCH);
+    	armLimit = new DigitalInput(RobotMap.LEFT_GRABBER.ARM_LIMIT_SWITCH);
+    	
     }
 	
 	public double getPot(){
 		return pot.get();
+	}
+	
+	public boolean isToteLimitPressed(){
+		return !totesLimit.get();
+	}
+	
+	public boolean isArmLimitPressed() {
+		return armLimit.get();
 	}
 	
 	@Override

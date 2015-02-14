@@ -5,6 +5,7 @@ import org.usfirst.frc.team649.robot.subsystems.ContainerGrabberSubsystem;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class ClampContainerGrabber extends Command {
 
@@ -30,7 +31,10 @@ public class ClampContainerGrabber extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return FishyRobot2015.containerGrabberSubsystem.getGrabberState() == referencePos.value;
+		while(new WaitCommand(ContainerGrabberSubsystem.TIME_TO_CLOSE_PISTONS).isRunning()) {
+			
+		}
+		return true;
 	}
 
 	@Override

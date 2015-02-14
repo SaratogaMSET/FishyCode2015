@@ -1,17 +1,12 @@
 
 package org.usfirst.frc.team649.robot.subsystems;
 
-import org.usfirst.frc.team649.robot.FishyRobot2015;
 import org.usfirst.frc.team649.robot.RobotMap;
-import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem.PIDConstants;
-
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 /**
@@ -25,9 +20,9 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 	public Victor roller, arm;
 	public Potentiometer pot;
 	public PIDController pid;
-	public DigitalInput touchSensor;
-	public static final double INTAKE_ROLLER_SPEED = 0.4;
-	public static final double INTAKE_ROLLER_OFF_SPEED = 0;
+	public DigitalInput toteLimit;
+	public DigitalInput armLimit;
+	public static final double PURGE_ROLLER_SPEED = -0.4;
 
 	public static final class PIDConstants{
 		public static final double P = 0.0;
@@ -55,10 +50,12 @@ public class IntakeRightSubsystem extends PIDSubsystem {
     	pot = new AnalogPotentiometer(RobotMap.RIGHT_GRABBER.POT);
     	
     	//motors
+
     	roller = new Victor(RobotMap.RIGHT_GRABBER.ROLLER_MOTOR);
     	arm = new Victor(RobotMap.RIGHT_GRABBER.ARM_MOTOR);
     	
-    	touchSensor = new DigitalInput(RobotMap.RIGHT_GRABBER.LIMIT_SWITCH);
+    	toteLimit = new DigitalInput(RobotMap.RIGHT_GRABBER.TOTE_LIMIT_SWITCH);
+    	armLimit = new DigitalInput(RobotMap.RIGHT_GRABBER.ARM_LIMIT_SWITCH);
     }
 	
 	public void initDefaultCommand() {
@@ -69,7 +66,14 @@ public class IntakeRightSubsystem extends PIDSubsystem {
 	public double getPot(){
 		return pot.get();
 	}
+	
+	public boolean isToteLimitPressed(){
+		return !toteLimit.get();
+	}
     
+	public boolean isArmLimitPressed() {
+		return armLimit.get();
+	}
 
 	@Override
 	protected double returnPIDInput() {

@@ -19,7 +19,7 @@ public class AutoWinchAndDrive extends CommandGroup {
     	addSequential(new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.STORE_STATE));
     	addParallel(new WinchTotesIn());
     	//wait command amount == time between start winching & start driving
-    	addSequential(new WaitCommand(1000));
+    	addSequential(new WaitCommand(1));
     	addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_WINCH_DRIVE_DISTANCE));
 
     }

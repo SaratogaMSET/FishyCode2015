@@ -48,7 +48,10 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 		public static final double CONTAINER_REGRIP_LOWER_HEIGHT = -12;
 		public static final double PLATFORM_DRIVE_OFFSET = 3;
 		public static final double STEP_OFFSET = 8;
-
+		public static final boolean UP = true;
+		public static final boolean DOWN = false;
+		public static final boolean PLATFORM_HEIGHT = true;
+		public static final boolean STEP_HEIGHT = false;
 		//Other
 		public static final double UNLOAD_TOTES_MOTOR_POWER = -.5;
 
@@ -82,9 +85,8 @@ public class ChainLiftSubsystem extends PIDSubsystem {
     }
 	
     public void setPower(double power) {
-        for (int i =0; i < motors.length; i++) {
-            motors[i].set(power);
-        }
+        motors[0].set(power);
+        motors[1].set(-power);
     }
     
     public boolean isMaxLimitPressed() {
