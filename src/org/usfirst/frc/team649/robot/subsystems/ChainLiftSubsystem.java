@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ChainLiftSubsystem extends PIDSubsystem {
     
-    // Put methods for controlling this subsystem
+	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 	Victor[] motors;
 	public Encoder[] encoders;
@@ -54,6 +54,8 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 		public static final boolean STEP_HEIGHT = false;
 		//Other
 		public static final double UNLOAD_TOTES_MOTOR_POWER = -.5;
+	    private static final double CURRENT_CAP = 0;
+
 
 	}
 
@@ -105,6 +107,12 @@ public class ChainLiftSubsystem extends PIDSubsystem {
         }
         return totalVal / numEncoders;    	
     }
+    
+    public double getVelocity() {
+    	double enc1Speed = Math.abs(encoders[0].getRate());
+    	double enc2Speed = Math.abs(encoders[1].getRate());
+    	return enc1Speed > enc2Speed ? enc1Speed : enc2Speed;
+    }
 
     public void resetEncoders() {
         for (int x = 0; x < encoders.length; x++) {
@@ -127,7 +135,13 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		this.setPower(output);
+		//if(FishyRobot2015.pdp.getCurrent(channel))
+		double avgCurrent = ((FishyRobot2015.pdp.getCurrent(13) + FishyRobot2015.pdp.getCurrent(12)) / 2); 
+    	if(avgCurrent > PIDConstants.CURRENT_CAP && Math.abs(this.getVelocity()) < 0.2 ) {
+    		this.setPower(0);
+    	} else{
+    		this.setPower(output);
+    	}
 	}
 
 }

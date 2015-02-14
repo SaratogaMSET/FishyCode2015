@@ -23,6 +23,7 @@ import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -49,6 +50,7 @@ public class FishyRobot2015 extends IterativeRobot {
 	public static AutoWinchSubsystem autoWinchSubsystem;
 	public static ContainerGrabberSubsystem containerGrabberSubsystem;
 	public static CameraSubsystem cameraSubsystem;
+	public static PowerDistributionPanel pdp;
 
 	
 	public SendableChooser autoChooser;
@@ -64,6 +66,7 @@ public class FishyRobot2015 extends IterativeRobot {
     	chainLiftSubsystem = new ChainLiftSubsystem();
     	intakeLeftSubsystem = new IntakeLeftSubsystem();
     	intakeRightSubsystem = new IntakeRightSubsystem();
+    	pdp = new PowerDistributionPanel();
     //	autoWinchSubsystem = new AutoWinchSubsystem();
     	containerGrabberSubsystem = new ContainerGrabberSubsystem();
     	//cameraSubsystem = new CameraSubsystem();
