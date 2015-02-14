@@ -70,6 +70,7 @@ public class FishyRobot2015 extends IterativeRobot {
     	oi = new OI();
     	
     	autoChooser = new SendableChooser();
+    	
     	autoChooser.addObject("Debugger Mode", "debugger mode");
     	autoChooser.addObject("Winch Autonomous", "winch in totes");
     	autoChooser.addObject("Get Container and Tote", "container and tote");
@@ -174,7 +175,7 @@ public class FishyRobot2015 extends IterativeRobot {
         SmartDashboard.putNumber("Chain Height", chainLiftSubsystem.getHeight());
         new DriveForwardRotate(oi.driver.getDriveForward(), oi.driver.getDriveRotation()).start();
         if(oi.operator.purgeButton.get()) {
-        	new RunRoller(IntakeLeftSubsystem.PURGE_ROLLER_SPEED).start();;
+        	new RunRoller(IntakeLeftSubsystem.INTAKE_ROLLER_SPEED).start();;
         }
         if(oi.operator.intakeButton.get()) {
         	new IntakeTote().start();
@@ -235,7 +236,7 @@ public class FishyRobot2015 extends IterativeRobot {
         	intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_SPEED);
         	intakeRightSubsystem.roller.set(IntakeRightSubsystem.INTAKE_ROLLER_SPEED);
         } else if(oi.manual.runRollersOut.get()) {
-        	intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.PURGE_ROLLER_SPEED);
+        	intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_SPEED);
         	intakeRightSubsystem.roller.set(IntakeRightSubsystem.PURGE_ROLLER_SPEED);
         } else {
         	intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_OFF_SPEED);

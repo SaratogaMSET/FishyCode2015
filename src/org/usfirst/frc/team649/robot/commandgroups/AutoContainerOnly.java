@@ -19,7 +19,7 @@ public class AutoContainerOnly extends CommandGroup {
     	addSequential(new ClampContainerGrabber(false));
     	addSequential(new ScoreAllTotesAndResetEncoders());
     	addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_START_TO_CONTAINER));
-    	addSequential(new WaitCommand(300));
+    	addSequential(new WaitCommand(.3));
     	addSequential(new PickUpContainer());
     	addSequential(new TurnWithPIDCommand(GyroBasedDriving.AUTO_GRYO_TURN_ANGLE));
     	addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_CONTAINER_TO_AUTO_ZONE));

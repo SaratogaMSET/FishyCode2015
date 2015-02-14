@@ -20,10 +20,10 @@ public class IntakeTote extends Command {
 		// TODO Auto-generated method stub
 		
 		//so the tote will only stop moving when both triggers have been hit
-		if (FishyRobot2015.intakeLeftSubsystem.touchSensor.get()){
+		if (FishyRobot2015.intakeLeftSubsystem.isToteLimitPressed()){
 			FishyRobot2015.intakeLeftSubsystem.roller.set(0);
 		}
-		if (FishyRobot2015.intakeRightSubsystem.touchSensor.get()){
+		if (FishyRobot2015.intakeRightSubsystem.isToteLimitPressed()){
 			FishyRobot2015.intakeRightSubsystem.roller.set(0);
 		}
 	}
@@ -31,14 +31,14 @@ public class IntakeTote extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return FishyRobot2015.intakeLeftSubsystem.touchSensor.get() && FishyRobot2015.intakeRightSubsystem.touchSensor.get();
+		return FishyRobot2015.intakeLeftSubsystem.isToteLimitPressed() && FishyRobot2015.intakeRightSubsystem.isToteLimitPressed();
 	}
 
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-		FishyRobot2015.intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_OFF_SPEED);
-		FishyRobot2015.intakeRightSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_OFF_SPEED);
+		FishyRobot2015.intakeLeftSubsystem.roller.set(0);
+		FishyRobot2015.intakeRightSubsystem.roller.set(0);
 	}
 
 	@Override

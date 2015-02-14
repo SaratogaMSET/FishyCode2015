@@ -14,7 +14,7 @@ public class FullRaiseTote extends CommandGroup {
     
     public  FullRaiseTote(boolean upOrDown) {
     	addSequential(new RaiseToteToIntermediateLevel(upOrDown));
-    	while(!FishyRobot2015.intakeRightSubsystem.isLimitPressed() && !FishyRobot2015.intakeLeftSubsystem.isLimitPressed()) {
+    	while(!FishyRobot2015.intakeRightSubsystem.isToteLimitPressed() && !FishyRobot2015.intakeLeftSubsystem.isToteLimitPressed()) {
     		
     	}
     	addSequential(new FinishRaiseTote(upOrDown));
