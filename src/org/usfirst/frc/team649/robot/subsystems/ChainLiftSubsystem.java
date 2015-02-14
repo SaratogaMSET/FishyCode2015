@@ -24,10 +24,13 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	Victor[] motors;
 	public Encoder[] encoders;
 	PIDController pid;
+
 	DigitalInput limitMax;
 	DigitalInput limitReset;
+	
 	public double setpointHeight;
 	public double offsetHeight;
+	
 	//true for platform, false for step
 	public boolean platformOrStepOffset;
 	public boolean isAtBase;
@@ -35,17 +38,29 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	
 	public static class PIDConstants {
 		//PID
-		public static final double P_VALUE = 0.0;
+		public static final double P_VALUE = 0.5;
 		public static final double I_VALUE = 0.0;
 		public static final double D_VALUE = 0.0;
-		public static final double ENCODER_DISTANCE_PER_PULSE = 0;
-		public static final double ABS_TOLERANCE = 0;
+		public static final double ENCODER_DISTANCE_PER_PULSE = .01;
+		public static final double ABS_TOLERANCE = 1;
 		//In inches
 		public static final double STORE_TO_STEP_LEVEL_DIFFERENCE = 5.0;
+		
+		//MUST add up to 16 (hook separation)
 		public static final double STORE_TO_INTERMEDIATE_DIFFERENCE = 12.0;
-		public static final double INTERMEDIATE_TO_STORE_DIFFERENCE = 3;
+		public static final double INTERMEDIATE_TO_STORE_DIFFERENCE = 4;
+		
+		//MUST be distance between reset position and intermediate step
+		public static final double FIRST_TOTE_STORE_TO_INTERMEDIATE = 7;
+		
+		//MUST add up to intermediate height difference
 		public static final double CONTAINER_PICK_UP_RAISE_HEIGHT = 18;
-		public static final double CONTAINER_REGRIP_LOWER_HEIGHT = -12;
+		public static final double CONTAINER_REGRIP_LOWER_HEIGHT = -6;
+		
+		//TIMEOUTS
+		public static final double HAL_COMPENSATION_TIME_OUT = 0.5; //in seconds
+		public static final double RESET_TIME_OUT = 10;
+		
 		public static final double PLATFORM_DRIVE_OFFSET = 3;
 		public static final double STEP_OFFSET = 8;
 		public static final boolean UP = true;
@@ -83,7 +98,7 @@ public class ChainLiftSubsystem extends PIDSubsystem {
         limitMax = new DigitalInput(RobotMap.CHAIN_LIFT.MAX_LIM_SWITCH);
         limitReset = new DigitalInput(RobotMap.CHAIN_LIFT.RESET_LIM_SWITCH);
         
-
+        isAtBase = false; //TODO we hopefully call reset at the beginning of the program
     }
 	
     public void setPower(double power) {
@@ -91,21 +106,19 @@ public class ChainLiftSubsystem extends PIDSubsystem {
         motors[1].set(-power);
     }
     
+    //HalEffect Sensors
     public boolean isMaxLimitPressed() {
-    	return limitMax.get();
+    	return !limitMax.get();
     }
     
     public boolean isResetLimitPressed() {
-    	return limitReset.get();
+    	return !limitReset.get();
     }
     
     public double getHeight() {
-    	int numEncoders = encoders.length;
-        double totalVal = 0;
-        for (int i = 0; i < numEncoders; i++) {
-            totalVal += encoders[i].getDistance();
-        }
-        return totalVal / numEncoders;    	
+    	//returns the highest encoder value
+    	double encDist1 = encoders[0].getDistance(), encDist2 = encoders[1].getDistance();
+    	return encDist1>encDist2 ? encDist1: encDist2;
     }
     
     public double getVelocity() {

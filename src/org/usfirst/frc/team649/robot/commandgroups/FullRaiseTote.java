@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class FullRaiseTote extends CommandGroup {
     
-    public  FullRaiseTote(boolean upOrDown) {
-    	addSequential(new RaiseToteToIntermediateLevel(upOrDown));
-    	while(!FishyRobot2015.intakeRightSubsystem.isToteLimitPressed() && !FishyRobot2015.intakeLeftSubsystem.isToteLimitPressed()) {
+    public  FullRaiseTote() {
+    	addSequential(new RaiseToteToIntermediateLevel(true));
+    	while(!FishyRobot2015.intakeRightSubsystem.isToteLimitPressed() || !FishyRobot2015.intakeLeftSubsystem.isToteLimitPressed()) {
     		
     	}
-    	addSequential(new FinishRaiseTote(upOrDown));
+    	addSequential(new FinishRaiseTote(true));
     }
 }

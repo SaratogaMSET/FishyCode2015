@@ -10,19 +10,20 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class RunRoller extends Command {
 
+	public double speed;
 	//allows for a command to stop
 	public RunRoller(double speed){
-		FishyRobot2015.intakeLeftSubsystem.roller.set(speed);
-		FishyRobot2015.intakeRightSubsystem.roller.set(speed);
+		this.speed = speed;
 	}
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void execute() {
+		FishyRobot2015.intakeLeftSubsystem.roller.set(speed);
+		FishyRobot2015.intakeRightSubsystem.roller.set(speed);
 	}
 
 	@Override
@@ -32,8 +33,6 @@ public class RunRoller extends Command {
 
 	@Override
 	protected void end() {
-		FishyRobot2015.intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_OFF_SPEED);
-		FishyRobot2015.intakeRightSubsystem.roller.set(IntakeRightSubsystem.INTAKE_ROLLER_OFF_SPEED);
 	}
 
 	@Override

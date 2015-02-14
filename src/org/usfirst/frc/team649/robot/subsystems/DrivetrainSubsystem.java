@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDOutput {
     
-    private SpeedController[] motors;
+    public Talon [] motors;
     public Encoder[] encoders;
     public PIDController encoderPID;
     public PIDController gyroPID;
@@ -54,6 +54,8 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     	public static final double AUTO_I = 0.0;
     	public static final double AUTO_D = 0.0001;
     	public static final double ABS_TOLERANCE = 12000.0;
+    	
+    	public static final double GYRO_TOLERANCE = 2;
 
     }
     public static class RampingConstants {
@@ -66,7 +68,7 @@ public class DrivetrainSubsystem extends PIDSubsystem implements PIDSource, PIDO
     
     public DrivetrainSubsystem() {
     	super("Drivetrain", EncoderBasedDriving.AUTO_P, EncoderBasedDriving.AUTO_I, EncoderBasedDriving.AUTO_D);
-    	motors = new SpeedController[RobotMap.DRIVE_TRAIN.MOTORS.length];
+    	motors = new Talon[RobotMap.DRIVE_TRAIN.MOTORS.length];
     	for (int i = 0; i < RobotMap.DRIVE_TRAIN.MOTORS.length; i++) {
             motors[i] = new Talon(RobotMap.DRIVE_TRAIN.MOTORS[i]);
         }

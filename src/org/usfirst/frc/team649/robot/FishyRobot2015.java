@@ -1,11 +1,12 @@
 
 package org.usfirst.frc.team649.robot;
 
+import org.usfirst.frc.team649.robot.commandgroups.AutoContainerAndTotePickUp;
 import org.usfirst.frc.team649.robot.commandgroups.AutoContainerOnly;
-import org.usfirst.frc.team649.robot.commandgroups.AutoFullContainerAndToteSequence;
 import org.usfirst.frc.team649.robot.commandgroups.AutoWinchAndDrive;
 import org.usfirst.frc.team649.robot.commandgroups.Debug;
 import org.usfirst.frc.team649.robot.commandgroups.FullContainerAndFirstToteSequence;
+import org.usfirst.frc.team649.robot.commandgroups.FullLowerTote;
 import org.usfirst.frc.team649.robot.commandgroups.FullRaiseTote;
 import org.usfirst.frc.team649.robot.commandgroups.ScoreTotesOnPlatform;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveForwardRotate;
@@ -111,7 +112,7 @@ public class FishyRobot2015 extends IterativeRobot {
     		autoCommand = new AutoWinchAndDrive();
     		break;
     	case "container and totes":
-    		autoCommand = new AutoFullContainerAndToteSequence();
+    		autoCommand = new AutoContainerAndTotePickUp();
     		break;
     	case "just tote":
     		autoCommand = new AutoContainerOnly();
@@ -187,10 +188,10 @@ public class FishyRobot2015 extends IterativeRobot {
         	new ScoreTotesOnPlatform().start();
         }
         if(oi.operator.raiseToteButton.get()) {
-        	new FullRaiseTote(ChainLiftSubsystem.PIDConstants.UP).start();
+        	new FullRaiseTote().start();
         }
         if(oi.operator.lowerToteButton.get()) {
-        	new FullRaiseTote(ChainLiftSubsystem.PIDConstants.DOWN).start();
+        	new FullLowerTote().start();
         }
         if(oi.operator.containerButton.get()) {
         	new FullContainerAndFirstToteSequence().start();
