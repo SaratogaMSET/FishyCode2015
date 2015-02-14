@@ -13,7 +13,7 @@ public class SetIntakeArmPosition extends Command {
 	double relevantSetpointLeft;
 	PIDController pidLeft, pidRight;
 	
-	public SetIntakeArmPosition(int st){
+	public SetIntakeArmPosition(double st){
 		//0 is grabbing, 1 is releasing, 2 is storage
 		 if (st == PIDConstants.GRABBING_STATE){
 			 relevantSetpointRight = IntakeRightSubsystem.PIDConstants.ARM_POS_GRABBING;

@@ -13,15 +13,27 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RaiseToteToIntermediateLevel extends Command {
 
 	private PIDController liftPID;
+	private boolean upOrDown;
+	
+	public double heightChangeReference;
 
 	public RaiseToteToIntermediateLevel(boolean up) {
+		upOrDown = up;
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		
+		if (FishyRobot2015.chainLiftSubsystem.isAtBase){
+			heightChangeReference = ChainLiftSubsystem.PIDConstants.FIRST_TOTE_STORE_TO_INTERMEDIATE;
+		}
+		else {
+			heightChangeReference = ChainLiftSubsystem.PIDConstants.STORE_TO_INTERMEDIATE_DIFFERENCE;
+		}
+		
 		liftPID =  FishyRobot2015.chainLiftSubsystem.getPIDController();
-		if (up) {
-			 FishyRobot2015.chainLiftSubsystem.setpointHeight += ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
+		if (upOrDown) {
+			 FishyRobot2015.chainLiftSubsystem.setpointHeight += heightChangeReference;
 		} else {
-			 FishyRobot2015.chainLiftSubsystem.setpointHeight -= ChainLiftSubsystem.PIDConstants.INTERMEDIATE_TO_STORE_DIFFERENCE;
+			 FishyRobot2015.chainLiftSubsystem.setpointHeight -= heightChangeReference;
 		}
 	}
 
@@ -42,7 +54,9 @@ public class RaiseToteToIntermediateLevel extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		FishyRobot2015.chainLiftSubsystem.isAtBase = false;
+		if (upOrDown){
+			FishyRobot2015.chainLiftSubsystem.isAtBase = false;
+		}
 	}
 
 	// Called when another command which requires one or more of the same

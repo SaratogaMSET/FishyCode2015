@@ -3,7 +3,6 @@ package org.usfirst.frc.team649.robot.commandgroups;
 import org.usfirst.frc.team649.robot.commands.containergrabbercommands.ClampContainerGrabber;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.DriveSetDistanceWithPID;
 import org.usfirst.frc.team649.robot.commands.drivetraincommands.TurnWithPIDCommand;
-import org.usfirst.frc.team649.robot.commands.lift.ScoreAllTotesAndResetEncoders;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.EncoderBasedDriving;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.GyroBasedDriving;
 
@@ -17,7 +16,7 @@ public class AutoContainerOnly extends CommandGroup {
     
     public  AutoContainerOnly() {
     	addSequential(new ClampContainerGrabber(false));
-    	addSequential(new ScoreAllTotesAndResetEncoders());
+    	addSequential(new ScoreAllAndResetFromTop());
     	addSequential(new DriveSetDistanceWithPID(EncoderBasedDriving.AUTO_START_TO_CONTAINER));
     	addSequential(new WaitCommand(.3));
     	addSequential(new PickUpContainer());

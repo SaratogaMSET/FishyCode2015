@@ -3,6 +3,7 @@ package org.usfirst.frc.team649.robot.commands.drivetraincommands;
 import org.usfirst.frc.team649.robot.FishyRobot2015;
 import org.usfirst.frc.team649.robot.RobotMap;
 import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.GyroBasedDriving;
 
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDController;
@@ -29,18 +30,19 @@ public class TurnWithPIDCommand extends Command {
 				DrivetrainSubsystem.GyroBasedDriving.AUTO_I,
 				DrivetrainSubsystem.GyroBasedDriving.AUTO_D);
 		pid.setPercentTolerance(10.0);
-		pid.setSetpoint(setAngle);
 		FishyRobot2015.drivetrainSubsystem.resetGyro();
 		pid.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+		pid.setSetpoint(setAngle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	//TODO check if this works lol
+        return Math.abs(FishyRobot2015.drivetrainSubsystem.gyro.getAngle() - setAngle) < GyroBasedDriving.GYRO_TOLERANCE;
     }
 
     // Called once after isFinished returns true
