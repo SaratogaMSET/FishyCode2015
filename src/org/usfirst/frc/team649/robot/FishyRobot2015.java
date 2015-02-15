@@ -191,7 +191,7 @@ public class FishyRobot2015 extends IterativeRobot {
         	new FullLowerTote().start();
         }
         if(oi.operator.containerButton.get()) {
-        	new FullContainerAndFirstToteSequence().start();
+        	new FullContainerAndFirstToteSequence(true).start();
         }
         if(oi.operator.stepButton.get()) {
         	new ChangeOffsetHeight(ChainLiftSubsystem.PIDConstants.STEP_HEIGHT);
