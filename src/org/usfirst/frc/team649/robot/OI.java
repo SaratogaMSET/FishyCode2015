@@ -17,6 +17,7 @@ public class OI {
 	public Operator operator;
 	public Driver driver;
 	public Manual manual;
+	
 
 	
 	public OI() {
@@ -82,7 +83,7 @@ public class OI {
 	}
 	
 	public class Manual {
-		public Button moveArmsIn = new JoystickButton(manualJoystick, 0);
+		public Button moveArmsIn = new JoystickButton(manualJoystick, 6);
 		public Button moveArmsOut = new JoystickButton(manualJoystick, 1);
 		public Button runRollersIn = new JoystickButton(manualJoystick, 2);
 		public Button runRollersOut = new JoystickButton(manualJoystick, 3);

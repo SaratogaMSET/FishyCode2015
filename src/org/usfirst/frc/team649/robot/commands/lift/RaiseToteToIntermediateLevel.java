@@ -6,6 +6,7 @@ import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem.PIDConstants;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -40,6 +41,7 @@ public class RaiseToteToIntermediateLevel extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		liftPID.enable();
+		SmartDashboard.putString("key", "we are enabled");
 		liftPID.setSetpoint(FishyRobot2015.chainLiftSubsystem.setpointHeight +  FishyRobot2015.chainLiftSubsystem.offsetHeight);
 	}
 
@@ -49,7 +51,7 @@ public class RaiseToteToIntermediateLevel extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return ((FishyRobot2015.chainLiftSubsystem.setpointHeight +  FishyRobot2015.chainLiftSubsystem.offsetHeight) ==  FishyRobot2015.chainLiftSubsystem.getHeight() ||  FishyRobot2015.chainLiftSubsystem.isMaxLimitPressed() ||  FishyRobot2015.chainLiftSubsystem.isResetLimitPressed());
+		return ((FishyRobot2015.chainLiftSubsystem.setpointHeight +  FishyRobot2015.chainLiftSubsystem.offsetHeight) ==  FishyRobot2015.chainLiftSubsystem.getHeight());// ||  FishyRobot2015.chainLiftSubsystem.isMaxLimitPressed() ||  FishyRobot2015.chainLiftSubsystem.isResetLimitPressed());
 	}
 
 	// Called once after isFinished returns true

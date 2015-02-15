@@ -2,27 +2,22 @@ package org.usfirst.frc.team649.robot.subsystems;
 
 import org.usfirst.frc.team649.robot.FishyRobot2015;
 import org.usfirst.frc.team649.robot.RobotMap;
-import org.usfirst.frc.team649.robot.subsystems.DrivetrainSubsystem.EncoderBasedDriving;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
-public class ChainLiftSubsystem extends PIDSubsystem {
+public class ChainLiftSubsystem extends PIDSubsystem{
     
-    // Put methods for controlling this subsystem
+	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 	Victor[] motors;
-	public Encoder[] encoders;
+	public Encoder encoder;
 	PIDController pid;
 
 	DigitalInput limitMax;
@@ -41,7 +36,7 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 		public static final double P_VALUE = 0.5;
 		public static final double I_VALUE = 0.0;
 		public static final double D_VALUE = 0.0;
-		public static final double ENCODER_DISTANCE_PER_PULSE = .01;
+		public static final double ENCODER_DISTANCE_PER_PULSE = ((22*(3/8))/300);
 		public static final double ABS_TOLERANCE = 1;
 		//In inches
 		public static final double STORE_TO_STEP_LEVEL_DIFFERENCE = 5.0;
@@ -69,6 +64,8 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 		public static final boolean STEP_HEIGHT = false;
 		//Other
 		public static final double UNLOAD_TOTES_MOTOR_POWER = -.5;
+	    private static final double CURRENT_CAP = 10;
+
 
 	}
 
@@ -82,11 +79,12 @@ public class ChainLiftSubsystem extends PIDSubsystem {
     	platformOrStepOffset = true;
     	
     	//TODO: ALTER FOR DEFNED NUM OF ENCODERS
-    	encoders = new Encoder[RobotMap.CHAIN_LIFT.ENCODERS.length / 2];
-        for (int x = 0; x < RobotMap.CHAIN_LIFT.ENCODERS.length; x += 2) {
-            encoders[x / 2] = new Encoder(RobotMap.CHAIN_LIFT.ENCODERS[x], RobotMap.CHAIN_LIFT.ENCODERS[x + 1], x == 0, EncodingType.k2X);
-            encoders[x / 2].setDistancePerPulse(PIDConstants.ENCODER_DISTANCE_PER_PULSE);
-        }
+    	//encoders = new Encoder[RobotMap.CHAIN_LIFT.ENCODERS.length / 2];
+        encoder = new Encoder(RobotMap.CHAIN_LIFT.ENCODERS[0], RobotMap.CHAIN_LIFT.ENCODERS[1]);
+        encoder.setDistancePerPulse(PIDConstants.ENCODER_DISTANCE_PER_PULSE);
+        
+//        encoders[1] = new Encoder(RobotMap.CHAIN_LIFT.ENCODERS[2], RobotMap.CHAIN_LIFT.ENCODERS[3]);
+//        encoders[1].setDistancePerPulse(PIDConstants.ENCODER_DISTANCE_PER_PULSE);
         
         /* issue see intake left subsystem
         pid = FishyRobot2015.chainLiftSubsystem.getPIDController();
@@ -97,7 +95,11 @@ public class ChainLiftSubsystem extends PIDSubsystem {
         limitReset = new DigitalInput(RobotMap.CHAIN_LIFT.RESET_LIM_SWITCH);
         
         isAtBase = false; //TODO we hopefully call reset at the beginning of the program
-    }
+
+        
+		pid = this.getPIDController();
+    	pid.setAbsoluteTolerance(PIDConstants.ABS_TOLERANCE);
+	}
 	
     public void setPower(double power) {
         motors[0].set(power);
@@ -106,23 +108,37 @@ public class ChainLiftSubsystem extends PIDSubsystem {
     
     //HalEffect Sensors
     public boolean isMaxLimitPressed() {
-    	return !limitMax.get();
+    	return true; //!limitMax.get();
     }
     
     public boolean isResetLimitPressed() {
-    	return !limitReset.get();
+    	return true; //!limitReset.get();
     }
     
     public double getHeight() {
-    	//returns the highest encoder value
-    	double encDist1 = encoders[0].getDistance(), encDist2 = encoders[1].getDistance();
-    	return encDist1>encDist2 ? encDist1: encDist2;
+//    	//returns the highest encoder value
+//    	double encDist1 = encoders[0].getDistance(), encDist2 = encoders[1].getDistance();
+//    	return encDist1>encDist2 ? encDist1: encDist2;
+//    	int numEncoders = encoders.length;
+//        double totalVal = 0;
+//        for (int i = 0; i < numEncoders; i++) {
+//            totalVal += encoders[i].getDistance();
+//        }
+        return encoder.getDistance();
+    }
+    
+    public double getVelocity() {
+//    	double enc1Speed = Math.abs(encoders[0].getRate());
+//    	double enc2Speed = Math.abs(encoders[1].getRate());
+//    	return enc1Speed > enc2Speed ? enc1Speed : enc2Speed;
+    	return encoder.getRate();
     }
 
     public void resetEncoders() {
-        for (int x = 0; x < encoders.length; x++) {
-            encoders[x].reset();
-        }
+//        for (int x = 0; x < encoders.length; x++) {
+//            encoders[x].reset();
+//        }
+    	encoder.reset();
     }
     
     
@@ -140,8 +156,13 @@ public class ChainLiftSubsystem extends PIDSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		this.setPower(output);
+		//if(FishyRobot2015.pdp.getCurrent(channel))
+		double avgCurrent = ((FishyRobot2015.pdp.getCurrent(13) + FishyRobot2015.pdp.getCurrent(12)) / 2); 
+    	if(avgCurrent > PIDConstants.CURRENT_CAP && Math.abs(this.getVelocity()) < 0.2 ) {
+    		this.setPower(0);
+    	} else{
+    		this.setPower(output);
+    	}
 	}
-
 }
 
