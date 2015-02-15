@@ -14,6 +14,8 @@ import org.usfirst.frc.team649.robot.commands.grabbercommands.IntakeTote;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.RunRoller;
 import org.usfirst.frc.team649.robot.commands.grabbercommands.SetIntakeArmPosition;
 import org.usfirst.frc.team649.robot.commands.lift.ChangeOffsetHeight;
+import org.usfirst.frc.team649.robot.commands.lift.RaiseToteToIntermediateLevel;
+import org.usfirst.frc.team649.robot.commands.lift.RunLift;
 import org.usfirst.frc.team649.robot.subsystems.AutoWinchSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team649.robot.subsystems.ChainLiftSubsystem;
@@ -25,12 +27,10 @@ import org.usfirst.frc.team649.robot.subsystems.IntakeRightSubsystem;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -53,6 +53,10 @@ public class FishyRobot2015 extends IterativeRobot {
 	public static CameraSubsystem cameraSubsystem;
 	public static PowerDistributionPanel pdp;
 
+	
+	//previous states for button press v hold
+	public boolean prevState5, prevState6;
+	
 	
 	public SendableChooser autoChooser;
 	public Command autoCommand;
@@ -90,6 +94,9 @@ public class FishyRobot2015 extends IterativeRobot {
     	//idk if this works
     	//SmartDashboard.putData("Cam", (Sendable) commandBase.cameraSubsystem.cam);
     	//cam must be configured from smartdashboard
+    	
+    	prevState5 = false;
+    	prevState6 = false;
     }
 	
 	public void disabledPeriodic() {
@@ -158,7 +165,7 @@ public class FishyRobot2015 extends IterativeRobot {
         // this line or comment it out.
     	
     	//FIGURE OUT HOW TO CLEAR SMARTDASHBOARD REMOTELY
-    	
+    	//chainLiftSubsystem.definePID();
 
     	
     }
@@ -168,7 +175,7 @@ public class FishyRobot2015 extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
+    	//new RunLift(0).start();
     }
 
     /**
@@ -177,7 +184,11 @@ public class FishyRobot2015 extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Chain Height", chainLiftSubsystem.getHeight());
+        
+        new RunLift(oi.operatorJoystick.getY()).start();
+        
         new DriveForwardRotate(oi.driver.getDriveForward(), oi.driver.getDriveRotation()).start();
+        
         if(oi.operator.purgeButton.get()) {
         	new RunRoller(IntakeLeftSubsystem.INTAKE_ROLLER_SPEED).start();;
         }
@@ -187,14 +198,23 @@ public class FishyRobot2015 extends IterativeRobot {
         if(oi.operator.scoreAllButton.get()) {
         	new ScoreTotesOnPlatform().start();
         }
-        if(oi.operator.raiseToteButton.get()) {
-        	new FullRaiseTote().start();
+        
+        SmartDashboard.putBoolean("Will 5 Run?", (oi.operator.raiseToteButton.get() && !prevState5));
+        SmartDashboard.putBoolean("Will 6 run?", (oi.operator.lowerToteButton.get() && !prevState6));
+        
+        
+        if(oi.operatorJoystick.getRawButton(5) && !prevState5){
+        	new RaiseToteToIntermediateLevel(true).start(); 
         }
-        if(oi.operator.lowerToteButton.get()) {
-        	new FullLowerTote().start();
+        
+        if(oi.operatorJoystick.getRawButton(6) && !prevState6){
+        	new RaiseToteToIntermediateLevel(false).start(); 
         }
+        
+        
+        
         if(oi.operator.containerButton.get()) {
-        	new FullContainerAndFirstToteSequence().start();
+        	new FullContainerAndFirstToteSequence(true).start();
         }
         if(oi.operator.stepButton.get()) {
         	new ChangeOffsetHeight(ChainLiftSubsystem.PIDConstants.STEP_HEIGHT);
@@ -213,28 +233,29 @@ public class FishyRobot2015 extends IterativeRobot {
         	new SetIntakeArmPosition(IntakeLeftSubsystem.PIDConstants.STORE_STATE);
         }
         
+        SmartDashboard.putNumber("GOAL HEIGHT", chainLiftSubsystem.offsetHeight + chainLiftSubsystem.setpointHeight);
         
         /****************MANUAL**********************/
         
-        chainLiftSubsystem.setPower((oi.manualJoystick.getAxis(Joystick.AxisType.kY)));
-        
-        if(oi.manual.moveArmsIn.get()) {
-        	intakeLeftSubsystem.arm.set(0.4);
-        	intakeRightSubsystem.arm.set(0.4);
-        	//setIntakeArmsPower(INTAKE_ARM_IN_POWER);
-        } else if(oi.manual.moveArmsOut.get()) {
-        	intakeLeftSubsystem.arm.set(-0.5);
-        	intakeRightSubsystem.arm.set(-0.5);
-        } else {
-        	intakeLeftSubsystem.arm.set(0.0);
-        	intakeRightSubsystem.arm.set(0.0);
-        }
-        
-        if(oi.manual.runAutoWinch.get()) {
-        	autoWinchSubsystem.setPower(1.0);
-        } else {
-        	autoWinchSubsystem.setPower(0);
-        }
+//        chainLiftSubsystem.setPower((oi.manualJoystick.getAxis(Joystick.AxisType.kY)));
+//        
+//        if(oi.manual.moveArmsIn.get()) {
+//        	intakeLeftSubsystem.arm.set(0.4);
+//        	intakeRightSubsystem.arm.set(0.4);
+//        	//setIntakeArmsPower(INTAKE_ARM_IN_POWER);
+//        } else if(oi.manual.moveArmsOut.get()) {
+//        	intakeLeftSubsystem.arm.set(-0.5);
+//        	intakeRightSubsystem.arm.set(-0.5);
+//        } else {
+//        	intakeLeftSubsystem.arm.set(0.0);
+//        	intakeRightSubsystem.arm.set(0.0);
+//        }
+//        
+//        if(oi.manual.runAutoWinch.get()) {
+//        	autoWinchSubsystem.setPower(1.0);
+//        } else {
+//        	autoWinchSubsystem.setPower(0);
+//        }
         
         if(oi.manual.runRollersIn.get()) {
         	intakeLeftSubsystem.roller.set(IntakeLeftSubsystem.INTAKE_ROLLER_SPEED);
@@ -253,7 +274,13 @@ public class FishyRobot2015 extends IterativeRobot {
         	containerGrabberSubsystem.setGrabberState(containerGrabberSubsystem.grabberStateBooleanForManualOnly ? Value.kForward: Value.kReverse);
         }
         
-        SmartDashboard.putData("Chain Encoder", chainLiftSubsystem.encoders[0]);
+        
+        //set the previous states
+        prevState5 = oi.operatorJoystick.getRawButton(5);
+        prevState6 = oi.operatorJoystick.getRawButton(6);
+        
+        SmartDashboard.putData("Chain Encoder 1", chainLiftSubsystem.encoder);
+    //    SmartDashboard.putData("Chain Encoder 2", chainLiftSubsystem.encoders[1]);
         SmartDashboard.putData("Drive Encoder Left", drivetrainSubsystem.encoders[0]);
         SmartDashboard.putData("Drive Encoder Right", drivetrainSubsystem.encoders[1]);
     }

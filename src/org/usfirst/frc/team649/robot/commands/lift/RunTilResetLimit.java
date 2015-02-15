@@ -40,7 +40,6 @@ public class RunTilResetLimit extends Command {
     protected void end() {
     	 FishyRobot2015.chainLiftSubsystem.resetEncoders();
     	 FishyRobot2015.chainLiftSubsystem.isAtBase = true;
-    	 FishyRobot2015.chainLiftSubsystem.firstTote = true;
     }
 
     // Called when another command which requires one or more of the same
